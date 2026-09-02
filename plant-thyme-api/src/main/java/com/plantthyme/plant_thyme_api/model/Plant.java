@@ -62,6 +62,6 @@ public class Plant {
     }
 
     public void setFertilizer(String fertilizer) {
-        this.fertilize = fertilizer;
+        this.fertilize = fertilize;
     }
 }
