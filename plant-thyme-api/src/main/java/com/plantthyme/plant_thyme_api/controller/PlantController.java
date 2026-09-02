@@ -22,7 +22,19 @@ public class PlantController {
         return plantRepository.findAll();
     }
 
-    // POST a new plant (for seeding data)
+    // GET one plant by id
+    @GetMapping("/{id}")
+    public Plant getPlantById(@PathVariable Long id) {
+        return plantRepository.findById(id).orElse(null);
+    }
+
+    // GET search plants by name (e.g. /api/plants/search?name=pothos)
+    @GetMapping("/search")
+    public List<Plant> searchPlants(@RequestParam String name) {
+        return plantRepository.findByNameContainingIgnoreCase(name);
+    }
+
+    // POST a new plant
     @PostMapping
     public Plant createPlant(@RequestBody Plant plant) {
         return plantRepository.save(plant);
