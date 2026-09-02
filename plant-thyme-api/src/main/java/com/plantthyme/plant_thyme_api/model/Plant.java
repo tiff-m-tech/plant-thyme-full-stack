@@ -1,11 +1,13 @@
 package com.plantthyme.plant_thyme_api.model;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
+@JsonPropertyOrder({"id", "name", "imagePath", "light", "water", "fertilize"})
 public class Plant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

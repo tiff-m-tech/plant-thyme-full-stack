@@ -1,10 +1,12 @@
 package com.plantthyme.plant_thyme_api.model;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
+@JsonPropertyOrder({"id", "plant", "purchaseDate", "purchaseStore", "cost", "nickname", "location", "notes"})
 public class CollectionPlant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
