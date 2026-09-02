@@ -17,9 +17,7 @@ public class Plant {
     private String water;
     private String fertilize;
 
-    public Plant() {
-
-    }
+    public Plant() {}
 
     public Long getId() {
         return id;
