@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { usePageTitleForBrowserTab } from "../../hooks/usePageTitleForBrowserTab";
 import { altFromFileName } from "../../utils/altFromFileName";
-import { logoImagePath } from "../../data/constants";
+import { logoImagePath } from "../../constants";
 import PageTitle from "../ui/PageTitle";
 import Button from "../ui/Button";
 import { useNavigate } from "react-router";
