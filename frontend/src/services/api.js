@@ -34,3 +34,14 @@ export async function getProgressPictures(collectionPlantId) {
     if (!response.ok) throw new Error("Failed to fetch progress pictures");
     return response.json();
 }
+
+// GET plants matching a search term
+export async function searchPlants(name) {
+    const response = await fetch(`${BASE_URL}/plants/search?name=${encodeURIComponent(name)}`);
+
+    if (!response.ok) {
+        throw new Error("Failed to search plants");
+    }
+
+    return response.json();
+}
