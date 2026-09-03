@@ -1,11 +1,25 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PageTitle from "../ui/PageTitle";
 import ProgressPictureCard from "../cards/ProgressPictureCard";
+import { getProgressPictures } from "../../services/api";
 
-export default function ProgressGallery({ plant }) {
-    const pictures = plant.progressPictures;
+export default function ProgressGallery({ collectionPlantId }) {
+    const [pictures, setPictures] = useState([]);
     const [selectedImage, setSelectedImage] = useState("");
     const today = new Date().toLocaleDateString("en-US");
+
+    useEffect(() => {
+        async function loadProgressPictures() {
+            try {
+                const data = await getProgressPictures(collectionPlantId);
+                setPictures(data);
+            } catch (error) {
+                console.error("Failed to load progress pictures:", error);
+            }
+        }
+
+        loadProgressPictures();
+    }, [collectionPlantId]);
 
     function formatDate(date) {
         return new Date(date + "T00:00:00").toLocaleDateString("en-US", {
@@ -38,9 +52,9 @@ export default function ProgressGallery({ plant }) {
                 {pictures.map((progressPic) => (
                     <ProgressPictureCard
                         key={progressPic.id}
-                        fileName={progressPic.picture}
+                        fileName={progressPic.imagePath}
                         date={formatDate(progressPic.date)}
-                        src={`${import.meta.env.BASE_URL}images/progressPictures/${progressPic.picture}`}
+                        src={`${import.meta.env.BASE_URL}images/progressPictures/${progressPic.imagePath}`}
                     />
                 ))}
                 {selectedImage && <ProgressPictureCard src={selectedImage} date={today} />}

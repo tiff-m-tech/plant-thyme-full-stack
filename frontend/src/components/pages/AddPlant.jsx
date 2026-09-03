@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import plantDatabase from "../../data/plantDatabase.json";
+// import plantDatabase from "../../data/plantDatabase.json";
+import { searchPlants } from "../../services/api";
 import Button from "../ui/Button";
 import SearchCard from "../cards/SearchCard";
 import PageTitle from "../ui/PageTitle";
@@ -17,13 +18,16 @@ export default function AddPlant({ addPlantToCollection }) {
         setSearchValue(event.target.value);
     }
 
-    function handleSearch() {
+    async function handleSearch() {
         if (searchValue.trim().length <= 1) return;
-        const results = plantDatabase.filter((plant) =>
-            plant.name.toLowerCase().trim().includes(searchValue.toLowerCase().trim()),
-        );
-        setFilteredPlants(results);
-        setHasSearched(true);
+
+        try {
+            const results = await searchPlants(searchValue.trim());
+            setFilteredPlants(results);
+            setHasSearched(true);
+        } catch (error) {
+            console.error("Failed to search plants:", error);
+        }
     }
 
     usePageTitleForBrowserTab("Add a Plant to Collection");
@@ -43,7 +47,7 @@ export default function AddPlant({ addPlantToCollection }) {
                 {filteredPlants.map((plant) => (
                     <SearchCard
                         key={plant.id}
-                        imgPath={plant.image}
+                        imgPath={plant.imagePath}
                         name={plant.name}
                         plant={plant}
                         addPlantToCollection={addPlantToCollection}

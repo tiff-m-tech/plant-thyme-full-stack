@@ -20,20 +20,20 @@ export default function CareInstructions({ plant }) {
                         <th scope="row">
                             <FontAwesomeIcon icon={faSun} className="sun-icon" /> Light
                         </th>
-                        <td>{plant.careInstructions[0].light}</td>
+                        <td>{plant.light}</td>
                     </tr>
                     <tr>
                         <th scope="row">
                             <FontAwesomeIcon icon={faShower} className="water-icon" /> Water
                         </th>
-                        <td>{plant.careInstructions[1].water}</td>
+                        <td>{plant.water}</td>
                     </tr>
                     <tr>
                         <th scope="row">
                             <FontAwesomeIcon icon={faSeedling} className="fertilize-icon" />{" "}
                             Fertilize
                         </th>
-                        <td>{plant.careInstructions[2].fertilize}</td>
+                        <td>{plant.fertilize}</td>
                     </tr>
                 </tbody>
             </table>

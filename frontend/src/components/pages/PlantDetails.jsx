@@ -19,10 +19,12 @@ export default function PlantDetails({ collection, loading, removePlantFromColle
     if (loading) return <Loading />;
 
     // URL parameters are strings, so convert collectionId to a number for comparison.
-    const plant = collection.find((plant) => plant.collectionId === Number(collectionId));
+    const collectionPlant = collection.find(
+        (collectionPlant) => collectionPlant.id === Number(collectionId),
+    );
 
     // No matching plants state. -------------------------------------------------------------------------------
-    if (!plant) {
+    if (!collectionPlant) {
         return (
             <main className="plant-not-found-in-collection-message">
                 <h1>Plant not found!</h1>
@@ -37,21 +39,24 @@ export default function PlantDetails({ collection, loading, removePlantFromColle
 
     // Matching plant state.  ------------------------------------------------------------------------------------
     return (
-        <PlantDetailsContent plant={plant} removePlantFromCollection={removePlantFromCollection} />
+        <PlantDetailsContent
+            collectionPlant={collectionPlant}
+            removePlantFromCollection={removePlantFromCollection}
+        />
     );
 }
 
-function PlantDetailsContent({ plant, removePlantFromCollection }) {
+function PlantDetailsContent({ collectionPlant, removePlantFromCollection }) {
     const navigate = useNavigate();
     const [showConfirm, setShowConfirm] = useState(false);
 
     usePageTitleForBrowserTab("Plant Details");
 
     const [detailsData, setDetailsData] = useState({
-        purchaseDate: plant.purchaseDate,
-        storePurchasedFrom: plant.purchaseStore,
-        cost: plant.cost,
-        notes: plant.notes,
+        purchaseDate: collectionPlant.purchaseDate,
+        storePurchasedFrom: collectionPlant.purchaseStore,
+        cost: collectionPlant.cost,
+        notes: collectionPlant.notes ?? "",
     });
     const [isEditing, setIsEditing] = useState(false);
 
@@ -65,7 +70,7 @@ function PlantDetailsContent({ plant, removePlantFromCollection }) {
     }
 
     function handleRemove() {
-        removePlantFromCollection(plant.collectionId);
+        removePlantFromCollection(collectionPlant.id);
         navigate("/currentCollection");
     }
 
@@ -73,11 +78,11 @@ function PlantDetailsContent({ plant, removePlantFromCollection }) {
         <main id="plantDetails">
             <Button innerText="Back" onClick={() => navigate(-1)} className="back-btn" />
             <img
-                src={`${import.meta.env.BASE_URL}images/plants/${plant.image}`}
-                alt={altFromFileName(plant.image)}
+                src={`${import.meta.env.BASE_URL}images/plants/${collectionPlant.plant.imagePath}`}
+                alt={altFromFileName(collectionPlant.plant.imagePath)}
                 className="details-page-image"
             />
-            <PageTitle title={plant.name} />
+            <PageTitle title={collectionPlant.plant.name} />
             <h2>Plant Details</h2>
             <form>
                 <label htmlFor="purchaseDate">Purchased Date:</label>
@@ -125,9 +130,9 @@ function PlantDetailsContent({ plant, removePlantFromCollection }) {
                 )}
             </form>
             <SectionDivider />
-            <CareInstructions plant={plant} />
+            <CareInstructions plant={collectionPlant.plant} />
             <SectionDivider />
-            <ProgressGallery plant={plant} />
+            <ProgressGallery collectionPlantId={collectionPlant.plant} />
             <SectionDivider />
             <div className="remove-btn-container">
                 <Button
@@ -143,7 +148,7 @@ function PlantDetailsContent({ plant, removePlantFromCollection }) {
                 isOpen={showConfirm}
                 onClose={() => setShowConfirm(false)}
                 onConfirm={handleRemove}
-                message={`Are you sure you want to remove the ${plant.name} from your collection?`}
+                message={`Are you sure you want to remove the ${collectionPlant.plant.name} from your collection?`}
                 confirmText="Remove Plant"
                 cancelText="Cancel"
                 iconClassName="modal-yellow-warning-icon"

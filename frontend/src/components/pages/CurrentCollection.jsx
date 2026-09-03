@@ -14,8 +14,8 @@ export default function CurrentCollection({ collection, loading }) {
     const [searchValue, setSearchValue] = useState("");
     // Filter collection by search term or show all if no term.
     const displayedPlants = searchValue.trim()
-        ? collection.filter((plant) =>
-              plant.name.toLowerCase().includes(searchValue.toLowerCase().trim()),
+        ? collection.filter((collectionPlant) =>
+              collectionPlant.plant.name.toLowerCase().includes(searchValue.toLowerCase().trim()),
           )
         : collection;
 
@@ -76,16 +76,16 @@ export default function CurrentCollection({ collection, loading }) {
                         <div className="collection-cards-container">
                             {/* Show matching plants in alphabetical order + copy array so displayedPlants is not modified. -------------------*/}
                             {[...displayedPlants]
-                                .sort((a, b) => a.name.localeCompare(b.name))
-                                .map((plant) => (
+                                .sort((a, b) => a.plant.name.localeCompare(b.plant.name))
+                                .map((collectionPlant) => (
                                     <CollectionCard
-                                        key={plant.collectionId}
-                                        collectionId={plant.collectionId}
-                                        imgPath={plant.image}
-                                        name={plant.name}
-                                        light={plant.careInstructions[0].light}
-                                        water={plant.careInstructions[1].water}
-                                        fertilize={plant.careInstructions[2].fertilize}
+                                        key={collectionPlant.id}
+                                        collectionId={collectionPlant.id}
+                                        imgPath={collectionPlant.plant.imagePath}
+                                        name={collectionPlant.plant.name}
+                                        light={collectionPlant.plant.light}
+                                        water={collectionPlant.plant.water}
+                                        fertilize={collectionPlant.plant.fertilize}
                                     />
                                 ))}
                         </div>
