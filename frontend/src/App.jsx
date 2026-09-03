@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router";
 import { currentCollection } from "./data/currentCollection";
+import { getCollection } from "./services/api";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 import Home from "./components/pages/Home";
@@ -15,30 +16,24 @@ import ScrollToTop from "./components/layout/ScrollToTop";
 function App() {
     const [collection, setCollection] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    // NOTE: setting as true so I stay logged in while building/testing
+    const [isLoggedIn, setIsLoggedIn] = useState(true);
 
     useEffect(() => {
-        // NOTE: Fake Fetch + setTimeout: Simulates loading data from an API with a delay.
-        function fetchCollection() {
-            return new Promise((resolve) => {
-                // To simulate loading.
-                setTimeout(() => resolve(currentCollection), 1000);
-            });
-        }
-
         async function loadCollection() {
             try {
-                const data = await fetchCollection();
+                const data = await getCollection(); // fetch from backend
                 setCollection(data);
+                console.log("Collection data:", data);
+                console.log("First item:", data[0]);
             } catch (error) {
                 console.error("Failed to load collection:", error);
             } finally {
                 setLoading(false);
             }
         }
-
         loadCollection();
-    }, []); // empty array = run useEffect once when the app mounts
+    }, []);
 
     function addPlantToCollection(plant) {
         const newCollectionId =
