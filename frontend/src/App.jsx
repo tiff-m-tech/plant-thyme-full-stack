@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router";
-import { currentCollection } from "./data/currentCollection";
 import { getCollection } from "./services/api";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
@@ -24,8 +23,6 @@ function App() {
             try {
                 const data = await getCollection(); // fetch from backend
                 setCollection(data);
-                console.log("Collection data:", data);
-                console.log("First item:", data[0]);
             } catch (error) {
                 console.error("Failed to load collection:", error);
             } finally {
