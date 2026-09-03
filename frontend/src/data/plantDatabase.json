@@ -1,0 +1,342 @@
+[
+    {
+        "id": 1,
+        "name": "Angel Wing Begonia",
+        "image": "angel-wing-begonia.webp",
+        "careInstructions": [
+            { "light": "bright indirect light | 6 to 8 hours" },
+            { "water": "when the top inch of soil is dry" },
+            { "fertilize": "every 2 to 4 weeks in spring & summer" }
+        ]
+    },
+    {
+        "id": 2,
+        "name": "Batik Syngonium",
+        "image": "batik-syngonium.webp",
+        "careInstructions": [
+            { "light": "bright indirect light | 6 to 8 hours" },
+            { "water": "when the top inch of soil is dry" },
+            { "fertilize": "monthly in spring & summer" }
+        ]
+    },
+    {
+        "id": 3,
+        "name": "Brasil Philodendron",
+        "image": "brasil-philodendron.webp",
+        "careInstructions": [
+            { "light": "bright indirect light | 6 to 8 hours" },
+            { "water": "when the top two inches of soil are dry" },
+            { "fertilize": "monthly in spring & summer" }
+        ]
+    },
+    {
+        "id": 4,
+        "name": "Caperata Peperomia",
+        "image": "caperata-peperomia.webp",
+        "careInstructions": [
+            { "light": "medium to bright indirect light | 6 to 8 hours" },
+            { "water": "when the top two inches of soil are dry" },
+            { "fertilize": "monthly in spring & summer" }
+        ]
+    },
+    {
+        "id": 5,
+        "name": "Gold Dust Croton",
+        "image": "gold-dust-croton.webp",
+        "careInstructions": [
+            { "light": "bright indirect light | 6 to 8 hours" },
+            { "water": "when the top inch of soil is dry" },
+            { "fertilize": "monthly in spring & summer" }
+        ]
+    },
+    {
+        "id": 6,
+        "name": "Golden Ivy",
+        "image": "golden-ivy.webp",
+        "careInstructions": [
+            { "light": "medium to bright indirect light | 4 to 8 hours" },
+            { "water": "when the top two inches of soil are dry" },
+            { "fertilize": "monthly in spring & summer" }
+        ]
+    },
+    {
+        "id": 7,
+        "name": "Golden Pothos",
+        "image": "golden-pothos.webp",
+        "careInstructions": [
+            { "light": "medium to bright indirect light | 4 to 8 hours" },
+            { "water": "when the top two inches of soil are dry" },
+            { "fertilize": "monthly in spring & summer" }
+        ]
+    },
+    {
+        "id": 8,
+        "name": "Green Ripple Peperomia",
+        "image": "green-ripple-peperomia.webp",
+        "careInstructions": [
+            { "light": "medium to bright indirect light | 6 to 8 hours" },
+            { "water": "when the top two inches of soil are dry" },
+            { "fertilize": "monthly in spring & summer" }
+        ]
+    },
+    {
+        "id": 9,
+        "name": "Heartleaf Philodendron",
+        "image": "heartleaf-philodendron.webp",
+        "careInstructions": [
+            { "light": "medium to bright indirect light | 4 to 8 hours" },
+            { "water": "when the top two inches of soil are dry" },
+            { "fertilize": "monthly in spring & summer" }
+        ]
+    },
+    {
+        "id": 10,
+        "name": "Manjula Pothos",
+        "image": "manjula-pothos.webp",
+        "careInstructions": [
+            { "light": "bright indirect light | 6 to 8 hours" },
+            { "water": "when the top two inches of soil are dry" },
+            { "fertilize": "monthly in spring & summer" }
+        ]
+    },
+    {
+        "id": 11,
+        "name": "Marble Queen Pothos",
+        "image": "marble-queen-pothos.webp",
+        "careInstructions": [
+            { "light": "bright indirect light | 6 to 8 hours" },
+            { "water": "when the top two inches of soil are dry" },
+            { "fertilize": "monthly in spring & summer" }
+        ]
+    },
+    {
+        "id": 12,
+        "name": "Micans Philodendron",
+        "image": "micans-philodendron.webp",
+        "careInstructions": [
+            { "light": "bright indirect light | 6 to 8 hours" },
+            { "water": "when the top two inches of soil are dry" },
+            { "fertilize": "monthly in spring & summer" }
+        ]
+    },
+    {
+        "id": 13,
+        "name": "Money Tree",
+        "image": "money-tree.webp",
+        "careInstructions": [
+            { "light": "bright indirect light | 6 to 8 hours" },
+            { "water": "when the top two to three inches of soil are dry" },
+            { "fertilize": "monthly in spring & summer" }
+        ]
+    },
+    {
+        "id": 14,
+        "name": "Neon Pothos",
+        "image": "neon-pothos.webp",
+        "careInstructions": [
+            { "light": "bright indirect light | 6 to 8 hours" },
+            { "water": "when the top two inches of soil are dry" },
+            { "fertilize": "monthly in spring & summer" }
+        ]
+    },
+    {
+        "id": 15,
+        "name": "Neon Queen Pothos",
+        "image": "neon-queen-pothos.webp",
+        "careInstructions": [
+            { "light": "bright indirect light | 6 to 8 hours" },
+            { "water": "when the top two inches of soil are dry" },
+            { "fertilize": "monthly in spring & summer" }
+        ]
+    },
+    {
+        "id": 16,
+        "name": "Non Variegated Monstera",
+        "image": "non-variegated-monstera.webp",
+        "careInstructions": [
+            { "light": "bright indirect light | 6 to 8 hours" },
+            { "water": "when the top two inches of soil are dry" },
+            { "fertilize": "monthly in spring & summer" }
+        ]
+    },
+    {
+        "id": 17,
+        "name": "Peace Lily",
+        "image": "peace-lily.webp",
+        "careInstructions": [
+            { "light": "medium to bright indirect light | 4 to 8 hours" },
+            { "water": "when the top inch of soil is dry" },
+            { "fertilize": "every 4 to 6 weeks in spring & summer" }
+        ]
+    },
+    {
+        "id": 18,
+        "name": "Pearls and Jade Pothos",
+        "image": "pearls-and-jade-pothos.webp",
+        "careInstructions": [
+            { "light": "bright indirect light | 6 to 8 hours" },
+            { "water": "when the top two inches of soil are dry" },
+            { "fertilize": "monthly in spring & summer" }
+        ]
+    },
+    {
+        "id": 19,
+        "name": "Petra Croton",
+        "image": "petra-croton.webp",
+        "careInstructions": [
+            { "light": "bright indirect light | 6 to 8 hours" },
+            { "water": "when the top inch of soil is dry" },
+            { "fertilize": "monthly in spring & summer" }
+        ]
+    },
+    {
+        "id": 20,
+        "name": "Piccolo Banda Peperomia",
+        "image": "piccolo-banda-peperomia.webp",
+        "careInstructions": [
+            { "light": "medium to bright indirect light | 6 to 8 hours" },
+            { "water": "when the top two inches of soil are dry" },
+            { "fertilize": "monthly in spring & summer" }
+        ]
+    },
+    {
+        "id": 21,
+        "name": "Pink Syngonium",
+        "image": "pink-syngonium.webp",
+        "careInstructions": [
+            { "light": "bright indirect light | 6 to 8 hours" },
+            { "water": "when the top inch of soil is dry" },
+            { "fertilize": "monthly in spring & summer" }
+        ]
+    },
+    {
+        "id": 22,
+        "name": "Pittsburgh Ivy",
+        "image": "pittsburgh-ivy.webp",
+        "careInstructions": [
+            { "light": "medium to bright indirect light | 4 to 8 hours" },
+            { "water": "when the top inch of soil is dry" },
+            { "fertilize": "monthly in spring & summer" }
+        ]
+    },
+    {
+        "id": 23,
+        "name": "Purple African Violet",
+        "image": "purple-african-violet.webp",
+        "careInstructions": [
+            { "light": "bright indirect light | 8 to 12 hours" },
+            { "water": "when the top inch of soil feels slightly dry" },
+            { "fertilize": "every 2 to 4 weeks during active growth" }
+        ]
+    },
+    {
+        "id": 24,
+        "name": "Red Kiss Rex Begonia",
+        "image": "red-kiss-rex-begonia.webp",
+        "careInstructions": [
+            { "light": "bright indirect light | 6 to 8 hours" },
+            { "water": "when the top inch of soil is dry" },
+            { "fertilize": "monthly in spring & summer" }
+        ]
+    },
+    {
+        "id": 25,
+        "name": "Ring of Fire Philodendron",
+        "image": "ring-of-fire-philodendron.webp",
+        "careInstructions": [
+            { "light": "bright indirect light | 6 to 8 hours" },
+            { "water": "when the top two inches of soil are dry" },
+            { "fertilize": "monthly in spring & summer" }
+        ]
+    },
+    {
+        "id": 26,
+        "name": "Rosso Peperomia",
+        "image": "rosso-peperomia.webp",
+        "careInstructions": [
+            { "light": "medium to bright indirect light | 6 to 8 hours" },
+            { "water": "when the top two inches of soil are dry" },
+            { "fertilize": "monthly in spring & summer" }
+        ]
+    },
+    {
+        "id": 27,
+        "name": "Snake Plant",
+        "image": "snake-plant.webp",
+        "careInstructions": [
+            { "light": "low to bright indirect light | 4 to 8 hours" },
+            { "water": "when the soil is completely dry" },
+            { "fertilize": "every 6 to 8 weeks in spring & summer" }
+        ]
+    },
+    {
+        "id": 28,
+        "name": "Spider Plant",
+        "image": "spider-plant.webp",
+        "careInstructions": [
+            { "light": "medium to bright indirect light | 6 to 8 hours" },
+            { "water": "when the top inch of soil is dry" },
+            { "fertilize": "monthly in spring & summer" }
+        ]
+    },
+    {
+        "id": 29,
+        "name": "String of Hearts",
+        "image": "string-of-hearts.webp",
+        "careInstructions": [
+            { "light": "bright indirect light | 6 to 8 hours" },
+            { "water": "when most of the soil is dry" },
+            { "fertilize": "monthly in spring & summer" }
+        ]
+    },
+    {
+        "id": 30,
+        "name": "String of Pearls",
+        "image": "string-of-pearls.webp",
+        "careInstructions": [
+            { "light": "bright indirect light | 6 to 8 hours" },
+            { "water": "when the soil is almost completely dry" },
+            { "fertilize": "monthly in spring & summer" }
+        ]
+    },
+    {
+        "id": 31,
+        "name": "Thai Constellation Monstera",
+        "image": "thai-constellation-monstera.webp",
+        "careInstructions": [
+            { "light": "bright indirect light | 6 to 8 hours" },
+            { "water": "when the top two inches of soil are dry" },
+            { "fertilize": "monthly in spring & summer" }
+        ]
+    },
+    {
+        "id": 32,
+        "name": "Variegated Syngonium",
+        "image": "variegated-syngonium.webp",
+        "careInstructions": [
+            { "light": "bright indirect light | 6 to 8 hours" },
+            { "water": "when the top inch of soil is dry" },
+            { "fertilize": "monthly in spring & summer" }
+        ]
+    },
+    {
+        "id": 33,
+        "name": "Watermelon Peperomia",
+        "image": "watermelon-peperomia.webp",
+        "careInstructions": [
+            { "light": "medium to bright indirect light | 6 to 8 hours" },
+            { "water": "when the top two inches of soil are dry" },
+            { "fertilize": "monthly in spring & summer" }
+        ]
+    },
+    {
+        "id": 34,
+        "name": "White Butterfly Syngonium",
+        "image": "white-butterfly-syngonium.webp",
+        "careInstructions": [
+            { "light": "medium to bright indirect light | 6 to 8 hours" },
+            { "water": "when the top inch of soil is dry" },
+            { "fertilize": "monthly in spring & summer" }
+        ]
+    }
+]

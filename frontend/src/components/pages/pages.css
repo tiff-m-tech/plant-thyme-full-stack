@@ -1,0 +1,298 @@
+/* Pages Shared CSS ------------------------------------------------------------------------------------------------ */
+main {
+    flex: 1;
+}
+
+.large-page-image {
+    width: 250px;
+}
+
+#logIn,
+#home,
+#contact,
+#currentCollection,
+#addPlant,
+#plantDetails,
+#notFound {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    width: 100%;
+}
+
+.home-page-app-summary,
+.contact-page-summary {
+    margin: 1rem;
+}
+
+#logIn form label,
+#contact form label,
+#plantDetails form label {
+    font-weight: bold;
+    text-align: left;
+}
+
+.collection-cards-container,
+.search-cards-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    width: 100%;
+    max-width: 1050px;
+    margin-top: 1rem;
+}
+
+/* Log In Page ------------------------------------------------------------------------------------------ */
+#logIn form,
+.signup-container {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    max-width: 500px;
+    margin-top: 1.5rem;
+}
+
+#logIn form input {
+    background-color: white;
+    width: 100%;
+    padding: 0.5rem;
+    align-self: center;
+    margin-bottom: 0.75rem;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.mock-credentials {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f4f4f2;
+    padding: 1rem 1.25rem;
+    margin: 1.5rem 0;
+    max-width: 500px;
+    width: 90%;
+    text-align: left;
+}
+
+.mock-credentials strong {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.mock-credentials p {
+    margin: 0.25rem 0;
+    font-family: monospace;
+}
+
+/* Home Page -------------------------------------------------------------------------------------------- */
+#home {
+    max-width: 700px;
+}
+
+.home-page-feature-list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.home-page-feature {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.home-view-collection-btn {
+    margin-top: 1rem;
+}
+
+/* Contact Page -------------------------------------------------------------------------------------------- */
+.contact-info-container {
+    text-align: left;
+    margin-bottom: 1.25rem;
+}
+
+.contact-info {
+    margin-bottom: 1rem;
+}
+
+.address-label {
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+#contact form {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    max-width: 500px;
+    margin-top: 1.5rem;
+}
+
+#contact form input,
+#contact form textarea {
+    width: 100%;
+    padding: 0.5rem;
+    align-self: center;
+    margin-bottom: 0.75rem;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+#contact form button {
+    align-self: center;
+}
+
+.contact-submit-btn {
+    margin-top: 1rem;
+}
+
+.red-font {
+    color: red;
+}
+
+.confirmation-form-submitted {
+    color: green;
+    margin-top: 1rem;
+}
+
+/* Current Collection Page ---------------------------------------------------------------------------------- */
+#currentCollection input {
+    padding: 0.65rem;
+    margin-bottom: 0.75rem;
+}
+
+.collection-page-controls-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 90%;
+}
+
+.plant-count {
+    font-weight: bold;
+}
+
+.empty-collection-text {
+    margin-bottom: 1rem;
+}
+
+/* Add Plant Page ------------------------------------------------------------------------------------------ */
+#addPlant input {
+    display: flex;
+    padding: 0.65rem;
+    margin-bottom: 0.75rem;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.no-search-results-found-message {
+    grid-column: 1 / -1; /* start at the first line, end at the last */
+}
+
+/* Details Page ----------------------------------------------------------------------------------------- */
+.details-page-image {
+    width: 300px;
+    margin-top: 1rem;
+    border: 1px black solid;
+    border-radius: 5px;
+}
+
+#plantDetails form {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    max-width: 500px;
+    margin-bottom: 2rem;
+}
+
+#plantDetails form input,
+#plantDetails form textarea {
+    background-color: white;
+    width: 100%;
+    padding: 0.5rem;
+    align-self: center;
+    margin-bottom: 0.75rem;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+#plantDetails form button {
+    margin-top: 1rem;
+    align-self: center;
+}
+
+.remove-btn-container {
+    margin-top: 2rem;
+}
+
+.remove-btn {
+    background-color: #da5955;
+}
+
+.remove-btn:hover {
+    background-color: #c84f4b;
+}
+
+.plant-not-found-in-collection-message {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    text-align: center;
+    gap: 1rem;
+}
+
+.modal-yellow-warning-icon {
+    color: #ffdf28;
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+/* Not Found Page --------------------------------------------------------------------------------------- */
+.not-found-list {
+    text-align: left;
+    display: inline-block;
+    margin: 1rem auto;
+    line-height: 1.8;
+}
+
+.not-found-btn {
+    margin-top: 1rem;
+}
+
+.not-found-image {
+    margin-bottom: 1rem;
+}
+
+/* Media Queries ---------------------------------------------------------------------------------------- */
+/* Tablet */
+@media (min-width: 1000px) {
+    .collection-cards-container,
+    .search-cards-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .large-page-image {
+        width: 300px;
+    }
+}
+
+/* Large Desktop */
+@media (min-width: 1500px) {
+    .collection-cards-container {
+        max-width: 1400px;
+    }
+
+    .search-cards-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .large-page-image {
+        width: 350px;
+    }
+}
