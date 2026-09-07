@@ -51,6 +51,11 @@ function App() {
         }
     }
 
+    async function refreshCollection() {
+        const updated = await getCollection();
+        setCollection(updated);
+    }
+
     async function removePlantFromCollection(idToRemove) {
         try {
             await delectCollectionPlant(idToRemove);
@@ -86,6 +91,7 @@ function App() {
                                 collection={collection}
                                 loading={loading}
                                 removePlantFromCollection={removePlantFromCollection}
+                                refreshCollection={refreshCollection}
                             />
                         }
                     />

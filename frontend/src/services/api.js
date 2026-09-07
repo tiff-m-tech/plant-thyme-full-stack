@@ -59,6 +59,19 @@ export async function addToCollection(plantId, details) {
     return response.json();
 }
 
+// PUT update notes for collection plant
+export async function updateCollectionPlant(id, details) {
+    const response = await fetch(`${BASE_URL}/collection-plants/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(details),
+    });
+    if (!response.ok) {
+        throw new Error("Failed to update collection plant.");
+    }
+    return response.json();
+}
+
 // DELETE one plant from collection
 export async function delectCollectionPlant(id) {
     const response = await fetch(`${BASE_URL}/collection-plants/${id}`, { method: "DELETE" });

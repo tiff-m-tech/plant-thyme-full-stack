@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useParams, useNavigate } from "react-router";
 import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 import { altFromFileName } from "../../utils/altFromFileName";
+import { updateCollectionPlant } from "../../services/api";
 import Button from "../ui/Button";
 import PageTitle from "../ui/PageTitle";
 import CareInstructions from "../features/CareInstructions";
@@ -11,7 +12,12 @@ import SectionDivider from "../ui/SectionDivider";
 import { usePageTitleForBrowserTab } from "../../hooks/usePageTitleForBrowserTab";
 import Modal from "../ui/Modal";
 
-export default function PlantDetails({ collection, loading, removePlantFromCollection }) {
+export default function PlantDetails({
+    collection,
+    loading,
+    removePlantFromCollection,
+    refreshCollection,
+}) {
     const navigate = useNavigate();
     const { collectionId } = useParams();
 
@@ -42,11 +48,12 @@ export default function PlantDetails({ collection, loading, removePlantFromColle
         <PlantDetailsContent
             collectionPlant={collectionPlant}
             removePlantFromCollection={removePlantFromCollection}
+            refreshCollection={refreshCollection}
         />
     );
 }
 
-function PlantDetailsContent({ collectionPlant, removePlantFromCollection }) {
+function PlantDetailsContent({ collectionPlant, removePlantFromCollection, refreshCollection }) {
     const navigate = useNavigate();
     const [showConfirm, setShowConfirm] = useState(false);
 
@@ -65,8 +72,20 @@ function PlantDetailsContent({ collectionPlant, removePlantFromCollection }) {
         setDetailsData((prev) => ({ ...prev, [name]: value }));
     }
 
-    function handleSave() {
-        setIsEditing(false);
+    async function handleSave() {
+        try {
+            const updatedDetails = {
+                purchaseDate: detailsData.purchaseDate,
+                purchaseStore: detailsData.storePurchasedFrom,
+                cost: detailsData.cost,
+                notes: detailsData.notes,
+            };
+            await updateCollectionPlant(collectionPlant.id, updatedDetails);
+            await refreshCollection();
+            setIsEditing(false);
+        } catch (error) {
+            console.error("Failed to update plant:", error);
+        }
     }
 
     function handleRemove() {
