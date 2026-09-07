@@ -24,6 +24,10 @@ button {
     background-color: var(--light-green);
     border: none;
     border-radius: 5px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.05rem;
     transition:
         transform 0.1s,
         box-shadow 0.1s;
@@ -42,6 +46,7 @@ button:active {
     align-self: flex-start;
     margin-left: 1rem;
 }
+
 /* Search Bar --------------------------------------------------------------------------------------------- */
 .search-bar {
     display: flex;

@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import PageTitle from "../ui/PageTitle";
 import ProgressPictureCard from "../cards/ProgressPictureCard";
 import { getProgressPictures } from "../../services/api";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCamera } from "@fortawesome/free-solid-svg-icons";
 
 export default function ProgressGallery({ collectionPlantId }) {
     const [pictures, setPictures] = useState([]);
@@ -35,7 +37,7 @@ export default function ProgressGallery({ collectionPlantId }) {
             <PageTitle title="Progress Pictures" />
             <div>
                 <label htmlFor="progress-upload" className="file-upload-label">
-                    Add Progress Picture
+                    <FontAwesomeIcon icon={faCamera} /> Add Progress Picture
                 </label>
                 <input
                     id="progress-upload"

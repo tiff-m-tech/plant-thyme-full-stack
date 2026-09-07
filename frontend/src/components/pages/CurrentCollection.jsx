@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import CollectionCard from "../cards/CollectionCard";
 import Button from "../ui/Button";
 import PageTitle from "../ui/PageTitle";
@@ -50,6 +51,7 @@ export default function CurrentCollection({ collection, loading }) {
                         up with leafy friends! 🪴🥰
                     </p>
                     <Button
+                        icon={faPlus}
                         innerText="Add Plant"
                         onClick={() => navigate("/currentCollection/add")}
                     />
@@ -60,6 +62,7 @@ export default function CurrentCollection({ collection, loading }) {
                     <div className="collection-page-controls-container">
                         <h2 className="plant-count">Plant Count: {plantCount}</h2>
                         <Button
+                            icon={faPlus}
                             innerText="Add Plant"
                             onClick={() => navigate("/currentCollection/add")}
                         />

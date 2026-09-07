@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router";
-import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
+import { faTriangleExclamation, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { altFromFileName } from "../../utils/altFromFileName";
 import { updateCollectionPlant } from "../../services/api";
 import Button from "../ui/Button";
@@ -156,6 +156,7 @@ function PlantDetailsContent({ collectionPlant, removePlantFromCollection, refre
             <div className="remove-btn-container">
                 <Button
                     innerText="Remove Plant"
+                    icon={faTrashCan}
                     onClick={() => setShowConfirm(true)}
                     className="remove-btn"
                 />
