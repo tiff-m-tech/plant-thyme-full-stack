@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router";
-import { getCollection, delectCollectionPlant } from "./services/api";
+import { getCollection, addToCollection, delectCollectionPlant } from "./services/api";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 import Home from "./components/pages/Home";
@@ -32,26 +32,45 @@ function App() {
         loadCollection();
     }, []);
 
-    function addPlantToCollection(plant) {
-        const newCollectionId =
-            collection.length > 0 ? Math.max(...collection.map((p) => p.collectionId)) + 1 : 1;
-        const newEntry = {
-            collectionId: newCollectionId,
-            plantId: plant.id,
-            name: plant.name,
-            image: plant.image,
-            purchaseDate: "",
-            purchaseStore: "",
-            cost: "",
-            notes: "",
-            progressPictures: [],
-            careInstructions: [
-                { light: plant.careInstructions[0].light },
-                { water: plant.careInstructions[1].water },
-                { fertilize: plant.careInstructions[2].fertilize },
-            ],
-        };
-        setCollection((prev) => [...prev, newEntry]);
+    // function addPlantToCollection(plant) {
+    //     const newCollectionId =
+    //         collection.length > 0 ? Math.max(...collection.map((p) => p.collectionId)) + 1 : 1;
+    //     const newEntry = {
+    //         collectionId: newCollectionId,
+    //         plantId: plant.id,
+    //         name: plant.name,
+    //         image: plant.image,
+    //         purchaseDate: "",
+    //         purchaseStore: "",
+    //         cost: "",
+    //         notes: "",
+    //         progressPictures: [],
+    //         careInstructions: [
+    //             { light: plant.careInstructions[0].light },
+    //             { water: plant.careInstructions[1].water },
+    //             { fertilize: plant.careInstructions[2].fertilize },
+    //         ],
+    //     };
+    //     setCollection((prev) => [...prev, newEntry]);
+    // }
+
+    async function addPlantToCollection(plant) {
+        try {
+            const details = {
+                purchaseDate: "",
+                purchaseStore: "",
+                cost: null,
+                nickname: "",
+                location: "",
+                notes: "",
+            };
+            await addToCollection(plant.id, details);
+            // Refetch so the new plant shows up
+            const updated = await getCollection();
+            setCollection(updated);
+        } catch (error) {
+            console.error("Failed to add plant:", error);
+        }
     }
 
     async function removePlantFromCollection(idToRemove) {

@@ -46,6 +46,19 @@ export async function searchPlants(name) {
     return response.json();
 }
 
+// POST add one plant to collection
+export async function addToCollection(plantId, details) {
+    const response = await fetch(`${BASE_URL}/collection-plants?plantId=${plantId}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(details),
+    });
+    if (!response.ok) {
+        throw new Error("Failed to add plant to collection.");
+    }
+    return response.json();
+}
+
 // DELETE one plant from collection
 export async function delectCollectionPlant(id) {
     const response = await fetch(`${BASE_URL}/collection-plants/${id}`, { method: "DELETE" });
