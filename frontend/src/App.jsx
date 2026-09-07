@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router";
-import { getCollection } from "./services/api";
+import { getCollection, delectCollectionPlant } from "./services/api";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 import Home from "./components/pages/Home";
@@ -54,11 +54,22 @@ function App() {
         setCollection((prev) => [...prev, newEntry]);
     }
 
-    function removePlantFromCollection(idToRemove) {
-        setCollection((prevCollection) =>
-            prevCollection.filter((plant) => plant.collectionId !== idToRemove),
-        );
+    async function removePlantFromCollection(idToRemove) {
+        try {
+            await delectCollectionPlant(idToRemove);
+            // Refresh from the database so state matches reality
+            const updated = await getCollection();
+            setCollection(updated);
+        } catch (error) {
+            console.error("Failed to delete plant:", error);
+        }
     }
+
+    // function removePlantFromCollection(idToRemove) {
+    //     setCollection((prevCollection) =>
+    //         prevCollection.filter((plant) => plant.collectionId !== idToRemove),
+    //     );
+    // }
 
     return (
         <>
