@@ -32,28 +32,6 @@ function App() {
         loadCollection();
     }, []);
 
-    // function addPlantToCollection(plant) {
-    //     const newCollectionId =
-    //         collection.length > 0 ? Math.max(...collection.map((p) => p.collectionId)) + 1 : 1;
-    //     const newEntry = {
-    //         collectionId: newCollectionId,
-    //         plantId: plant.id,
-    //         name: plant.name,
-    //         image: plant.image,
-    //         purchaseDate: "",
-    //         purchaseStore: "",
-    //         cost: "",
-    //         notes: "",
-    //         progressPictures: [],
-    //         careInstructions: [
-    //             { light: plant.careInstructions[0].light },
-    //             { water: plant.careInstructions[1].water },
-    //             { fertilize: plant.careInstructions[2].fertilize },
-    //         ],
-    //     };
-    //     setCollection((prev) => [...prev, newEntry]);
-    // }
-
     async function addPlantToCollection(plant) {
         try {
             const details = {
@@ -83,12 +61,6 @@ function App() {
             console.error("Failed to delete plant:", error);
         }
     }
-
-    // function removePlantFromCollection(idToRemove) {
-    //     setCollection((prevCollection) =>
-    //         prevCollection.filter((plant) => plant.collectionId !== idToRemove),
-    //     );
-    // }
 
     return (
         <>
