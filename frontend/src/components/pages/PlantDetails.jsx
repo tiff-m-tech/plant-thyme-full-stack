@@ -132,7 +132,7 @@ function PlantDetailsContent({ collectionPlant, removePlantFromCollection }) {
             <SectionDivider />
             <CareInstructions plant={collectionPlant.plant} />
             <SectionDivider />
-            <ProgressGallery collectionPlantId={collectionPlant.plant} />
+            <ProgressGallery collectionPlantId={collectionPlant.id} />
             <SectionDivider />
             <div className="remove-btn-container">
                 <Button

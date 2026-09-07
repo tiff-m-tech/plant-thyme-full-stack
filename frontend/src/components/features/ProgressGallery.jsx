@@ -12,7 +12,8 @@ export default function ProgressGallery({ collectionPlantId }) {
         async function loadProgressPictures() {
             try {
                 const data = await getProgressPictures(collectionPlantId);
-                setPictures(data);
+                const filtered = data.filter((pic) => pic.collectionPlant.id === collectionPlantId);
+                setPictures(filtered);
             } catch (error) {
                 console.error("Failed to load progress pictures:", error);
             }
@@ -53,7 +54,7 @@ export default function ProgressGallery({ collectionPlantId }) {
                     <ProgressPictureCard
                         key={progressPic.id}
                         fileName={progressPic.imagePath}
-                        date={formatDate(progressPic.date)}
+                        date={formatDate(progressPic.pictureDate)}
                         src={`${import.meta.env.BASE_URL}images/progressPictures/${progressPic.imagePath}`}
                     />
                 ))}
