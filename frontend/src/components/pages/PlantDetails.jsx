@@ -124,14 +124,17 @@ function PlantDetailsContent({ collectionPlant, removePlantFromCollection, refre
                     onChange={handleChange}
                 />
                 <label htmlFor="cost">Cost:</label>
-                <input
-                    id="cost"
-                    type="text"
-                    name="cost"
-                    value={detailsData.cost}
-                    disabled={!isEditing}
-                    onChange={handleChange}
-                />
+                <div className="cost-input-wrapper">
+                    <span className="cost-prefix">$</span>
+                    <input
+                        id="cost"
+                        type="text"
+                        name="cost"
+                        value={detailsData.cost}
+                        disabled={!isEditing}
+                        onChange={handleChange}
+                    />
+                </div>
                 <label htmlFor="notes">Notes:</label>
                 <textarea
                     id="notes"

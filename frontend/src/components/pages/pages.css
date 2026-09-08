@@ -219,6 +219,23 @@ main {
     border: 1px solid black;
     border-radius: 5px;
 }
+.cost-input-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.cost-prefix {
+    position: absolute;
+    left: 10px;
+    top: 35%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: #555;
+}
+
+input#cost {
+    padding-left: 22px !important; /* push typed text right so it doesn't overlap the $ */
+}
 
 #plantDetails form button {
     margin-top: 1rem;
