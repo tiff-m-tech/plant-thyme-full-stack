@@ -42,7 +42,16 @@ function App() {
                 location: "",
                 notes: "",
             };
-            await addToCollection(plant.id, details);
+
+            // Fix for reading null error
+            // Backend wants null (not "") for empty optional fields —
+            // e.g. purchaseDate is a LocalDate and "" fails to parse.
+            const payload = Object.fromEntries(
+                Object.entries(details).map(([k, v]) => [k, v === "" ? null : v]),
+            );
+
+            await addToCollection(plant.id, payload);
+
             // Refetch so the new plant shows up
             const updated = await getCollection();
             setCollection(updated);
