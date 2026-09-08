@@ -2,6 +2,11 @@ package com.plantthyme.plant_thyme_api.model;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.Size;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -14,13 +19,27 @@ public class CollectionPlant {
 
     @ManyToOne
     @JoinColumn(name = "plant_id")
+    @NotNull(message = "Plant is required.")
     private Plant plant;
 
+    @PastOrPresent(message = "Purchase date cannot be in the future.")
     private LocalDate purchaseDate;
+
+    @Size(max = 100, message = "Purchase store must be 100 characters or less.")
     private String purchaseStore;
+
+    @PositiveOrZero(message = "Cost cannot be negative.")
+    @Column(precision = 10, scale = 2) // precision = 10 = up to 10 total digits, scale = 2 = two decimal places (cents)
     private BigDecimal cost;
+
+    @Size(max = 100, message = "Nickname must be 100 characters or less.")
     private String nickname;
+
+    @Size(max = 100, message = "Location must be 100 characters or less.")
     private String location;
+
+    @Column(length = 1000) // database column
+    @Size(max = 1000, message = "Notes must be 1000 characters or less.")
     private String notes;
 
     public CollectionPlant() {}
