@@ -57,11 +57,11 @@ public class Plant {
         this.water = water;
     }
 
-    public String getFertilizer() {
+    public String getFertilize() {
         return fertilize;
     }
 
-    public void setFertilizer(String fertilizer) {
+    public void setFertilize(String fertilize) {
         this.fertilize = fertilize;
     }
 }

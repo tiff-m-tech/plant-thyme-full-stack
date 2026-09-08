@@ -1,0 +1,185 @@
+/* Page Title --------------------------------------------------------------------------------------------- */
+.title {
+    font-family: var(--brand-font);
+    color: var(--dark-green);
+    font-size: 2rem;
+    margin: 1rem 0;
+}
+.end-deco-image {
+    width: 15px;
+}
+
+.page-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+}
+
+/* Button Component --------------------------------------------------------------------------------------------- */
+button {
+    font-weight: bold;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: var(--light-green);
+    border: none;
+    border-radius: 5px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.05rem;
+    transition:
+        transform 0.1s,
+        box-shadow 0.1s;
+}
+
+button:hover {
+    background-color: var(--medium-green);
+}
+
+button:active {
+    transform: scale(0.95);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.back-btn {
+    align-self: flex-start;
+    margin-left: 1rem;
+}
+
+/* Search Bar --------------------------------------------------------------------------------------------- */
+.search-bar {
+    display: flex;
+    gap: 0.5rem;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 400px;
+}
+
+.search-bar input {
+    flex: 1; /*input fills the available space in the flex row */
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+/* Modal ------------------------------------------------------------------------------------------------- */
+.modal-container {
+    position: fixed;
+    /* Center on screen: place top-left corner at the middle... */
+    top: 50%;
+    left: 50%;
+    /* then pull back by half the modal's own size. */
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 2rem;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 100;
+}
+
+.modal-btns {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1.5rem;
+}
+
+/* Loading ----------------------------------------------------------------------------------------------- */
+.loader {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    animation: spin 1.2s linear infinite;
+}
+
+.loader div {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 6px;
+    height: 15px;
+    margin-left: -3px;
+    background: var(--dark-green);
+    border-radius: 3px;
+    transform-origin: 3px 25px; /* pivot around the center */
+}
+
+/* each spoke rotated to its spot + faded */
+.loader div:nth-child(1) {
+    transform: rotate(0deg);
+    opacity: 1;
+}
+.loader div:nth-child(2) {
+    transform: rotate(30deg);
+    opacity: 0.9;
+}
+.loader div:nth-child(3) {
+    transform: rotate(60deg);
+    opacity: 0.8;
+}
+.loader div:nth-child(4) {
+    transform: rotate(90deg);
+    opacity: 0.7;
+}
+.loader div:nth-child(5) {
+    transform: rotate(120deg);
+    opacity: 0.6;
+}
+.loader div:nth-child(6) {
+    transform: rotate(150deg);
+    opacity: 0.5;
+}
+.loader div:nth-child(7) {
+    transform: rotate(180deg);
+    opacity: 0.4;
+}
+.loader div:nth-child(8) {
+    transform: rotate(210deg);
+    opacity: 0.35;
+}
+.loader div:nth-child(9) {
+    transform: rotate(240deg);
+    opacity: 0.3;
+}
+.loader div:nth-child(10) {
+    transform: rotate(270deg);
+    opacity: 0.25;
+}
+.loader div:nth-child(11) {
+    transform: rotate(300deg);
+    opacity: 0.2;
+}
+.loader div:nth-child(12) {
+    transform: rotate(330deg);
+    opacity: 0.15;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Section Divider -------------------------------------------------------------------------------------- */
+.section-divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: 90%;
+    max-width: 1050px;
+}
+
+.divider-line {
+    flex: 1;
+    height: 3px;
+    background-color: var(--medium-green);
+}
+
+.divider-ornament {
+    width: 30px;
+    opacity: 0.7;
+}

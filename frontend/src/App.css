@@ -1,0 +1,56 @@
+html {
+    box-sizing: border-box;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: var(--regular-font);
+    background-color: #f2ede6;
+    min-height: 100%;
+}
+
+#root {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+:root {
+    --dark-green: #51742e;
+    --medium-green: #889853;
+    --light-green: #afb888;
+    --dark-brown: #d18a59;
+    --light-brown: #f2dec6;
+    --brand-font: "Lobster Two", cursive;
+    --regular-font: "Nunito Sans", sans-serif;
+}
+
+/* Scrollbar for Chrome, Edge, Safari, not FireFox ------------------------------------ */
+::-webkit-scrollbar {
+    width: 15px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--light-brown);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--dark-brown);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--medium-green);
+}
