@@ -60,9 +60,9 @@ function PlantDetailsContent({ collectionPlant, removePlantFromCollection, refre
     usePageTitleForBrowserTab("Plant Details");
 
     const [detailsData, setDetailsData] = useState({
-        purchaseDate: collectionPlant.purchaseDate,
-        storePurchasedFrom: collectionPlant.purchaseStore,
-        cost: collectionPlant.cost,
+        purchaseDate: collectionPlant.purchaseDate ?? "",
+        storePurchasedFrom: collectionPlant.purchaseStore ?? "",
+        cost: collectionPlant.cost ?? "",
         notes: collectionPlant.notes ?? "",
     });
     const [isEditing, setIsEditing] = useState(false);
@@ -75,10 +75,11 @@ function PlantDetailsContent({ collectionPlant, removePlantFromCollection, refre
     async function handleSave() {
         try {
             const updatedDetails = {
-                purchaseDate: detailsData.purchaseDate,
-                purchaseStore: detailsData.storePurchasedFrom,
-                cost: detailsData.cost,
-                notes: detailsData.notes,
+                purchaseDate: detailsData.purchaseDate === "" ? null : detailsData.purchaseDate,
+                purchaseStore:
+                    detailsData.storePurchasedFrom === "" ? null : detailsData.storePurchasedFrom,
+                cost: detailsData.cost === "" ? null : Number(detailsData.cost),
+                notes: detailsData.notes === "" ? null : detailsData.notes,
             };
             await updateCollectionPlant(collectionPlant.id, updatedDetails);
             await refreshCollection();
@@ -123,14 +124,17 @@ function PlantDetailsContent({ collectionPlant, removePlantFromCollection, refre
                     onChange={handleChange}
                 />
                 <label htmlFor="cost">Cost:</label>
-                <input
-                    id="cost"
-                    type="text"
-                    name="cost"
-                    value={detailsData.cost}
-                    disabled={!isEditing}
-                    onChange={handleChange}
-                />
+                <div className="cost-input-wrapper">
+                    <span className="cost-prefix">$</span>
+                    <input
+                        id="cost"
+                        type="text"
+                        name="cost"
+                        value={detailsData.cost}
+                        disabled={!isEditing}
+                        onChange={handleChange}
+                    />
+                </div>
                 <label htmlFor="notes">Notes:</label>
                 <textarea
                     id="notes"
