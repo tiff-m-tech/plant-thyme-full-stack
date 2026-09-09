@@ -17,10 +17,16 @@ public class CollectionPlant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    // No @NotNull here — @Valid runs on the request body before the controller
+    // sets plant from the plantId param, so @NotNull would always fail ("plant is
+    // required") on a valid request. optional = false enforces it at the DB level instead.
+    @ManyToOne(optional = false)
     @JoinColumn(name = "plant_id")
-    @NotNull(message = "Plant is required.")
     private Plant plant;
+
+    // Validation constraints (@Size, @PositiveOrZero, @PastOrPresent) are checked by
+    // Bean Validation when the controller uses @Valid, and failures return a 400 via
+    // GlobalExceptionHandler. @Column annotations are JPA schema config, not validation.
 
     @PastOrPresent(message = "Purchase date cannot be in the future.")
     private LocalDate purchaseDate;

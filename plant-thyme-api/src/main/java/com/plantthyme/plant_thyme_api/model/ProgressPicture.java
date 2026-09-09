@@ -13,9 +13,11 @@ public class ProgressPicture {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    // No @NotNull here — @Valid runs on the request body before the controller
+    // sets collectionPlant from the collectionPlantId param, so @NotNull would always
+    // fail ("collection plant is required") on a valid request. optional = false enforces it at the DB level instead.
+    @ManyToOne(optional = false)
     @JoinColumn(name = "collection_plant_id")
-    @NotNull(message = "Collection plant is required.")
     private CollectionPlant collectionPlant;
 
     @NotBlank(message = "Image path is required.")
