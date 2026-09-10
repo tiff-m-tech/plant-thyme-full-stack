@@ -18,6 +18,10 @@
         transform 0.2s;
 }
 
+.collection-card {
+    margin-bottom: 1rem;
+}
+
 .collection-card:hover,
 .search-card:hover,
 .progress-picture-card:hover {
@@ -103,5 +107,10 @@
 
     .care-info-container {
         display: block;
+    }
+
+    .collection-card-nickname,
+    .collection-card-location {
+        font-size: 1.15rem;
     }
 }

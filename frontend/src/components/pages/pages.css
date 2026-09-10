@@ -35,7 +35,14 @@ main {
     text-align: left;
 }
 
-.collection-cards-container,
+.collection-cards-container {
+    columns: 1;
+    column-gap: 1rem;
+    width: 100%;
+    max-width: 1050px;
+    margin: 1rem auto 0;
+}
+
 .search-cards-container {
     display: grid;
     grid-template-columns: 1fr;
@@ -237,6 +244,18 @@ input#cost {
     padding-left: 22px !important; /* push typed text right so it doesn't overlap the $ */
 }
 
+.field-with-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.show-on-card-label {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+}
+
 #plantDetails form button {
     margin-top: 1rem;
     align-self: center;
@@ -289,7 +308,9 @@ input#cost {
 /* Media Queries ---------------------------------------------------------------------------------------- */
 /* Tablet */
 @media (min-width: 1000px) {
-    .collection-cards-container,
+    .collection-cards-container {
+        columns: 2;
+    }
     .search-cards-container {
         grid-template-columns: repeat(2, 1fr);
     }
