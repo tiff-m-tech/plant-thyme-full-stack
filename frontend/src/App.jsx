@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router";
-import { getCollection, addToCollection, delectCollectionPlant } from "./services/api";
+import { getCollection, addToCollection, deleteCollectionPlant } from "./services/api";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 import Home from "./components/pages/Home";
@@ -67,7 +67,7 @@ function App() {
 
     async function removePlantFromCollection(idToRemove) {
         try {
-            await delectCollectionPlant(idToRemove);
+            await deleteCollectionPlant(idToRemove);
             // Refresh from the database so state matches reality
             const updated = await getCollection();
             setCollection(updated);

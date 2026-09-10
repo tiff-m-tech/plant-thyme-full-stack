@@ -73,7 +73,7 @@ export async function updateCollectionPlant(id, details) {
 }
 
 // DELETE one plant from collection
-export async function delectCollectionPlant(id) {
+export async function deleteCollectionPlant(id) {
     const response = await fetch(`${BASE_URL}/collection-plants/${id}`, { method: "DELETE" });
     if (!response.ok) {
         throw new Error("Failed to delete plant.");
