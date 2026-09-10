@@ -8,6 +8,7 @@ import Contact from "./components/pages/Contact";
 import CurrentCollection from "./components/pages/CurrentCollection";
 import AddPlant from "./components/pages/AddPlant";
 import PlantDetails from "./components/pages/PlantDetails";
+import ProgressPictureDetails from "./components/pages/ProgressPictureDetails";
 import LogIn from "./components/pages/LogIn";
 import NotFound from "./components/pages/NotFound";
 import ScrollToTop from "./components/layout/ScrollToTop";
@@ -104,6 +105,7 @@ function App() {
                             />
                         }
                     />
+                    <Route path="/progress-picture/:id" element={<ProgressPictureDetails />} />
                     <Route path="*" element={<NotFound />} />
                 </Routes>
             ) : (
