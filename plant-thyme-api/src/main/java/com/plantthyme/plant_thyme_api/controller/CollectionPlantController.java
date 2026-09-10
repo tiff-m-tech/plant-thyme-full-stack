@@ -106,6 +106,8 @@ public class CollectionPlantController {
         existingPlant.setNickname(updatedPlant.getNickname());
         existingPlant.setLocation(updatedPlant.getLocation());
         existingPlant.setNotes(updatedPlant.getNotes());
+        existingPlant.setShowNickname(updatedPlant.isShowNickname());
+        existingPlant.setShowLocation(updatedPlant.isShowLocation());
 
         // save the modified existing record. Because it has an id, JPA does an UPDATE, not an INSERT.
         CollectionPlant saved = collectionPlantRepository.save(existingPlant);
