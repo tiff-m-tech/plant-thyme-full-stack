@@ -63,13 +63,24 @@ function PlantDetailsContent({ collectionPlant, removePlantFromCollection, refre
         purchaseDate: collectionPlant.purchaseDate ?? "",
         storePurchasedFrom: collectionPlant.purchaseStore ?? "",
         cost: collectionPlant.cost ?? "",
+        nickname: collectionPlant.nickname ?? "",
+        location: collectionPlant.location ?? "",
         notes: collectionPlant.notes ?? "",
+        showNickname: collectionPlant.showNickname ?? false,
+        showLocation: collectionPlant.showLocation ?? false,
     });
     const [isEditing, setIsEditing] = useState(false);
 
+    // handleChange updates whichever field changed, keyed by the input's name.
+    // - Text/date/textarea inputs store their value (a string) from event.target.value.
+    // - Checkboxes store true/false from event.target.checked
+
     function handleChange(event) {
-        const { name, value } = event.target;
-        setDetailsData((prev) => ({ ...prev, [name]: value }));
+        const { name, value, type, checked } = event.target;
+        setDetailsData((prev) => ({
+            ...prev,
+            [name]: type === "checkbox" ? checked : value,
+        }));
     }
 
     async function handleSave() {
@@ -79,7 +90,11 @@ function PlantDetailsContent({ collectionPlant, removePlantFromCollection, refre
                 purchaseStore:
                     detailsData.storePurchasedFrom === "" ? null : detailsData.storePurchasedFrom,
                 cost: detailsData.cost === "" ? null : Number(detailsData.cost),
+                nickname: detailsData.nickname === "" ? null : detailsData.nickname,
+                location: detailsData.location === "" ? null : detailsData.location,
                 notes: detailsData.notes === "" ? null : detailsData.notes,
+                showNickname: detailsData.showNickname,
+                showLocation: detailsData.showLocation,
             };
             await updateCollectionPlant(collectionPlant.id, updatedDetails);
             await refreshCollection();
@@ -134,6 +149,48 @@ function PlantDetailsContent({ collectionPlant, removePlantFromCollection, refre
                         disabled={!isEditing}
                         onChange={handleChange}
                     />
+                </div>
+                <label htmlFor="nickname">Nickname:</label>
+                <div className="field-with-checkbox">
+                    <input
+                        id="nickname"
+                        type="text"
+                        name="nickname"
+                        value={detailsData.nickname}
+                        disabled={!isEditing}
+                        onChange={handleChange}
+                    />
+                    <label className="show-on-card-label">
+                        <input
+                            type="checkbox"
+                            name="showNickname"
+                            checked={detailsData.showNickname}
+                            disabled={!isEditing}
+                            onChange={handleChange}
+                        />
+                        Show on card
+                    </label>
+                </div>
+                <label htmlFor="location">Location:</label>
+                <div className="field-with-checkbox">
+                    <input
+                        id="location"
+                        type="text"
+                        name="location"
+                        value={detailsData.location}
+                        disabled={!isEditing}
+                        onChange={handleChange}
+                    />
+                    <label className="show-on-card-label">
+                        <input
+                            type="checkbox"
+                            name="showLocation"
+                            checked={detailsData.showLocation}
+                            disabled={!isEditing}
+                            onChange={handleChange}
+                        />
+                        Show on card
+                    </label>
                 </div>
                 <label htmlFor="notes">Notes:</label>
                 <textarea

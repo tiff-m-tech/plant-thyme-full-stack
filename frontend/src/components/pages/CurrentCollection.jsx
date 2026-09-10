@@ -89,6 +89,10 @@ export default function CurrentCollection({ collection, loading }) {
                                         light={collectionPlant.plant.light}
                                         water={collectionPlant.plant.water}
                                         fertilize={collectionPlant.plant.fertilize}
+                                        nickname={collectionPlant.nickname}
+                                        location={collectionPlant.location}
+                                        showNickname={collectionPlant.showNickname}
+                                        showLocation={collectionPlant.showLocation}
                                     />
                                 ))}
                         </div>

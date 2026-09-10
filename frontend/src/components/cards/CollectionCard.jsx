@@ -4,7 +4,18 @@ import { altFromFileName } from "../../utils/altFromFileName";
 import { useNavigate } from "react-router";
 import Button from "../ui/Button";
 
-export default function CollectionCard({ collectionId, imgPath, name, light, water, fertilize }) {
+export default function CollectionCard({
+    collectionId,
+    imgPath,
+    name,
+    light,
+    water,
+    fertilize,
+    nickname,
+    location,
+    showNickname,
+    showLocation,
+}) {
     const navigate = useNavigate();
 
     return (
@@ -16,6 +27,16 @@ export default function CollectionCard({ collectionId, imgPath, name, light, wat
             />
             <div className="collection-card-right-container">
                 <h2 className="collection-card-title">{name}</h2>
+                {showNickname && nickname && (
+                    <p className="collection-card-nickname">
+                        <strong>Nickname:</strong> {nickname}
+                    </p>
+                )}
+                {showLocation && location && (
+                    <p className="collection-card-location">
+                        <strong>Location:</strong> {location}
+                    </p>
+                )}
                 <div className="care-info-container">
                     <h3 className="care-info-title">Care Instructions:</h3>
                     <div className="care-info-div">
