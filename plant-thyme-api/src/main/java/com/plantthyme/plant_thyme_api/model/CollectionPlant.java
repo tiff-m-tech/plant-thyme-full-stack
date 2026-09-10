@@ -48,6 +48,9 @@ public class CollectionPlant {
     @Size(max = 1000, message = "Notes must be 1000 characters or less.")
     private String notes;
 
+    private boolean showNickname;
+    private boolean showLocation;
+
     public CollectionPlant() {}
 
     public Long getId() {
@@ -108,6 +111,22 @@ public class CollectionPlant {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public boolean isShowNickname() {
+        return showNickname;
+    }
+
+    public void setShowNickname(boolean showNickname) {
+        this.showNickname = showNickname;
+    }
+
+    public boolean isShowLocation() {
+        return showLocation;
+    }
+
+    public void setShowLocation(boolean showLocation) {
+        this.showLocation = showLocation;
     }
 }
 
