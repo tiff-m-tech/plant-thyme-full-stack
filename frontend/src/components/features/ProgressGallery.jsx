@@ -4,6 +4,7 @@ import ProgressPictureCard from "../cards/ProgressPictureCard";
 import { getProgressPictures } from "../../services/api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
+import { SERVER_URL } from "../../constants";
 
 export default function ProgressGallery({ collectionPlantId }) {
     const [pictures, setPictures] = useState([]);
@@ -57,7 +58,7 @@ export default function ProgressGallery({ collectionPlantId }) {
                         key={progressPic.id}
                         fileName={progressPic.imagePath}
                         date={formatDate(progressPic.pictureDate)}
-                        src={`${import.meta.env.BASE_URL}images/progressPictures/${progressPic.imagePath}`}
+                        src={`${SERVER_URL}/uploads/progress-pictures/${progressPic.imagePath}`}
                     />
                 ))}
                 {selectedImage && <ProgressPictureCard src={selectedImage} date={today} />}
