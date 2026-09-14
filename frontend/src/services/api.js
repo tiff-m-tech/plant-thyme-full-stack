@@ -89,6 +89,23 @@ export async function getProgressPicture(id) {
     return response.json();
 }
 
+// POST one newe progress picture
+export async function uploadProgressPicture(collectionPlantId, file) {
+    const formData = new FormData();
+    formData.append("file", file); // "file" must match @RequestParam("file")
+
+    const response = await fetch(
+        `${BASE_URL}/api/progress-pictures/upload?collectionPlantId=${collectionPlantId}`,
+        {
+            method: "POST",
+            body: formData, // NO headers object — let the browser set Content-Type
+        },
+    );
+
+    if (!response.ok) throw new Error("Upload failed");
+    return response.json(); // the created ProgressPicture, with its new id
+}
+
 // PUT update a progress picture (update type and notes)
 export async function updateProgressPicture(id, details) {
     const response = await fetch(`${BASE_URL}/progress-pictures/${id}`, {
