@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router";
-import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBan, faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 import {
     getProgressPicture,
     updateProgressPicture,
@@ -24,6 +25,7 @@ export default function ProgressPictureDetails() {
     const [isEditing, setIsEditing] = useState(false);
     const [formData, setFormData] = useState({ updateType: "", notes: "" });
     const [showConfirm, setShowConfirm] = useState(false);
+    const [errors, setErrors] = useState([]);
 
     // Load the picture when the page opens.
     useEffect(() => {
@@ -61,9 +63,10 @@ export default function ProgressPictureDetails() {
             await updateProgressPicture(id, details);
             const refreshed = await getProgressPicture(id);
             setPicture(refreshed);
+            setErrors([]);
             setIsEditing(false);
         } catch (error) {
-            console.error("Failed to update progress picture:", error);
+            setErrors(error.message ?? ["Something went wrong. Please try again."]);
         }
     }
 
@@ -132,10 +135,28 @@ export default function ProgressPictureDetails() {
                     disabled={!isEditing}
                     onChange={handleChange}
                 />
+                {errors.length > 0 && (
+                    <div className="form-errors">
+                        <p>
+                            <FontAwesomeIcon icon={faBan} /> Please fix the following:
+                        </p>
+                        <ul className="form-errors">
+                            {errors.map((msg, index) => (
+                                <li key={index}>{msg}</li>
+                            ))}
+                        </ul>
+                    </div>
+                )}
                 {isEditing ? (
                     <Button innerText="Save" onClick={handleSave} />
                 ) : (
-                    <Button innerText="Edit" onClick={() => setIsEditing(true)} />
+                    <Button
+                        innerText="Edit"
+                        onClick={() => {
+                            setIsEditing(true);
+                            setErrors([]);
+                        }}
+                    />
                 )}
             </form>
             <SectionDivider />
