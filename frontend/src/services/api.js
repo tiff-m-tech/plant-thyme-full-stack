@@ -79,3 +79,33 @@ export async function deleteCollectionPlant(id) {
         throw new Error("Failed to delete plant.");
     }
 }
+
+// GET one progress picture by id
+export async function getProgressPicture(id) {
+    const response = await fetch(`${BASE_URL}/progress-pictures/${id}`);
+    if (!response.ok) {
+        throw new Error("Failed to fetch progress picture");
+    }
+    return response.json();
+}
+
+// PUT update a progress picture (update type and notes)
+export async function updateProgressPicture(id, details) {
+    const response = await fetch(`${BASE_URL}/progress-pictures/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(details),
+    });
+    if (!response.ok) {
+        throw new Error("Failed to update progress picture.");
+    }
+    return response.json();
+}
+
+// DELETE a progress picture
+export async function deleteProgressPicture(id) {
+    const response = await fetch(`${BASE_URL}/progress-pictures/${id}`, { method: "DELETE" });
+    if (!response.ok) {
+        throw new Error("Failed to delete progress picture.");
+    }
+}
