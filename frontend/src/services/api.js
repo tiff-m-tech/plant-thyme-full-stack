@@ -67,7 +67,8 @@ export async function updateCollectionPlant(id, details) {
         body: JSON.stringify(details),
     });
     if (!response.ok) {
-        throw new Error("Failed to update collection plant.");
+        const errorData = await response.json(); // read the backend's error body
+        throw errorData;
     }
     return response.json();
 }
@@ -89,7 +90,7 @@ export async function getProgressPicture(id) {
     return response.json();
 }
 
-// POST one newe progress picture
+// POST one new progress picture
 export async function uploadProgressPicture(collectionPlantId, file) {
     const formData = new FormData();
     formData.append("file", file); // "file" must match @RequestParam("file")
@@ -114,7 +115,8 @@ export async function updateProgressPicture(id, details) {
         body: JSON.stringify(details),
     });
     if (!response.ok) {
-        throw new Error("Failed to update progress picture.");
+        const errorData = await response.json(); // read the backend's error body
+        throw errorData;
     }
     return response.json();
 }
