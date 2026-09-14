@@ -251,7 +251,7 @@ function PlantDetailsContent({ collectionPlant, removePlantFromCollection, refre
                 onClose={() => setShowConfirm(false)}
                 onConfirm={handleRemove}
                 message={`Are you sure you want to remove the ${collectionPlant.plant.name} from your collection?`}
-                confirmText="Remove Plant"
+                confirmText="Yes, Remove"
                 cancelText="Cancel"
                 iconClassName="modal-yellow-warning-icon"
                 confirmButtonClassName="remove-btn"

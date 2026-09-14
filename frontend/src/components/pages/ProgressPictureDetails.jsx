@@ -174,7 +174,7 @@ export default function ProgressPictureDetails() {
                 onClose={() => setShowConfirm(false)}
                 onConfirm={handleDelete}
                 message="Are you sure you want to remove this progress picture and it's details?"
-                confirmText="Remove Progress Picture"
+                confirmText="Yes, Remove"
                 cancelText="Cancel"
                 iconClassName="modal-yellow-warning-icon"
                 confirmButtonClassName="remove-btn"
