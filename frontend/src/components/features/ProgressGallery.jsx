@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import PageTitle from "../ui/PageTitle";
-import ProgressPictureCard from "../cards/ProgressPictureCard";
-import { getProgressPictures } from "../../services/api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
+import PageTitle from "../ui/PageTitle";
+import ProgressPictureCard from "../cards/ProgressPictureCard";
+import { getProgressPictures, uploadProgressPicture } from "../../services/api";
+
 import { SERVER_URL } from "../../constants";
 
 export default function ProgressGallery({ collectionPlantId }) {
@@ -35,6 +36,25 @@ export default function ProgressGallery({ collectionPlantId }) {
         });
     }
 
+    async function handleUpload(event) {
+        const file = event.target.files?.[0];
+        if (!file) return;
+
+        // Instant preview while the upload happens.
+        setSelectedImage(URL.createObjectURL(file));
+
+        try {
+            const newPicture = await uploadProgressPicture(collectionPlantId, file);
+            // The backend returns the saved picture WITH its new id — add it to the gallery.
+            setPictures((prev) => [...prev, newPicture]);
+        } catch (error) {
+            console.error("Failed to upload progress picture:", error);
+        } finally {
+            setSelectedImage(""); // clear the temporary preview
+            event.target.value = ""; // reset input so the same file can be picked again
+        }
+    }
+
     return (
         <section id="progressGallery">
             <PageTitle title="Progress Pictures" />
@@ -47,11 +67,7 @@ export default function ProgressGallery({ collectionPlantId }) {
                     type="file"
                     accept="image/*"
                     className="file-upload-input"
-                    onChange={(event) => {
-                        const file = event.target.files?.[0];
-                        // Creates a temporary blob URL (ex blob:http://localhost...) that points to the selected image data so it can be previewed immediately.
-                        setSelectedImage(file ? URL.createObjectURL(file) : undefined);
-                    }}
+                    onChange={handleUpload}
                 />
             </div>
             <div className="progress-pictures-cards-container">
