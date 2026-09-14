@@ -83,6 +83,13 @@ main {
     margin-top: 1rem;
 }
 
+.form-errors {
+    font-weight: bold;
+    list-style: none;
+    padding: 0;
+    color: red;
+}
+
 /* Log In Page ------------------------------------------------------------------------------------------ */
 #logIn form,
 .signup-container {
