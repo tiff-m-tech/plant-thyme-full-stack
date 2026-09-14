@@ -95,7 +95,7 @@ export async function uploadProgressPicture(collectionPlantId, file) {
     formData.append("file", file); // "file" must match @RequestParam("file")
 
     const response = await fetch(
-        `${BASE_URL}/api/progress-pictures/upload?collectionPlantId=${collectionPlantId}`,
+        `${BASE_URL}/progress-pictures/upload?collectionPlantId=${collectionPlantId}`,
         {
             method: "POST",
             body: formData, // NO headers object — let the browser set Content-Type
