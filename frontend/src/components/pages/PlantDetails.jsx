@@ -70,6 +70,7 @@ function PlantDetailsContent({ collectionPlant, removePlantFromCollection, refre
         showLocation: collectionPlant.showLocation ?? false,
     });
     const [isEditing, setIsEditing] = useState(false);
+    const [errors, setErrors] = useState([]);
 
     // handleChange updates whichever field changed, keyed by the input's name.
     // - Text/date/textarea inputs store their value (a string) from event.target.value.
@@ -98,9 +99,10 @@ function PlantDetailsContent({ collectionPlant, removePlantFromCollection, refre
             };
             await updateCollectionPlant(collectionPlant.id, updatedDetails);
             await refreshCollection();
+            setErrors([]);
             setIsEditing(false);
         } catch (error) {
-            console.error("Failed to update plant:", error);
+            setErrors(error.message ?? ["Something went wrong. Please try again."]);
         }
     }
 
@@ -203,10 +205,23 @@ function PlantDetailsContent({ collectionPlant, removePlantFromCollection, refre
                     disabled={!isEditing}
                     onChange={handleChange}
                 />
+                {errors.length > 0 && (
+                    <ul className="form-errors">
+                        {errors.map((msg, index) => (
+                            <li key={index}>{msg}</li>
+                        ))}
+                    </ul>
+                )}
                 {isEditing ? (
                     <Button innerText="Save" onClick={handleSave} />
                 ) : (
-                    <Button innerText="Edit" onClick={() => setIsEditing(true)} />
+                    <Button
+                        innerText="Edit"
+                        onClick={() => {
+                            setIsEditing(true);
+                            setErrors([]);
+                        }}
+                    />
                 )}
             </form>
             <SectionDivider />
