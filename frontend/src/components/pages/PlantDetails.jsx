@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router";
-import { faTriangleExclamation, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBan, faTriangleExclamation, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { altFromFileName } from "../../utils/altFromFileName";
 import { updateCollectionPlant } from "../../services/api";
 import Button from "../ui/Button";
@@ -206,11 +207,16 @@ function PlantDetailsContent({ collectionPlant, removePlantFromCollection, refre
                     onChange={handleChange}
                 />
                 {errors.length > 0 && (
-                    <ul className="form-errors">
-                        {errors.map((msg, index) => (
-                            <li key={index}>{msg}</li>
-                        ))}
-                    </ul>
+                    <div className="form-errors">
+                        <p>
+                            <FontAwesomeIcon icon={faBan} /> Please fix the following:
+                        </p>
+                        <ul className="form-errors">
+                            {errors.map((msg, index) => (
+                                <li key={index}>{msg}</li>
+                            ))}
+                        </ul>
+                    </div>
                 )}
                 {isEditing ? (
                     <Button innerText="Save" onClick={handleSave} />
