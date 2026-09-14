@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 import PageTitle from "../ui/PageTitle";
 import ProgressPictureCard from "../cards/ProgressPictureCard";
 import { getProgressPictures } from "../../services/api";
@@ -10,6 +11,7 @@ export default function ProgressGallery({ collectionPlantId }) {
     const [pictures, setPictures] = useState([]);
     const [selectedImage, setSelectedImage] = useState("");
     const today = new Date().toLocaleDateString("en-US");
+    const navigate = useNavigate();
 
     useEffect(() => {
         async function loadProgressPictures() {
@@ -59,6 +61,7 @@ export default function ProgressGallery({ collectionPlantId }) {
                         fileName={progressPic.imagePath}
                         date={formatDate(progressPic.pictureDate)}
                         src={`${SERVER_URL}/uploads/progress-pictures/${progressPic.imagePath}`}
+                        onClick={() => navigate(`/progress-picture/${progressPic.id}`)}
                     />
                 ))}
                 {selectedImage && <ProgressPictureCard src={selectedImage} date={today} />}
