@@ -73,9 +73,56 @@ export async function updateCollectionPlant(id, details) {
 }
 
 // DELETE one plant from collection
-export async function delectCollectionPlant(id) {
+export async function deleteCollectionPlant(id) {
     const response = await fetch(`${BASE_URL}/collection-plants/${id}`, { method: "DELETE" });
     if (!response.ok) {
         throw new Error("Failed to delete plant.");
+    }
+}
+
+// GET one progress picture by id
+export async function getProgressPicture(id) {
+    const response = await fetch(`${BASE_URL}/progress-pictures/${id}`);
+    if (!response.ok) {
+        throw new Error("Failed to fetch progress picture");
+    }
+    return response.json();
+}
+
+// POST one newe progress picture
+export async function uploadProgressPicture(collectionPlantId, file) {
+    const formData = new FormData();
+    formData.append("file", file); // "file" must match @RequestParam("file")
+
+    const response = await fetch(
+        `${BASE_URL}/progress-pictures/upload?collectionPlantId=${collectionPlantId}`,
+        {
+            method: "POST",
+            body: formData, // NO headers object — let the browser set Content-Type
+        },
+    );
+
+    if (!response.ok) throw new Error("Upload failed");
+    return response.json(); // the created ProgressPicture, with its new id
+}
+
+// PUT update a progress picture (update type and notes)
+export async function updateProgressPicture(id, details) {
+    const response = await fetch(`${BASE_URL}/progress-pictures/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(details),
+    });
+    if (!response.ok) {
+        throw new Error("Failed to update progress picture.");
+    }
+    return response.json();
+}
+
+// DELETE a progress picture
+export async function deleteProgressPicture(id) {
+    const response = await fetch(`${BASE_URL}/progress-pictures/${id}`, { method: "DELETE" });
+    if (!response.ok) {
+        throw new Error("Failed to delete progress picture.");
     }
 }

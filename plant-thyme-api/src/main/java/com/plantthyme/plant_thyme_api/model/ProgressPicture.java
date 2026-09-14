@@ -29,7 +29,7 @@ public class ProgressPicture {
     private LocalDate pictureDate;
 
     @Pattern( // this is for a dropdown selection, adding validation for postman
-            regexp = "Growth|Repotting|Pruning|Pest Treatment|Other",
+            regexp = "(Growth|Repotting|Pruning|Pest Treatment|Other)?",
             message = "Update type must be Growth, Repotting, Pruning, Pest Treatment, or Other."
     )
     private String updateType;

@@ -13,6 +13,7 @@ main {
 #currentCollection,
 #addPlant,
 #plantDetails,
+#progressPictureDetails,
 #notFound {
     display: flex;
     flex-direction: column;
@@ -30,9 +31,39 @@ main {
 
 #logIn form label,
 #contact form label,
-#plantDetails form label {
+#plantDetails form label,
+#progressPictureDetails form label {
     font-weight: bold;
     text-align: left;
+}
+
+#plantDetails form input,
+#plantDetails form textarea,
+#progressPictureDetails form input,
+#progressPictureDetails form textarea,
+#progressPictureDetails form select {
+    background-color: white;
+    width: 100%;
+    padding: 0.5rem;
+    align-self: center;
+    margin-bottom: 0.75rem;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+#plantDetails form,
+#progressPictureDetails form {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    max-width: 500px;
+    margin-bottom: 2rem;
+}
+
+#plantDetails form button,
+#progressPictureDetails form button {
+    margin-top: 1rem;
+    align-self: center;
 }
 
 .collection-cards-container {
@@ -208,24 +239,6 @@ main {
     border-radius: 5px;
 }
 
-#plantDetails form {
-    display: flex;
-    flex-direction: column;
-    width: 90%;
-    max-width: 500px;
-    margin-bottom: 2rem;
-}
-
-#plantDetails form input,
-#plantDetails form textarea {
-    background-color: white;
-    width: 100%;
-    padding: 0.5rem;
-    align-self: center;
-    margin-bottom: 0.75rem;
-    border: 1px solid black;
-    border-radius: 5px;
-}
 .cost-input-wrapper {
     position: relative;
     display: inline-block;
@@ -256,11 +269,6 @@ input#cost {
     white-space: nowrap;
 }
 
-#plantDetails form button {
-    margin-top: 1rem;
-    align-self: center;
-}
-
 .remove-btn-container {
     margin-top: 2rem;
 }
@@ -287,6 +295,20 @@ input#cost {
     color: #ffdf28;
     font-size: 3rem;
     margin-bottom: 1rem;
+}
+
+/* Progress Pictures Details Page ----------------------------------------------------------------------- */
+
+.progress-picture-page-image {
+    /* progress pictures should show at max size */
+    display: block;
+    margin: 0 auto 1rem;
+    width: auto; /* let the image use its natural width... */
+    height: auto; /* and natural height */
+    max-width: 100%; /* but never wider than the page */
+    max-height: 85vh; /* and never taller than 85% of the screen height */
+    border: 1px black solid;
+    border-radius: 5px;
 }
 
 /* Not Found Page --------------------------------------------------------------------------------------- */

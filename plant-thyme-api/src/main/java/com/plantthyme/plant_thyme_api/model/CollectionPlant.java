@@ -9,6 +9,8 @@ import jakarta.validation.constraints.Size;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @JsonPropertyOrder({"id", "plant", "purchaseDate", "purchaseStore", "cost", "nickname", "location", "notes"})
@@ -23,6 +25,17 @@ public class CollectionPlant {
     @ManyToOne(optional = false)
     @JoinColumn(name = "plant_id")
     private Plant plant;
+
+    // Inverse side of the FK, which lives on progress_picture table (mappedBy = the field there).
+    // cascade = ALL + orphanRemoval delete a plant's progress pictures when the plant is deleted
+    // fix for error where I couldn't delete the collection plant because the progress pictures were still there and FK still existed
+    @OneToMany(
+            mappedBy = "collectionPlant",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+
+    private List<ProgressPicture> progressPictures = new ArrayList<>();
 
     // Validation constraints (@Size, @PositiveOrZero, @PastOrPresent) are checked by
     // Bean Validation when the controller uses @Valid, and failures return a 400 via
