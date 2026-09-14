@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBan, faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
+import { faBan, faTrashCan, faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 import {
     getProgressPicture,
     updateProgressPicture,
@@ -163,6 +163,7 @@ export default function ProgressPictureDetails() {
             <div className="remove-btn-container">
                 <Button
                     innerText="Remove Progress Picture"
+                    icon={faTrashCan}
                     onClick={() => setShowConfirm(true)}
                     className="remove-btn"
                 />
