@@ -32,6 +32,7 @@ export default function ProgressPictureDetails() {
                 const data = await getProgressPicture(id);
                 setPicture(data);
                 setFormData({
+                    pictureDate: data.pictureDate,
                     updateType: data.updateType ?? "",
                     notes: data.notes ?? "",
                 });
@@ -53,6 +54,7 @@ export default function ProgressPictureDetails() {
         try {
             const details = {
                 ...picture, // keeps imagePath + pictureDate so @Valid passes, fix for not being able to edit details
+                pictureDate: formData.pictureDate,
                 updateType: formData.updateType === "" ? null : formData.updateType,
                 notes: formData.notes === "" ? null : formData.notes,
             };
@@ -74,14 +76,6 @@ export default function ProgressPictureDetails() {
         }
     }
 
-    function formatDate(date) {
-        return new Date(date + "T00:00:00").toLocaleDateString("en-US", {
-            month: "numeric",
-            day: "numeric",
-            year: "numeric",
-        });
-    }
-
     if (loading) return <Loading />;
 
     if (!picture) {
@@ -97,13 +91,21 @@ export default function ProgressPictureDetails() {
         <main id="progressPictureDetails">
             <Button innerText="Back" onClick={() => navigate(-1)} className="back-btn" />
             <PageTitle title={picture.collectionPlant.plant.name} />
-            <div className="progress-picture-date">{formatDate(picture.pictureDate)}</div>
             <img
                 src={`${SERVER_URL}/uploads/progress-pictures/${picture.imagePath}`}
-                alt={`Progress picture of ${picture.collectionPlant.plant.name} from ${formatDate(picture.pictureDate)}`}
+                alt={`Progress picture of ${picture.collectionPlant.plant.name} from ${picture.pictureDate}`}
                 className="details-page-image"
             />
             <form>
+                <label htmlFor="pictureDate">Photo Date:</label>
+                <input
+                    id="pictureDate"
+                    type="date"
+                    name="pictureDate"
+                    value={formData.pictureDate}
+                    disabled={!isEditing}
+                    onChange={handleChange}
+                />
                 <label htmlFor="updateType">Update Type:</label>
                 <select
                     id="updateType"

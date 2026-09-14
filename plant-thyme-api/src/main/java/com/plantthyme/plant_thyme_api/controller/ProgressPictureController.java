@@ -87,6 +87,7 @@ public class ProgressPictureController {
             return ResponseEntity.notFound().build();
         }
 
+        existingPicture.setPictureDate(updatedPicture.getPictureDate());
         existingPicture.setUpdateType(updatedPicture.getUpdateType());
         existingPicture.setNotes(updatedPicture.getNotes());
 
