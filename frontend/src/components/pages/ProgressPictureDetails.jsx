@@ -94,7 +94,7 @@ export default function ProgressPictureDetails() {
             <img
                 src={`${SERVER_URL}/uploads/progress-pictures/${picture.imagePath}`}
                 alt={`Progress picture of ${picture.collectionPlant.plant.name} from ${picture.pictureDate}`}
-                className="details-page-image"
+                className="progress-picture-page-image"
             />
             <form>
                 <label htmlFor="pictureDate">Photo Date:</label>
