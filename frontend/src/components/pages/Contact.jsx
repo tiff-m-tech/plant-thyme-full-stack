@@ -64,6 +64,9 @@ export default function Contact() {
                 <h2>
                     <FontAwesomeIcon icon={faPenToSquare} /> Drop Us a Note!
                 </h2>
+                <p className="required-legend">
+                    <span className="red-font">*</span> indicates a required field
+                </p>
                 <label htmlFor="name">
                     Name <span className="red-font">*</span>
                 </label>

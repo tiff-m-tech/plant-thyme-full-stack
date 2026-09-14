@@ -203,6 +203,11 @@ main {
     margin-top: 1rem;
 }
 
+.required-legend {
+    font-size: 0.875rem;
+    margin: 1rem 0;
+}
+
 /* Current Collection Page ---------------------------------------------------------------------------------- */
 #currentCollection input {
     padding: 0.65rem;
