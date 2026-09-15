@@ -337,6 +337,10 @@ input#cost {
 
 .not-found-image {
     margin-bottom: 1rem;
+    max-height: 550px;
+    max-width: 90%;
+    width: auto;
+    height: auto;
 }
 
 /* Media Queries ---------------------------------------------------------------------------------------- */
