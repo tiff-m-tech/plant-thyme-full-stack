@@ -1,4 +1,6 @@
 import { useNavigate } from "react-router";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSeedling } from "@fortawesome/free-solid-svg-icons";
 import { altFromFileName } from "../../utils/altFromFileName";
 import { usePageTitleForBrowserTab } from "../../hooks/usePageTitleForBrowserTab";
 import { userName, logoImagePath } from "../../constants";
@@ -18,7 +20,10 @@ export default function Home() {
                 className="large-page-image"
             />
             <PageTitle title={`Welcome back, ${userName}!`} />
-            <h2>Grow your collection, one plant story at a time.</h2>
+            <h2>
+                <FontAwesomeIcon icon={faSeedling} /> Grow your collection, one plant story at a
+                time.
+            </h2>
             <p className="home-page-app-summary">
                 Every plant has a little history, from the day you brought it home to the first new
                 leaf you noticed. Plant Thyme gives those memories a place to grow.
@@ -34,7 +39,7 @@ export default function Home() {
                 </div>
                 <div className="home-page-feature">
                     <h3>📸 See How They’ve Grown</h3>
-                    <p>Look back on progress photos over time.</p>
+                    <p>Look back on progress pictures over time.</p>
                 </div>
             </div>
             <Button
