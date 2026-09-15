@@ -346,6 +346,12 @@ input#cost {
 }
 
 /* Media Queries ---------------------------------------------------------------------------------------- */
+/* Super Small Phone Screens */
+@media (max-width: 450px) {
+    .end-deco-image {
+        display: none;
+    }
+}
 /* Tablet */
 @media (min-width: 1000px) {
     .collection-cards-container {
