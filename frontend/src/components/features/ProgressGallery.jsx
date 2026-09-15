@@ -5,7 +5,6 @@ import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import PageTitle from "../ui/PageTitle";
 import ProgressPictureCard from "../cards/ProgressPictureCard";
 import { getProgressPictures, uploadProgressPicture } from "../../services/api";
-
 import { SERVER_URL } from "../../constants";
 
 export default function ProgressGallery({ collectionPlantId }) {
@@ -74,7 +73,6 @@ export default function ProgressGallery({ collectionPlantId }) {
                 {pictures.map((progressPic) => (
                     <ProgressPictureCard
                         key={progressPic.id}
-                        fileName={progressPic.imagePath}
                         date={formatDate(progressPic.pictureDate)}
                         src={`${SERVER_URL}/uploads/progress-pictures/${progressPic.imagePath}`}
                         onClick={() => navigate(`/progress-picture/${progressPic.id}`)}
