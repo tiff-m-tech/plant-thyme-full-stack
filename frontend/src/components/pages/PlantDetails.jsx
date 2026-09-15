@@ -157,7 +157,7 @@ function PlantDetailsContent({ collectionPlant, removePlantFromCollection, refre
                         type="text"
                         name="cost"
                         inputMode="decimal"
-                        value={detailsData.cost ?? ""}
+                        value={detailsData.cost}
                         disabled={!isEditing}
                         onChange={handleCostChange}
                     />
