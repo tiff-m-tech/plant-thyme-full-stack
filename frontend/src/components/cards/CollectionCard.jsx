@@ -41,15 +41,15 @@ export default function CollectionCard({
                     <h3 className="care-info-title">Care Instructions:</h3>
                     <div className="care-info-div">
                         <FontAwesomeIcon icon={faSun} className="sun-icon" />
-                        <strong>Light:</strong> {light}
+                        <strong> Light:</strong> {light}
                     </div>
                     <div className="care-info-div">
                         <FontAwesomeIcon icon={faShower} className="water-icon" />
-                        <strong>Water:</strong> {water}
+                        <strong> Water:</strong> {water}
                     </div>
                     <div className="care-info-div">
                         <FontAwesomeIcon icon={faSeedling} className="fertilize-icon" />
-                        <strong>Fertilize:</strong> {fertilize}
+                        <strong> Fertilize:</strong> {fertilize}
                     </div>
                 </div>
                 <Button

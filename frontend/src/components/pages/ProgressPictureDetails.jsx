@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router";
-import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBug, faTrashCan, faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 import {
     getProgressPicture,
     updateProgressPicture,
@@ -24,6 +25,7 @@ export default function ProgressPictureDetails() {
     const [isEditing, setIsEditing] = useState(false);
     const [formData, setFormData] = useState({ updateType: "", notes: "" });
     const [showConfirm, setShowConfirm] = useState(false);
+    const [errors, setErrors] = useState([]);
 
     // Load the picture when the page opens.
     useEffect(() => {
@@ -61,9 +63,10 @@ export default function ProgressPictureDetails() {
             await updateProgressPicture(id, details);
             const refreshed = await getProgressPicture(id);
             setPicture(refreshed);
+            setErrors([]);
             setIsEditing(false);
         } catch (error) {
-            console.error("Failed to update progress picture:", error);
+            setErrors(error.message ?? ["Something went wrong. Please try again."]);
         }
     }
 
@@ -132,16 +135,35 @@ export default function ProgressPictureDetails() {
                     disabled={!isEditing}
                     onChange={handleChange}
                 />
+                {errors.length > 0 && (
+                    <div className="form-errors">
+                        <p>
+                            <FontAwesomeIcon icon={faBug} /> Please fix the following:
+                        </p>
+                        <ul className="form-errors">
+                            {errors.map((msg, index) => (
+                                <li key={index}>{msg}</li>
+                            ))}
+                        </ul>
+                    </div>
+                )}
                 {isEditing ? (
                     <Button innerText="Save" onClick={handleSave} />
                 ) : (
-                    <Button innerText="Edit" onClick={() => setIsEditing(true)} />
+                    <Button
+                        innerText="Edit"
+                        onClick={() => {
+                            setIsEditing(true);
+                            setErrors([]);
+                        }}
+                    />
                 )}
             </form>
             <SectionDivider />
             <div className="remove-btn-container">
                 <Button
                     innerText="Remove Progress Picture"
+                    icon={faTrashCan}
                     onClick={() => setShowConfirm(true)}
                     className="remove-btn"
                 />
@@ -153,7 +175,7 @@ export default function ProgressPictureDetails() {
                 onClose={() => setShowConfirm(false)}
                 onConfirm={handleDelete}
                 message="Are you sure you want to remove this progress picture and it's details?"
-                confirmText="Remove Progress Picture"
+                confirmText="Yes, Remove"
                 cancelText="Cancel"
                 iconClassName="modal-yellow-warning-icon"
                 confirmButtonClassName="remove-btn"

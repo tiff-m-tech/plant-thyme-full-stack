@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router";
-import { faTriangleExclamation, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBug, faTriangleExclamation, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { altFromFileName } from "../../utils/altFromFileName";
 import { updateCollectionPlant } from "../../services/api";
 import Button from "../ui/Button";
@@ -9,6 +10,8 @@ import CareInstructions from "../features/CareInstructions";
 import ProgressGallery from "../features/ProgressGallery";
 import Loading from "../ui/Loading";
 import SectionDivider from "../ui/SectionDivider";
+import { pickRandom } from "../../utils/pickRandom";
+import { NOT_FOUND_IMAGES } from "../../constants";
 import { usePageTitleForBrowserTab } from "../../hooks/usePageTitleForBrowserTab";
 import Modal from "../ui/Modal";
 
@@ -20,6 +23,7 @@ export default function PlantDetails({
 }) {
     const navigate = useNavigate();
     const { collectionId } = useParams();
+    const [randomImage] = useState(() => pickRandom(NOT_FOUND_IMAGES));
 
     // Show the loading spinner until the collection data is available.
     if (loading) return <Loading />;
@@ -33,6 +37,11 @@ export default function PlantDetails({
     if (!collectionPlant) {
         return (
             <main className="plant-not-found-in-collection-message">
+                <img
+                    src={`${import.meta.env.BASE_URL}images/brand/${randomImage}`}
+                    alt=""
+                    className="large-page-image not-found-image"
+                />
                 <h1>Plant not found!</h1>
                 <p>The plant you are looking for is not in your collection.</p>
                 <Button
@@ -70,6 +79,7 @@ function PlantDetailsContent({ collectionPlant, removePlantFromCollection, refre
         showLocation: collectionPlant.showLocation ?? false,
     });
     const [isEditing, setIsEditing] = useState(false);
+    const [errors, setErrors] = useState([]);
 
     // handleChange updates whichever field changed, keyed by the input's name.
     // - Text/date/textarea inputs store their value (a string) from event.target.value.
@@ -98,9 +108,10 @@ function PlantDetailsContent({ collectionPlant, removePlantFromCollection, refre
             };
             await updateCollectionPlant(collectionPlant.id, updatedDetails);
             await refreshCollection();
+            setErrors([]);
             setIsEditing(false);
         } catch (error) {
-            console.error("Failed to update plant:", error);
+            setErrors(error.message ?? ["Something went wrong. Please try again."]);
         }
     }
 
@@ -108,6 +119,14 @@ function PlantDetailsContent({ collectionPlant, removePlantFromCollection, refre
         removePlantFromCollection(collectionPlant.id);
         navigate("/currentCollection");
     }
+
+    const handleCostChange = (e) => {
+        const value = e.target.value;
+        // empty, or digits with an optional single decimal point
+        if (value === "" || /^\d*\.?\d*$/.test(value)) {
+            setDetailsData({ ...detailsData, cost: value });
+        }
+    };
 
     return (
         <main id="plantDetails">
@@ -145,9 +164,10 @@ function PlantDetailsContent({ collectionPlant, removePlantFromCollection, refre
                         id="cost"
                         type="text"
                         name="cost"
+                        inputMode="decimal"
                         value={detailsData.cost}
                         disabled={!isEditing}
-                        onChange={handleChange}
+                        onChange={handleCostChange}
                     />
                 </div>
                 <label htmlFor="nickname">Nickname:</label>
@@ -203,10 +223,28 @@ function PlantDetailsContent({ collectionPlant, removePlantFromCollection, refre
                     disabled={!isEditing}
                     onChange={handleChange}
                 />
+                {errors.length > 0 && (
+                    <div className="form-errors">
+                        <p>
+                            <FontAwesomeIcon icon={faBug} /> Please fix the following:
+                        </p>
+                        <ul className="form-errors">
+                            {errors.map((msg, index) => (
+                                <li key={index}>{msg}</li>
+                            ))}
+                        </ul>
+                    </div>
+                )}
                 {isEditing ? (
                     <Button innerText="Save" onClick={handleSave} />
                 ) : (
-                    <Button innerText="Edit" onClick={() => setIsEditing(true)} />
+                    <Button
+                        innerText="Edit"
+                        onClick={() => {
+                            setIsEditing(true);
+                            setErrors([]);
+                        }}
+                    />
                 )}
             </form>
             <SectionDivider />
@@ -230,7 +268,7 @@ function PlantDetailsContent({ collectionPlant, removePlantFromCollection, refre
                 onClose={() => setShowConfirm(false)}
                 onConfirm={handleRemove}
                 message={`Are you sure you want to remove the ${collectionPlant.plant.name} from your collection?`}
-                confirmText="Remove Plant"
+                confirmText="Yes, Remove"
                 cancelText="Cancel"
                 iconClassName="modal-yellow-warning-icon"
                 confirmButtonClassName="remove-btn"

@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { usePageTitleForBrowserTab } from "../../hooks/usePageTitleForBrowserTab";
+import { pickRandom } from "../../utils/pickRandom";
+import { NOT_FOUND_IMAGES } from "../../constants";
 import Button from "../ui/Button";
 import PageTitle from "../ui/PageTitle";
 
@@ -8,12 +10,7 @@ export default function NotFound() {
     const navigate = useNavigate();
     usePageTitleForBrowserTab("Page Not Found");
 
-    const images = ["missing_404_1.png", "missing_404_2.png", "missing_404_3.png"];
-
-    const [randomImage] = useState(() => {
-        const randomIndex = Math.floor(Math.random() * images.length);
-        return images[randomIndex];
-    });
+    const [randomImage] = useState(() => pickRandom(NOT_FOUND_IMAGES));
 
     return (
         <main id="notFound">

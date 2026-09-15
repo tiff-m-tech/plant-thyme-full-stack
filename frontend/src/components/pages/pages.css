@@ -14,7 +14,8 @@ main {
 #addPlant,
 #plantDetails,
 #progressPictureDetails,
-#notFound {
+#notFound,
+#plant-not-found-in-collection-message {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -81,6 +82,13 @@ main {
     width: 100%;
     max-width: 1050px;
     margin-top: 1rem;
+}
+
+.form-errors {
+    font-weight: bold;
+    list-style: none;
+    padding: 0;
+    color: red;
 }
 
 /* Log In Page ------------------------------------------------------------------------------------------ */
@@ -196,6 +204,11 @@ main {
     margin-top: 1rem;
 }
 
+.required-legend {
+    font-size: 0.875rem;
+    margin: 1rem 0;
+}
+
 /* Current Collection Page ---------------------------------------------------------------------------------- */
 #currentCollection input {
     padding: 0.65rem;
@@ -289,6 +302,7 @@ input#cost {
     flex: 1;
     text-align: center;
     gap: 1rem;
+    padding: 2rem 1.5rem; /* vertical, horizontal */
 }
 
 .modal-yellow-warning-icon {
@@ -325,9 +339,19 @@ input#cost {
 
 .not-found-image {
     margin-bottom: 1rem;
+    max-height: 60vh;
+    max-width: 90%;
+    width: auto;
+    height: auto;
 }
 
 /* Media Queries ---------------------------------------------------------------------------------------- */
+/* Super Small Phone Screens */
+@media (max-width: 450px) {
+    .end-deco-image {
+        display: none;
+    }
+}
 /* Tablet */
 @media (min-width: 1000px) {
     .collection-cards-container {
