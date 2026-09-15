@@ -10,6 +10,8 @@ import CareInstructions from "../features/CareInstructions";
 import ProgressGallery from "../features/ProgressGallery";
 import Loading from "../ui/Loading";
 import SectionDivider from "../ui/SectionDivider";
+import { pickRandom } from "../../utils/pickRandom";
+import { NOT_FOUND_IMAGES } from "../../constants";
 import { usePageTitleForBrowserTab } from "../../hooks/usePageTitleForBrowserTab";
 import Modal from "../ui/Modal";
 
@@ -21,6 +23,7 @@ export default function PlantDetails({
 }) {
     const navigate = useNavigate();
     const { collectionId } = useParams();
+    const [randomImage] = useState(() => pickRandom(NOT_FOUND_IMAGES));
 
     // Show the loading spinner until the collection data is available.
     if (loading) return <Loading />;
@@ -34,6 +37,11 @@ export default function PlantDetails({
     if (!collectionPlant) {
         return (
             <main className="plant-not-found-in-collection-message">
+                <img
+                    src={`${import.meta.env.BASE_URL}images/brand/${randomImage}`}
+                    alt=""
+                    className="large-page-image not-found-image"
+                />
                 <h1>Plant not found!</h1>
                 <p>The plant you are looking for is not in your collection.</p>
                 <Button
