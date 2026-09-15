@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBan, faTrashCan, faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
+import { faBug, faTrashCan, faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 import {
     getProgressPicture,
     updateProgressPicture,
@@ -138,7 +138,7 @@ export default function ProgressPictureDetails() {
                 {errors.length > 0 && (
                     <div className="form-errors">
                         <p>
-                            <FontAwesomeIcon icon={faBan} /> Please fix the following:
+                            <FontAwesomeIcon icon={faBug} /> Please fix the following:
                         </p>
                         <ul className="form-errors">
                             {errors.map((msg, index) => (

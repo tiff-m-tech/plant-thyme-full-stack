@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBan, faTriangleExclamation, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { faBug, faTriangleExclamation, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { altFromFileName } from "../../utils/altFromFileName";
 import { updateCollectionPlant } from "../../services/api";
 import Button from "../ui/Button";
@@ -209,7 +209,7 @@ function PlantDetailsContent({ collectionPlant, removePlantFromCollection, refre
                 {errors.length > 0 && (
                     <div className="form-errors">
                         <p>
-                            <FontAwesomeIcon icon={faBan} /> Please fix the following:
+                            <FontAwesomeIcon icon={faBug} /> Please fix the following:
                         </p>
                         <ul className="form-errors">
                             {errors.map((msg, index) => (
