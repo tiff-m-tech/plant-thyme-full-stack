@@ -112,6 +112,14 @@ function PlantDetailsContent({ collectionPlant, removePlantFromCollection, refre
         navigate("/currentCollection");
     }
 
+    const handleCostChange = (e) => {
+        const value = e.target.value;
+        // empty, or digits with an optional single decimal point
+        if (value === "" || /^\d*\.?\d*$/.test(value)) {
+            setDetailsData({ ...detailsData, cost: value });
+        }
+    };
+
     return (
         <main id="plantDetails">
             <Button innerText="Back" onClick={() => navigate(-1)} className="back-btn" />
@@ -148,9 +156,10 @@ function PlantDetailsContent({ collectionPlant, removePlantFromCollection, refre
                         id="cost"
                         type="text"
                         name="cost"
-                        value={detailsData.cost}
+                        inputMode="decimal"
+                        value={detailsData.cost ?? ""}
                         disabled={!isEditing}
-                        onChange={handleChange}
+                        onChange={handleCostChange}
                     />
                 </div>
                 <label htmlFor="nickname">Nickname:</label>
