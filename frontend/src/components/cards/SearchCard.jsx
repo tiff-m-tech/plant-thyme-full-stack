@@ -14,7 +14,7 @@ export default function SearchCard({ imgPath, name, plant, addPlantToCollection 
                 className="search-card-picture"
             />
             <div className="search-card-right-container">
-                <h3 className="search-card-title">{name}</h3>
+                <h2 className="search-card-title">{name}</h2>
                 <Button
                     innerText="Add Plant"
                     icon={faPlus}
