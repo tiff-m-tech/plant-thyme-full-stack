@@ -187,6 +187,7 @@ function PlantDetailsContent({ collectionPlant, removePlantFromCollection, refre
                             disabled={!isEditing}
                             onChange={handleChange}
                         />
+                        <span className="toggle-slider"></span>
                         Show on card
                     </label>
                 </div>
@@ -208,6 +209,7 @@ function PlantDetailsContent({ collectionPlant, removePlantFromCollection, refre
                             disabled={!isEditing}
                             onChange={handleChange}
                         />
+                        <span className="toggle-slider"></span>
                         Show on card
                     </label>
                 </div>
