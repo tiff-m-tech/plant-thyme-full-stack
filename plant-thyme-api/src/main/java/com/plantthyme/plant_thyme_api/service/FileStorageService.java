@@ -10,7 +10,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.UUID;
-gt
+
 // Takes the uploaded file, saves it to the folder, returns the generated filename, controller stores that filename in the DB (imagePath).
 
 @Service
