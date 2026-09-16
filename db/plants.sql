@@ -1,6 +1,5 @@
--- Plant Thyme: seed data for the master plant database
--- 34 plants for the `plant` table
--- Run this once in MySQL Workbench against the plant_thyme schema.
+-- seed data for the master plant database
+-- 'plant' table
 
 USE plant_thyme;
 
