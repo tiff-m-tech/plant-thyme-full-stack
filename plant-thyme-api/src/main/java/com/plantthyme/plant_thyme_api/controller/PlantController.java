@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-// Error handling, watched ResponseEntity Objects & Data Validation Carrie Demo, start at 6:30
-
 @RestController
 @RequestMapping("/api/plants")
 public class PlantController {
@@ -39,12 +37,5 @@ public class PlantController {
     @GetMapping("/search")
     public List<Plant> searchPlants(@RequestParam String name) {
         return plantRepository.findByNameContainingIgnoreCase(name);
-    }
-
-    // POST a new plant
-    @PostMapping
-    public ResponseEntity<Plant> createPlant(@Valid @RequestBody Plant plant) {
-        Plant saved = plantRepository.save(plant);
-        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 }
