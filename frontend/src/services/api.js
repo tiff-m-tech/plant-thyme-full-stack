@@ -1,7 +1,8 @@
 // Central place for all API calls to the Spring backend.
 const BASE_URL = "http://localhost:8080/api";
 
-// GET all plants from the master plant database
+// Plant Database / plant table -----------------------------------------------------------------------------------------------------
+// GET all plants from the plant database/table
 export async function getAllPlants() {
     const response = await fetch(`${BASE_URL}/plants`);
     if (!response.ok) {
@@ -10,7 +11,8 @@ export async function getAllPlants() {
     return response.json();
 }
 
-// GET all plants in the user's collection
+// Users Plant Collection / collection_plant table -------------------------------------------------------------------------------------
+// GET all plants in user's collection
 export async function getCollection() {
     const response = await fetch(`${BASE_URL}/collection-plants`);
     if (!response.ok) {
@@ -25,13 +27,6 @@ export async function getCollectionPlant(id) {
     if (!response.ok) {
         throw new Error("Failed to fetch collection plant");
     }
-    return response.json();
-}
-
-// GET progress pictures for a collection plant
-export async function getProgressPictures(collectionPlantId) {
-    const response = await fetch(`${BASE_URL}/progress-pictures`);
-    if (!response.ok) throw new Error("Failed to fetch progress pictures");
     return response.json();
 }
 
@@ -67,7 +62,7 @@ export async function updateCollectionPlant(id, details) {
         body: JSON.stringify(details),
     });
     if (!response.ok) {
-        const errorData = await response.json(); // read the backend's error body
+        const errorData = await response.json();
         throw errorData;
     }
     return response.json();
@@ -79,6 +74,14 @@ export async function deleteCollectionPlant(id) {
     if (!response.ok) {
         throw new Error("Failed to delete plant.");
     }
+}
+
+// Progress Pictures / progress_picture table -----------------------------------------------------------------------------------------------------
+// GET all progress pictures for a collection plant
+export async function getProgressPictures() {
+    const response = await fetch(`${BASE_URL}/progress-pictures`);
+    if (!response.ok) throw new Error("Failed to fetch progress pictures");
+    return response.json();
 }
 
 // GET one progress picture by id
@@ -104,10 +107,10 @@ export async function uploadProgressPicture(collectionPlantId, file) {
     );
 
     if (!response.ok) throw new Error("Upload failed");
-    return response.json(); // the created ProgressPicture, with its new id
+    return response.json();
 }
 
-// PUT update a progress picture (update type and notes)
+// PUT update progress picture details
 export async function updateProgressPicture(id, details) {
     const response = await fetch(`${BASE_URL}/progress-pictures/${id}`, {
         method: "PUT",
@@ -115,13 +118,13 @@ export async function updateProgressPicture(id, details) {
         body: JSON.stringify(details),
     });
     if (!response.ok) {
-        const errorData = await response.json(); // read the backend's error body
+        const errorData = await response.json();
         throw errorData;
     }
     return response.json();
 }
 
-// DELETE a progress picture
+// DELETE one progress picture
 export async function deleteProgressPicture(id) {
     const response = await fetch(`${BASE_URL}/progress-pictures/${id}`, { method: "DELETE" });
     if (!response.ok) {
