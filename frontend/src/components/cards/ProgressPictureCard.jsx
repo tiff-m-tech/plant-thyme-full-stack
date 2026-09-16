@@ -10,7 +10,7 @@ export default function ProgressPictureCard({ src, date, onClick }) {
                 alt={`Progress picture of plant from ${date}`}
                 className="progress-picture"
             />
-            <Button innerText="View Details" icon={faBookOpen} onClick={onClick} />
+            <Button innerText="Progress Details" icon={faBookOpen} onClick={onClick} />
         </div>
     );
 }
