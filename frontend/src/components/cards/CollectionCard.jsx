@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookOpen, faSun, faShower, faSeedling } from "@fortawesome/free-solid-svg-icons";
-import { altFromFileName } from "../../utils/altFromFileName";
 import { useNavigate } from "react-router";
+import { altFromFileName } from "../../utils/altFromFileName";
 import Button from "../ui/Button";
 
 export default function CollectionCard({

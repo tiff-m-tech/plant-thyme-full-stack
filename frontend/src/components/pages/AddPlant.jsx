@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
-// import plantDatabase from "../../data/plantDatabase.json";
 import { searchPlants } from "../../services/api";
 import Button from "../ui/Button";
 import SearchCard from "../cards/SearchCard";

@@ -302,7 +302,7 @@ input#cost {
     flex: 1;
     text-align: center;
     gap: 1rem;
-    padding: 2rem 1.5rem; /* vertical, horizontal */
+    padding: 2rem 1.5rem;
 }
 
 .modal-yellow-warning-icon {
@@ -319,8 +319,8 @@ input#cost {
     margin: 0 auto 1rem;
     width: auto; /* let the image use its natural width... */
     height: auto; /* and natural height */
-    max-width: 100%; /* but never wider than the page */
-    max-height: 85vh; /* and never taller than 85% of the screen height */
+    max-width: 100%; /* 100% viewed, but never wider than the page */
+    max-height: 80vh; /* and never taller than 80% of the screen height */
     border: 1px black solid;
     border-radius: 5px;
 }

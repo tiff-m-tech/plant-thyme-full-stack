@@ -27,7 +27,6 @@ export default function ProgressPictureDetails() {
     const [showConfirm, setShowConfirm] = useState(false);
     const [errors, setErrors] = useState([]);
 
-    // Load the picture when the page opens.
     useEffect(() => {
         async function loadPicture() {
             try {

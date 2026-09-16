@@ -84,7 +84,6 @@ function PlantDetailsContent({ collectionPlant, removePlantFromCollection, refre
     // handleChange updates whichever field changed, keyed by the input's name.
     // - Text/date/textarea inputs store their value (a string) from event.target.value.
     // - Checkboxes store true/false from event.target.checked
-
     function handleChange(event) {
         const { name, value, type, checked } = event.target;
         setDetailsData((prev) => ({

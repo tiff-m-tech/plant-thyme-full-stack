@@ -1,6 +1,6 @@
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { altFromFileName } from "../../utils/altFromFileName";
 import { useNavigate } from "react-router";
+import { altFromFileName } from "../../utils/altFromFileName";
 import Button from "../ui/Button";
 
 export default function SearchCard({ imgPath, name, plant, addPlantToCollection }) {

@@ -64,7 +64,7 @@
 }
 
 .file-upload-input {
-    display: none; /* hide the ugly default */
+    display: none; /* hide the ugly default for "choose file" file upload */
 }
 
 .file-upload-label {

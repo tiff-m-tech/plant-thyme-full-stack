@@ -20,7 +20,7 @@
 
 .collection-card {
     margin-bottom: 1rem;
-    break-inside: avoid; /* Prevent collection card from splitting across columns when only one shows in search results */
+    break-inside: avoid; /* Prevent collection card from splitting across columns when only one shows in search results, fix for masonary layout */
 }
 
 .collection-card:hover,
