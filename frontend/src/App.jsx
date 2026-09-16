@@ -22,7 +22,7 @@ function App() {
     useEffect(() => {
         async function loadCollection() {
             try {
-                const data = await getCollection(); // fetch from backend
+                const data = await getCollection();
                 setCollection(data);
             } catch (error) {
                 console.error("Failed to load collection:", error);
@@ -45,10 +45,9 @@ function App() {
             };
 
             // Fix for reading null error
-            // Backend wants null (not "") for empty optional fields —
-            // e.g. purchaseDate is a LocalDate and "" fails to parse.
+            // Backend wants null (not "") for empty optional fields, ie purchaseDate is a LocalDate and "" fails to parse.
             const payload = Object.fromEntries(
-                Object.entries(details).map(([k, v]) => [k, v === "" ? null : v]),
+                Object.entries(details).map(([key, value]) => [key, value === "" ? null : value]),
             );
 
             await addToCollection(plant.id, payload);
