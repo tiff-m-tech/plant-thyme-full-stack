@@ -33,8 +33,11 @@ export default function AddPlant({ addPlantToCollection }) {
 
     return (
         <main id="addPlant">
-            {/* Passing -1 to navigate returns to the previous page in browser history. */}
-            <Button innerText="Back" onClick={() => navigate(-1)} className="back-btn" />
+            <Button
+                innerText="Back"
+                onClick={() => navigate(`/currentCollection`)}
+                className="back-btn"
+            />
             <PageTitle title="Plant Search" />
             <SearchBar
                 value={searchValue}
