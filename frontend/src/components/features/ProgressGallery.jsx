@@ -17,8 +17,7 @@ export default function ProgressGallery({ collectionPlantId }) {
         async function loadProgressPictures() {
             try {
                 const data = await getProgressPictures(collectionPlantId);
-                const filtered = data.filter((pic) => pic.collectionPlant.id === collectionPlantId);
-                setPictures(filtered);
+                setPictures(data);
             } catch (error) {
                 console.error("Failed to load progress pictures:", error);
             }
