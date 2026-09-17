@@ -48,6 +48,11 @@ button:active {
     margin-left: 1rem;
 }
 
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
 /* Search Bar --------------------------------------------------------------------------------------------- */
 .search-bar {
     display: flex;
