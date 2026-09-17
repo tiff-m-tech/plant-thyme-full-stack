@@ -125,7 +125,11 @@ export default function ProgressPictureDetails() {
 
     return (
         <main id="progressPictureDetails">
-            <Button innerText="Back" onClick={() => navigate(-1)} className="back-btn" />
+            <Button
+                innerText="Back"
+                onClick={() => navigate(`/currentCollection/${picture.collectionPlant.id}`)}
+                className="back-btn"
+            />
             <PageTitle title={picture.collectionPlant.plant.name} />
             <img
                 src={`${SERVER_URL}/uploads/progress-pictures/${picture.imagePath}`}
