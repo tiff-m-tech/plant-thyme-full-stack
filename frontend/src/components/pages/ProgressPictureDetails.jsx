@@ -106,7 +106,17 @@ export default function ProgressPictureDetails() {
     async function handleDelete() {
         try {
             await deleteProgressPicture(id);
-            navigate(-1); // go back to the plant details page
+            setShowConfirm(false);
+
+            const remaining = siblings.filter((p) => String(p.id) !== String(id));
+
+            if (remaining.length > 0) {
+                const target = nextPicture ?? prevPicture ?? remaining[0];
+                setSiblings(remaining);
+                navigate(`/progress-picture/${target.id}`);
+            } else {
+                navigate(`/currentCollection/${picture.collectionPlant.id}`);
+            }
         } catch (error) {
             console.error("Failed to delete progress picture:", error);
         }
