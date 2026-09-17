@@ -78,8 +78,10 @@ export async function deleteCollectionPlant(id) {
 
 // Progress Pictures / progress_picture table -----------------------------------------------------------------------------------------------------
 // GET all progress pictures for a collection plant
-export async function getProgressPictures() {
-    const response = await fetch(`${BASE_URL}/progress-pictures`);
+export async function getProgressPictures(collectionPlantId) {
+    const response = await fetch(
+        `${BASE_URL}/progress-pictures?collectionPlantId=${collectionPlantId}`,
+    );
     if (!response.ok) throw new Error("Failed to fetch progress pictures");
     return response.json();
 }
