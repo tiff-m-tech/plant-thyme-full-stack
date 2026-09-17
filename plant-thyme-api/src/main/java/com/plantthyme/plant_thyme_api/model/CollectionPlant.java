@@ -19,15 +19,11 @@ public class CollectionPlant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // No @NotNull here — @Valid runs on the request body before the controller, sets plant from the plantId param
-    // so @NotNull would always fail ("plant is required") on a valid request. optional = false enforces it at the DB level instead.
     @ManyToOne(optional = false)
     @JoinColumn(name = "plant_id")
     private Plant plant;
 
-    // Inverse side of the FK, which lives on progress_picture table (mappedBy = the field there).
     // cascade = ALL + orphanRemoval delete a plant's progress pictures when the plant is deleted
-    // fix for error where I couldn't delete the collection plant because the progress pictures were still there and FK still existed
     @OneToMany(
             mappedBy = "collectionPlant",
             cascade = CascadeType.ALL,
