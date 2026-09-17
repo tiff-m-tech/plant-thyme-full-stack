@@ -32,8 +32,13 @@ public class ProgressPictureController {
     }
 
     // GET all progress pictures from a collection plant
+// GET progress pictures — all, or filtered by collection plant when the param is present
     @GetMapping
-    public List<ProgressPicture> getAllProgressPictures() {
+    public List<ProgressPicture> getProgressPictures(
+            @RequestParam(required = false) Long collectionPlantId) {
+        if (collectionPlantId != null) {
+            return progressPictureRepository.findByCollectionPlantId(collectionPlantId);
+        }
         return progressPictureRepository.findAll();
     }
 
