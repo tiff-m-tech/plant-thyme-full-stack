@@ -17,11 +17,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-// @RestControllerAdvice = ONE global place to handle errors from ALL controllers.
-// Instead of try/catch in every controller method, exceptions bubble up to here.
-// extends ResponseEntityExceptionHandler = inherit Spring's built-in handlers for common web exceptions.
-// ...then @Override just the ones I want to give my own custom JSON response.
-
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
