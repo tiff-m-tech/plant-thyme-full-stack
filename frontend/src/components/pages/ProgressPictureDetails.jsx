@@ -1,9 +1,16 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBug, faTrashCan, faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
+import {
+    faBug,
+    faTrashCan,
+    faTriangleExclamation,
+    faBackward,
+    faForward,
+} from "@fortawesome/free-solid-svg-icons";
 import {
     getProgressPicture,
+    getProgressPictures,
     updateProgressPicture,
     deleteProgressPicture,
 } from "../../services/api";
@@ -26,6 +33,12 @@ export default function ProgressPictureDetails() {
     const [formData, setFormData] = useState({ updateType: "", notes: "" });
     const [showConfirm, setShowConfirm] = useState(false);
     const [errors, setErrors] = useState([]);
+    const [siblings, setSiblings] = useState([]);
+    const currentIndex = siblings.findIndex((p) => String(p.id) === String(id));
+    const prevPicture = currentIndex > 0 ? siblings[currentIndex - 1] : null;
+    const nextPicture =
+        currentIndex >= 0 && currentIndex < siblings.length - 1 ? siblings[currentIndex + 1] : null;
+    const hasMultiple = siblings.length > 1;
 
     useEffect(() => {
         async function loadPicture() {
@@ -45,6 +58,27 @@ export default function ProgressPictureDetails() {
         }
         loadPicture();
     }, [id]);
+
+    // info for prev/next buttons
+    useEffect(() => {
+        if (!picture) return;
+        let ignore = false;
+        setSiblings([]); // drop the previous plant's list
+        async function loadSiblings() {
+            try {
+                const list = await getProgressPictures(picture.collectionPlant.id);
+                if (ignore) return;
+                list.sort((a, b) => a.pictureDate.localeCompare(b.pictureDate) || a.id - b.id);
+                setSiblings(list);
+            } catch (error) {
+                if (!ignore) console.error("Failed to load sibling pictures:", error);
+            }
+        }
+        loadSiblings();
+        return () => {
+            ignore = true;
+        };
+    }, [picture?.collectionPlant?.id]);
 
     function handleChange(event) {
         const { name, value } = event.target;
@@ -98,6 +132,20 @@ export default function ProgressPictureDetails() {
                 alt={`Progress picture of ${picture.collectionPlant.plant.name} from ${picture.pictureDate}`}
                 className="progress-picture-page-image"
             />
+            {hasMultiple && (
+                <div className="progress-details-nav">
+                    <Button
+                        icon={faBackward}
+                        onClick={() => navigate(`/progress-picture/${prevPicture.id}`)}
+                        disabled={!prevPicture}
+                    />
+                    <Button
+                        icon={faForward}
+                        onClick={() => navigate(`/progress-picture/${nextPicture.id}`)}
+                        disabled={!nextPicture}
+                    />
+                </div>
+            )}
             <form>
                 <label htmlFor="pictureDate">Photo Date:</label>
                 <input

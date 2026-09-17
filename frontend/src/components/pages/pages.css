@@ -383,6 +383,12 @@ input#cost {
     border-radius: 5px;
 }
 
+.progress-details-nav {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
 /* Not Found Page --------------------------------------------------------------------------------------- */
 .not-found-list {
     text-align: left;
