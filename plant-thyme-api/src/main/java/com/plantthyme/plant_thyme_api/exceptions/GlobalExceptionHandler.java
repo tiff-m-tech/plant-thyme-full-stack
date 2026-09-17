@@ -17,15 +17,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-// This handles bad *API* URLs (/api/plnats) — returns JSON to whatever CODE called it.
-// This is NOT my frontend's 404 page. That's React Router handling bad *page* URLs for humans.
-// Two separate systems: React Router = pages for people; this = JSON for API calls.
-
-// @RestControllerAdvice = ONE global place to handle errors from ALL controllers.
-// Instead of try/catch in every controller method, exceptions bubble up to here.
-// extends ResponseEntityExceptionHandler = inherit Spring's built-in handlers for common web exceptions.
-// ...then @Override just the ones I want to give my own custom JSON response.
-
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
@@ -43,7 +34,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
-    // A field failed a validation rule (@NotBlank, @Size, etc.) -> 400
+    // A field failed a validation rule -> 400
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
                                                                   HttpHeaders headers,

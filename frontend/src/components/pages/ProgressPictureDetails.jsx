@@ -1,9 +1,16 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBug, faTrashCan, faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
+import {
+    faBug,
+    faTrashCan,
+    faTriangleExclamation,
+    faBackward,
+    faForward,
+} from "@fortawesome/free-solid-svg-icons";
 import {
     getProgressPicture,
+    getProgressPictures,
     updateProgressPicture,
     deleteProgressPicture,
 } from "../../services/api";
@@ -26,8 +33,13 @@ export default function ProgressPictureDetails() {
     const [formData, setFormData] = useState({ updateType: "", notes: "" });
     const [showConfirm, setShowConfirm] = useState(false);
     const [errors, setErrors] = useState([]);
+    const [siblings, setSiblings] = useState([]);
+    const currentIndex = siblings.findIndex((p) => String(p.id) === String(id));
+    const prevPicture = currentIndex > 0 ? siblings[currentIndex - 1] : null;
+    const nextPicture =
+        currentIndex >= 0 && currentIndex < siblings.length - 1 ? siblings[currentIndex + 1] : null;
+    const hasMultiple = siblings.length > 1;
 
-    // Load the picture when the page opens.
     useEffect(() => {
         async function loadPicture() {
             try {
@@ -47,6 +59,27 @@ export default function ProgressPictureDetails() {
         loadPicture();
     }, [id]);
 
+    // info for prev/next buttons
+    useEffect(() => {
+        if (!picture) return;
+        let ignore = false;
+        setSiblings([]); // drop the previous plant's list
+        async function loadSiblings() {
+            try {
+                const list = await getProgressPictures(picture.collectionPlant.id);
+                if (ignore) return;
+                list.sort((a, b) => a.pictureDate.localeCompare(b.pictureDate) || a.id - b.id);
+                setSiblings(list);
+            } catch (error) {
+                if (!ignore) console.error("Failed to load sibling pictures:", error);
+            }
+        }
+        loadSiblings();
+        return () => {
+            ignore = true;
+        };
+    }, [picture?.collectionPlant?.id]);
+
     function handleChange(event) {
         const { name, value } = event.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
@@ -55,7 +88,7 @@ export default function ProgressPictureDetails() {
     async function handleSave() {
         try {
             const details = {
-                ...picture, // keeps imagePath + pictureDate so @Valid passes, fix for not being able to edit details
+                imagePath: picture.imagePath,
                 pictureDate: formData.pictureDate,
                 updateType: formData.updateType === "" ? null : formData.updateType,
                 notes: formData.notes === "" ? null : formData.notes,
@@ -73,7 +106,17 @@ export default function ProgressPictureDetails() {
     async function handleDelete() {
         try {
             await deleteProgressPicture(id);
-            navigate(-1); // go back to the plant details page
+            setShowConfirm(false);
+
+            const remaining = siblings.filter((p) => String(p.id) !== String(id));
+
+            if (remaining.length > 0) {
+                const target = nextPicture ?? prevPicture ?? remaining[0];
+                setSiblings(remaining);
+                navigate(`/progress-picture/${target.id}`);
+            } else {
+                navigate(`/currentCollection/${picture.collectionPlant.id}`);
+            }
         } catch (error) {
             console.error("Failed to delete progress picture:", error);
         }
@@ -92,13 +135,31 @@ export default function ProgressPictureDetails() {
 
     return (
         <main id="progressPictureDetails">
-            <Button innerText="Back" onClick={() => navigate(-1)} className="back-btn" />
+            <Button
+                innerText="Back"
+                onClick={() => navigate(`/currentCollection/${picture.collectionPlant.id}`)}
+                className="back-btn"
+            />
             <PageTitle title={picture.collectionPlant.plant.name} />
             <img
                 src={`${SERVER_URL}/uploads/progress-pictures/${picture.imagePath}`}
                 alt={`Progress picture of ${picture.collectionPlant.plant.name} from ${picture.pictureDate}`}
                 className="progress-picture-page-image"
             />
+            {hasMultiple && (
+                <div className="progress-details-nav">
+                    <Button
+                        icon={faBackward}
+                        onClick={() => navigate(`/progress-picture/${prevPicture.id}`)}
+                        disabled={!prevPicture}
+                    />
+                    <Button
+                        icon={faForward}
+                        onClick={() => navigate(`/progress-picture/${nextPicture.id}`)}
+                        disabled={!nextPicture}
+                    />
+                </div>
+            )}
             <form>
                 <label htmlFor="pictureDate">Photo Date:</label>
                 <input

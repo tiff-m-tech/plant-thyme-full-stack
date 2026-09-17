@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
-// import plantDatabase from "../../data/plantDatabase.json";
 import { searchPlants } from "../../services/api";
 import Button from "../ui/Button";
 import SearchCard from "../cards/SearchCard";
@@ -34,8 +33,11 @@ export default function AddPlant({ addPlantToCollection }) {
 
     return (
         <main id="addPlant">
-            {/* Passing -1 to navigate returns to the previous page in browser history. */}
-            <Button innerText="Back" onClick={() => navigate(-1)} className="back-btn" />
+            <Button
+                innerText="Back"
+                onClick={() => navigate(`/currentCollection`)}
+                className="back-btn"
+            />
             <PageTitle title="Plant Search" />
             <SearchBar
                 value={searchValue}

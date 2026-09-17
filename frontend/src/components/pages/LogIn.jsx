@@ -1,10 +1,10 @@
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import { usePageTitleForBrowserTab } from "../../hooks/usePageTitleForBrowserTab";
 import { altFromFileName } from "../../utils/altFromFileName";
 import { logoImagePath } from "../../constants";
 import PageTitle from "../ui/PageTitle";
 import Button from "../ui/Button";
-import { useNavigate } from "react-router";
 
 const HARDCODED_USERNAME = "tiffany";
 const HARDCODED_PASSWORD = "123";

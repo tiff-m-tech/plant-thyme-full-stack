@@ -19,16 +19,11 @@ public class CollectionPlant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // No @NotNull here — @Valid runs on the request body before the controller
-    // sets plant from the plantId param, so @NotNull would always fail ("plant is
-    // required") on a valid request. optional = false enforces it at the DB level instead.
     @ManyToOne(optional = false)
     @JoinColumn(name = "plant_id")
     private Plant plant;
 
-    // Inverse side of the FK, which lives on progress_picture table (mappedBy = the field there).
     // cascade = ALL + orphanRemoval delete a plant's progress pictures when the plant is deleted
-    // fix for error where I couldn't delete the collection plant because the progress pictures were still there and FK still existed
     @OneToMany(
             mappedBy = "collectionPlant",
             cascade = CascadeType.ALL,
@@ -37,27 +32,23 @@ public class CollectionPlant {
 
     private List<ProgressPicture> progressPictures = new ArrayList<>();
 
-    // Validation constraints (@Size, @PositiveOrZero, @PastOrPresent) are checked by
-    // Bean Validation when the controller uses @Valid, and failures return a 400 via
-    // GlobalExceptionHandler. @Column annotations are JPA schema config, not validation.
-
     @PastOrPresent(message = "Purchase date cannot be in the future.")
     private LocalDate purchaseDate;
 
-    @Size(max = 100, message = "Purchase store must be 100 characters or less.")
+    @Size(max = 50, message = "Purchase store must be 50 characters or less.")
     private String purchaseStore;
 
     @PositiveOrZero(message = "Cost cannot be negative.")
-    @Column(precision = 10, scale = 2) // precision = 10 = up to 10 total digits, scale = 2 = two decimal places (cents)
+    @Column(precision = 10, scale = 2) // precision = 10, up to 10 total digits, scale = 2, two decimal places (cents)
     private BigDecimal cost;
 
-    @Size(max = 100, message = "Nickname must be 100 characters or less.")
+    @Size(max = 50, message = "Nickname must be 50 characters or less.")
     private String nickname;
 
-    @Size(max = 100, message = "Location must be 100 characters or less.")
+    @Size(max = 50, message = "Location must be 50 characters or less.")
     private String location;
 
-    @Column(length = 1000) // database column
+    @Column(length = 1000)
     @Size(max = 1000, message = "Notes must be 1000 characters or less.")
     private String notes;
 

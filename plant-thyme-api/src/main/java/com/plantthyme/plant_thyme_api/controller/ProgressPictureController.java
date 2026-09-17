@@ -31,9 +31,14 @@ public class ProgressPictureController {
         this.fileStorageService = fileStorageService;
     }
 
-    // GET all progress pictures
+    // GET all progress pictures from a collection plant
+// GET progress pictures — all, or filtered by collection plant when the param is present
     @GetMapping
-    public List<ProgressPicture> getAllProgressPictures() {
+    public List<ProgressPicture> getProgressPictures(
+            @RequestParam(required = false) Long collectionPlantId) {
+        if (collectionPlantId != null) {
+            return progressPictureRepository.findByCollectionPlantId(collectionPlantId);
+        }
         return progressPictureRepository.findAll();
     }
 
@@ -45,16 +50,14 @@ public class ProgressPictureController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // POST a new progress picture (linked to a collection plant)
-    // Upload endpoint — takes a FILE (multipart), not JSON. Different request type from my other POST.
-    // @RequestParam("file") MultipartFile = the uploaded file. "file" is the name the frontend/Postman labels it.
+    // POST a new progress picture
+    // Upload endpoint — takes a FILE (multipart), not JSON.
     // No @RequestBody / @Valid here because there's no JSON body — just a file + a param.
     @PostMapping("/upload")
     public ResponseEntity<ProgressPicture> uploadProgressPicture(
             @RequestParam("file") MultipartFile file,
             @RequestParam Long collectionPlantId) {
 
-        // Find which plant this picture belongs to (bad id -> 400).
         CollectionPlant collectionPlant =
                 collectionPlantRepository.findById(collectionPlantId).orElse(null);
         if (collectionPlant == null) {
@@ -64,17 +67,16 @@ public class ProgressPictureController {
         // Hand the file to the service; get back the saved filename.
         String filename = fileStorageService.storeFile(file);
 
-        // Build the record with backend-set defaults (user edits type/notes later).
         ProgressPicture picture = new ProgressPicture();
         picture.setCollectionPlant(collectionPlant);
         picture.setImagePath(filename);
-        picture.setPictureDate(LocalDate.now());   // backend stamps today's date
+        picture.setPictureDate(LocalDate.now());
 
         ProgressPicture saved = progressPictureRepository.save(picture);
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
-    // PUT update a progress picture (update type and notes, can't update picture)
+    // PUT update a progress picture's details
     @PutMapping("/{id}")
     public ResponseEntity<ProgressPicture> updateProgressPicture(
             @PathVariable Long id,

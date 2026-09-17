@@ -1,6 +1,12 @@
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEnvelope, faPhone, faHouse, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import {
+    faLeaf,
+    faEnvelope,
+    faPhone,
+    faHouse,
+    faPenToSquare,
+} from "@fortawesome/free-solid-svg-icons";
 import Button from "../ui/Button";
 import PageTitle from "../ui/PageTitle";
 import SectionDivider from "../ui/SectionDivider";
@@ -33,7 +39,9 @@ export default function Contact() {
         <main id="contact">
             <img src={contactImagePath} alt="" className="large-page-image" />
             <PageTitle title={pageTitle} />
-            <h2>Don't be a stranger, leaf me a message!</h2>
+            <h2>
+                <FontAwesomeIcon icon={faLeaf} /> Don't be a stranger, leaf me a message!
+            </h2>
             <div className="contact-page-summary">
                 Have a question, suggestion, or a leafy idea to share? Send it my way. I'd love to
                 hear from you!

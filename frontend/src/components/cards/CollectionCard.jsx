@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSun, faShower, faSeedling } from "@fortawesome/free-solid-svg-icons";
-import { altFromFileName } from "../../utils/altFromFileName";
+import { faBookOpen, faSun, faShower, faSeedling } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router";
+import { altFromFileName } from "../../utils/altFromFileName";
 import Button from "../ui/Button";
 
 export default function CollectionCard({
@@ -53,7 +53,8 @@ export default function CollectionCard({
                     </div>
                 </div>
                 <Button
-                    innerText="See Plant Details"
+                    innerText="Plant Details"
+                    icon={faBookOpen}
                     onClick={() => navigate(`/currentCollection/${collectionId}`)}
                 />
             </div>

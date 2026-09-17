@@ -1,6 +1,7 @@
--- Plant Thyme: seed data for the user's current collection
+-- Seed data for the user's current collection. (We currently are only setup for one user.)
 -- Based on the original currentCollection.js mock data.
 -- Run AFTER plants.sql so the referenced plant IDs already exist.
+-- 'collection_plant' table
 
 USE plant_thyme;
 

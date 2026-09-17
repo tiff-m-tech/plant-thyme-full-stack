@@ -59,12 +59,12 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 1rem;
+    gap: 2rem;
     width: 100%;
 }
 
 .file-upload-input {
-    display: none; /* hide the ugly default */
+    display: none; /* hide the ugly default for "choose file" file upload */
 }
 
 .file-upload-label {

@@ -84,7 +84,6 @@ function PlantDetailsContent({ collectionPlant, removePlantFromCollection, refre
     // handleChange updates whichever field changed, keyed by the input's name.
     // - Text/date/textarea inputs store their value (a string) from event.target.value.
     // - Checkboxes store true/false from event.target.checked
-
     function handleChange(event) {
         const { name, value, type, checked } = event.target;
         setDetailsData((prev) => ({
@@ -130,7 +129,11 @@ function PlantDetailsContent({ collectionPlant, removePlantFromCollection, refre
 
     return (
         <main id="plantDetails">
-            <Button innerText="Back" onClick={() => navigate(-1)} className="back-btn" />
+            <Button
+                innerText="Back"
+                onClick={() => navigate(`/currentCollection`)}
+                className="back-btn"
+            />
             <img
                 src={`${import.meta.env.BASE_URL}images/plants/${collectionPlant.plant.imagePath}`}
                 alt={altFromFileName(collectionPlant.plant.imagePath)}
@@ -188,6 +191,7 @@ function PlantDetailsContent({ collectionPlant, removePlantFromCollection, refre
                             disabled={!isEditing}
                             onChange={handleChange}
                         />
+                        <span className="toggle-slider"></span>
                         Show on card
                     </label>
                 </div>
@@ -209,6 +213,7 @@ function PlantDetailsContent({ collectionPlant, removePlantFromCollection, refre
                             disabled={!isEditing}
                             onChange={handleChange}
                         />
+                        <span className="toggle-slider"></span>
                         Show on card
                     </label>
                 </div>

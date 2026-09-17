@@ -18,7 +18,7 @@ export default function NotFound() {
             <img
                 src={`${import.meta.env.BASE_URL}images/brand/${randomImage}`}
                 alt=""
-                className="large-page-image not-found-image"
+                className="not-found-image"
             />
             <h2>This page wandered off to find more sunlight. 🌿</h2>
             <p>You might have landed here because:</p>
