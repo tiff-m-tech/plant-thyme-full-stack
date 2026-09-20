@@ -1,8 +1,14 @@
-# Plant Thyme 🪴
+<div align="center">
+  <img src="readme-resources/logo.png" alt="Plant Thyme logo" width="600px" />
+  <p><em>Grow your collection, one plant story at a time.</em></p>
+</div>
+
+---
 
 <div align="center">
   <img src="https://img.shields.io/badge/React-61DBFB?style=for-the-badge&logo=react&logoColor=333333" alt="React" />
   <img src="https://img.shields.io/badge/JavaScript-F0DB4F?style=for-the-badge&logo=javascript&logoColor=333333" alt="JavaScript" />
+  <img src="https://img.shields.io/badge/CSS-663399?style=for-the-badge&logo=css&logoColor=white" alt="CSS" />
   <img src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white" alt="Vite" />
   <img src="https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=reactrouter&logoColor=white" alt="React Router" />
   <img src="https://img.shields.io/badge/Font_Awesome-0A6EB4?style=for-the-badge&logo=fontawesome&logoColor=white" alt="Font Awesome" />
@@ -16,19 +22,19 @@
   <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL" />
 </div>
 
-<!-- TODO: Remove any badge above for a technology you didn't actually use, and add any you're missing. -->
-
 ---
 
 <div align="center">
     <a href="#about">About</a> •
     <a href="#features">Features</a> •
+    <a href="#screenshots">Preview of UI</a> •
     <a href="#tech">Tech Stack</a> •
     <a href="#installation">Installation</a> •
     <a href="#database">Database</a> •
     <a href="#api">API</a> •
     <a href="#visuals">Wireframes</a> •
-    <a href="#future">Future Features</a>
+    <a href="#future">Future Features</a> •
+    <a href="#learned">What I Learned</a>
 </div>
 
 ---
@@ -36,8 +42,6 @@
 <a name="about"></a>
 
 ## 💡 About the Project
-
-> _Grow your collection, one plant story at a time._
 
 Plant Thyme is a full-stack houseplant tracking application built to help plant lovers keep their collections organized and watch each plant's story unfold over time.
 
@@ -51,7 +55,7 @@ Build your personal collection from a plant database, customize details for each
 
 ## 🧩 Features
 
-### 🌱 Build Your Plant Collection
+### 🪴 Build Your Plant Collection
 
 Add houseplants from the plant database to create your own personal collection.
 
@@ -59,7 +63,7 @@ Add houseplants from the plant database to create your own personal collection.
 
 Plants are displayed alphabetically, and the live search feature filters matching plants as you type.
 
-### 🪴 Personalized Plant Cards
+### 🏷️ Personalized Plant Cards
 
 Each plant card displays the plant name along with an optional nickname and location. You can choose whether the nickname and location appear on the card.
 
@@ -68,7 +72,7 @@ Each plant card displays the plant name along with an optional nickname and loca
 Each plant in your collection has its own details page where you can track and edit:
 
 - Purchase date
-- Store
+- Store Purchased From
 - Cost
 - Nickname
 - Location
@@ -100,8 +104,41 @@ Use the Add Plant page to search the plant database and add new plants to your c
 
 Plants that are no longer part of your collection can be removed from their Plant Details page.
 
+### 📱 Responsive Design
+
+The layout adapts to desktop, tablet, and mobile screens, using CSS Grid and Flexbox to keep everything readable and organized at any size.
+
 > [!NOTE]
 > The current version uses a single hard-coded user while the application is in development.
+
+---
+
+<a name="screenshots"></a>
+
+## 📸 Preview of UI
+
+> Click any section below to expand the screenshots.
+
+<details>
+  <summary>Login & Home</summary><br />
+  <img src="readme-resources/login.png" alt="Login page." width="500px" />
+  <img src="readme-resources/home.png" alt="Home page." width="500px" />
+</details>
+
+<details>
+  <summary>Collection</summary><br />
+  <img src="readme-resources/collection.png" alt="Collection view." width="500px" />
+</details>
+
+<details>
+  <summary>Plant Details</summary><br />
+  <img src="readme-resources/details.png" alt="Plant details page." width="500px" />
+</details>
+
+<details>
+  <summary>Progress Picture Details</summary><br />
+  <img src="readme-resources/progressDetails.png" alt="Progress picture details." width="500px" />
+</details>
 
 ---
 
@@ -115,6 +152,7 @@ Plants that are no longer part of your collection can be removed from their Plan
 | ---------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------- |
 |                    ![React](https://img.shields.io/badge/React-61DBFB?style=for-the-badge&logo=react&logoColor=20232A) | Component-based UI with a virtual DOM for an efficient, interactive experience |
 |     ![JavaScript](https://img.shields.io/badge/JavaScript-F0DB4F?style=for-the-badge&logo=javascript&logoColor=323330) | Core language for dynamic behavior in the browser                              |
+|                           ![CSS](https://img.shields.io/badge/CSS-663399?style=for-the-badge&logo=css&logoColor=white) | Custom styling with a responsive layout built on CSS Grid and Flexbox          |
 | ![React Router](https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=reactrouter&logoColor=white) | Declarative, component-based navigation and routing                            |
 |                        ![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white) | Fast dev server with near-instant Hot Module Replacement (HMR)                 |
 | ![Font Awesome](https://img.shields.io/badge/Font_Awesome-0A6EB4?style=for-the-badge&logo=fontawesome&logoColor=white) | Scalable vector icons customizable with CSS                                    |
@@ -128,8 +166,6 @@ Plants that are no longer part of your collection can be removed from their Plan
 |            ![Maven](https://img.shields.io/badge/Maven-C71A36?style=for-the-badge&logo=apachemaven&logoColor=white) | Build tool and dependency management                              |
 |      ![Hibernate](https://img.shields.io/badge/Hibernate-59666C?style=for-the-badge&logo=hibernate&logoColor=white) | ORM (via Spring Data JPA) mapping Java objects to database tables |
 |                  ![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white) | Relational database for persistent, structured storage            |
-
-<!-- TODO: Remove any row for a technology you didn't use. -->
 
 ---
 
@@ -152,46 +188,46 @@ The project has two parts, both inside this repo: `plant-thyme-api` (the Spring 
 
 1. **Clone the repository** and move into the project folder:
 
-```shell
-   git clone https://github.com/tiff-m-tech/plant-thyme-full-stack.git
-   cd plant-thyme-full-stack
-```
+    ```shell
+    git clone https://github.com/tiff-m-tech/plant-thyme-full-stack.git
+    cd plant-thyme-full-stack
+    ```
 
-1. **Create the database.** In MySQL, create an empty database named `plant_thyme`:
+2. **Create the database.** In MySQL, create an empty database named `plant_thyme`:
 
-```sql
-   CREATE DATABASE plant_thyme;
-```
+    ```sql
+    CREATE DATABASE plant_thyme;
+    ```
 
-1. **Add your environment variables.** The backend reads its database connection from a `.env` file. Create a file named `.env` inside the `plant-thyme-api` folder and add your own MySQL details:
+3. **Add your environment variables.** The backend reads its database connection from a `.env` file. Create a file named `.env` inside the `plant-thyme-api` folder and add your own MySQL details:
 
-```properties
-   DB_HOST=localhost
-   DB_PORT=3306
-   DB_NAME=plant_thyme
-   DB_USER=root
-   DB_PASSWORD=your_password_here
-```
+    ```properties
+    DB_HOST=localhost
+    DB_PORT=3306
+    DB_NAME=plant_thyme
+    DB_USER=root
+    DB_PASSWORD=your_password_here
+    ```
 
-1. **Run the backend.** Open the `plant-thyme-api` project in IntelliJ and run the main application class, `PlantThymeApiApplication`. Hibernate creates the tables automatically on the first run.
+4. **Run the backend.** Open the `plant-thyme-api` project in IntelliJ and run the main application class, `PlantThymeApiApplication`. Hibernate creates the tables automatically on the first run.
 
     > [!NOTE]
     > The `.env` path is resolved relative to the project root, so your run configuration's working directory should be the repository root (`plant-thyme-full-stack`). If the app starts but can't connect to the database, that working directory is usually why.
 
     🟢 The API should now be running at `http://localhost:8080`.
 
-1. **Seed the database.** Once the tables exist, import the seed files from the `db/` folder **in this order** — each one depends on the one before it:
+5. **Seed the database.** Once the tables exist, import the seed files from the `db/` folder **in this order** — each one depends on the one before it:
     1. `db/plants.sql` — the master plant catalog
-    1. `db/collection_plants.sql` — a sample collection
-    1. `db/progress_pictures.sql` — sample progress pictures
+    2. `db/collection_plants.sql` — a sample collection
+    3. `db/progress_pictures.sql` — sample progress pictures
 
     You can run each file in MySQL Workbench, or from the terminal:
 
-```shell
-   mysql -u root -p plant_thyme < db/plants.sql
-   mysql -u root -p plant_thyme < db/collection_plants.sql
-   mysql -u root -p plant_thyme < db/progress_pictures.sql
-```
+    ```shell
+    mysql -u root -p plant_thyme < db/plants.sql
+    mysql -u root -p plant_thyme < db/collection_plants.sql
+    mysql -u root -p plant_thyme < db/progress_pictures.sql
+    ```
 
 ---
 
@@ -199,25 +235,28 @@ The project has two parts, both inside this repo: `plant-thyme-api` (the Spring 
 
 1. **Open a new terminal and move into the front end directory:**
 
-```shell
-   cd frontend
-```
+    ```shell
+    cd frontend
+    ```
 
-1. **Install dependencies:**
+2. **Install dependencies:**
 
-```shell
-   npm install
-```
+    ```shell
+    npm install
+    ```
 
-1. **Start the dev server:**
+3. **Start the dev server:**
 
-```shell
-   npm run dev
-```
+    ```shell
+    npm run dev
+    ```
 
-🟢 The front end will start, typically at `http://localhost:5173`.
+    🟢 The front end will start, typically at `http://localhost:5173`.
 
-1. **Log in with the demo credentials** — username: `tiffany`, password: `123`.
+4. **Log in with the demo credentials** — username: `tiffany`, password: `123`.
+
+> [!TIP]
+> **Trying it out:** In the seeded data, the **Brasil Philodendron** — the first plant shown in your collection, since they're listed alphabetically — is the only plant that comes with progress pictures. To test uploading your own, the `demo-images/` folder has four sample Golden Pothos photos you can download and add to the Golden Pothos in your collection. (Or use whatever photos you've got — the uploader won't judge if it's a picture of your cat. 🐱)
 
 ---
 
@@ -240,8 +279,8 @@ Plant Thyme uses a MySQL database built around three core entities, managed by H
 
 ```mermaid
 erDiagram
-    plant ||--o{ collection_plant : "appears in"
-    collection_plant ||--o{ progress_picture : "has"
+    plant ||--o{ collection_plant : ""
+    collection_plant ||--o{ progress_picture : ""
 
     plant {
         bigint id PK
@@ -317,12 +356,11 @@ All endpoints are served from the Spring Boot backend at `http://localhost:8080`
 
 ## 🖼️ Wireframes
 
-<details>
-  <summary>Click to view the wireframe</summary><br />
-  <a href="readme-resources/wireframe.png">
-    <img src="readme-resources/wireframe.png" alt="Plant Thyme wireframe" width="100%" />
-  </a>
-</details>
+<em>Click the wireframe to open it full-size.</em>
+
+<a href="readme-resources/wireframe.png?raw=true">
+  <img src="readme-resources/wireframe.png" alt="Plant Thyme wireframe" width="100%" />
+</a>
 
 ---
 
@@ -330,15 +368,41 @@ All endpoints are served from the Spring Boot backend at `http://localhost:8080`
 
 ## 🔮 Unsolved Problems & Future Features
 
-- **User accounts & authentication:** Login is currently hardcoded to a single user, and there's just one shared collection. The plan is real registration and secure authentication so that each person has their own account and their own private collection.
-- **Wishlist:** A list for plants you _want_ but don't own yet — much like the collection, with a photo and editable details such as which stores usually carry it, a good target price, and notes (for example, how to tell whether a specimen is healthy). Once you buy one, you could move it straight into your collection.
-- **Past plants:** A list for plants you no longer have, added from the catalog or moved out of your current collection. You could keep notes on why it's gone — did it die, did you sell it, was it too high-maintenance, or is it one to try again once the conditions are right (like when you finally get a greenhouse)?
-- **Connect to a plant API:** The catalog currently holds about 34 plants. Hooking into a public plant API could open that up to thousands of options to search and add.
-- **Daily plant fact:** A fun page that surfaces a new plant fact each day.
-- **Search, sort & filter the collection:** Right now your collection is searchable by name and sorted alphabetically. This would add richer sorting and filtering by the other details you track — location, store, purchase date, cost — so you could, for example, pull up every plant in the bedroom, or everything you bought this spring.
+- 🔐 **User accounts & authentication:** Login is currently hardcoded to a single user, and there's just one shared collection. The plan is real registration and secure authentication so that each person has their own account and their own private collection.
+- ⭐ **Wishlist:** A list for plants you _want_ but don't own yet — much like the collection, with a photo and editable details such as which stores usually carry it, a good target price, and notes (for example, how to tell whether a plant is healthy). Once you buy one, you could move it straight into your collection.
+- 🍂 **Past plants:** A list for plants you no longer have, added from the catalog or moved out of your current collection. You could keep notes on why it's gone — did it die, did you sell it, was it too high-maintenance, or is it one to try again once the conditions are right (like when you finally get a greenhouse)?
+- 🔌 **Connect to a plant API:** The catalog currently holds about 34 plants. Hooking into a public plant API could open that up to thousands of options to search and add.
+- 💡 **Daily plant fact:** A fun page that shows a new plant fact each day.
+- 🔍 **Search, sort & filter the collection:** Right now your collection is searchable by name and sorted alphabetically. This would add richer sorting and filtering by the other details you track — location, store, purchase date, cost — so you could, for example, pull up every plant in the bedroom, or everything you bought this spring.
 
 ---
 
-## 🧑‍💻 Author
+<a name="learned"></a>
 
-Tiffany — [@your-github](https://github.com/tiff-m-tech)
+## 🧠 What I Learned & Design Decisions
+
+**The backend was the real challenge.** I built the first version of Plant Thyme in about a month, roughly two weeks on the front end and two on the back. The front end was the fun part; I already had some experience there and I love designing things, so it came fairly naturally. The back end was a different story. My only prior backend experience was a few weeks of Node.js, and Java with Spring Boot turned out to be a much steeper climb — a genuinely different beast. It's the part I learned the most from, and the part I still have the most planned for (DTOs and real authentication are next on my list).
+
+**Designing for people, not just myself.** A surprising amount of the work was deciding _which_ details to include, and trying to see the app through other people's eyes instead of only my own. The nickname and location fields are a good example: personally I'd find them a bit like clutter, but I know plenty of plant people would love them, so I made them optional and let users choose whether they show on a card.
+
+**The feature I chose _not_ to build.** A lot of plant apps track when you last watered a plant, and if I ever put this in an app store I'm sure people would ask for it. But I left it out on purpose. Whether a plant actually needs water depends on too many things, and watering on a fixed schedule tends to lead to over- or under-watering — you're better off just checking your plants a few times a week. I didn't want to add a feature that quietly encourages a bad habit, even a popular one.
+
+---
+
+## 🎨 Credits
+
+- All plant images were created with the help of ChatGPT and edited by me. (Thanks you Chatty! 🤖)
+
+---
+
+## 💻 Author
+
+Tiffany :) — [@tiff-m-tech](https://github.com/tiff-m-tech)
+
+---
+
+## 📄 License
+
+© 2026 Tiffany. All rights reserved.
+
+This project is shared publicly for viewing and portfolio purposes only. Please don't copy, reuse, or redistribute the code or images without permission.
