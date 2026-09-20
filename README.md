@@ -391,7 +391,7 @@ All endpoints are served from the Spring Boot backend at `http://localhost:8080`
 
 ## 🎨 Credits
 
-- All plant images were created with the help of ChatGPT and edited by me. (Thanks you Chatty! 🤖)
+- All plant images were created with the help of ChatGPT and edited by me. (Thank you Chatty! 🤖)
 
 ---
 
