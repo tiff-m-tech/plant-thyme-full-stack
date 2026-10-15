@@ -2,8 +2,6 @@ package com.plantthyme.plant_thyme_api.controller;
 
 import com.plantthyme.plant_thyme_api.model.Plant;
 import com.plantthyme.plant_thyme_api.repository.PlantRepository;
-import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

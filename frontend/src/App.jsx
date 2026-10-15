@@ -16,7 +16,7 @@ import ScrollToTop from "./components/layout/ScrollToTop";
 function App() {
     const [collection, setCollection] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(true);
 
     useEffect(() => {
         async function loadCollection() {

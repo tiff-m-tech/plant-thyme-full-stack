@@ -266,19 +266,23 @@ function PlantDetailsContent({ collectionPlant, removePlantFromCollection, refre
                 />
             </div>
             {/* Removing a plant is destructive, so the user must confirm the action in a modal.  */}
-            <Modal
-                role="dialog" // For screen readers.
-                aria-modal="true" // This tells assistive technology that the dialog is modal.
-                isOpen={showConfirm}
-                onClose={() => setShowConfirm(false)}
-                onConfirm={handleRemove}
-                message={`Are you sure you want to remove the ${collectionPlant.plant.name} from your collection?`}
-                confirmText="Yes, Remove"
-                cancelText="Cancel"
-                iconClassName="modal-yellow-warning-icon"
-                confirmButtonClassName="remove-btn"
-                icon={faTriangleExclamation}
-            />
+            {showConfirm && (
+                <div className="modal-overlay">
+                    <Modal
+                        role="dialog"
+                        aria-modal="true"
+                        isOpen={showConfirm}
+                        onClose={() => setShowConfirm(false)}
+                        onConfirm={handleRemove}
+                        message={`Are you sure you want to remove the ${collectionPlant.plant.name} from your collection?`}
+                        confirmText="Yes, Remove"
+                        cancelText="Cancel"
+                        iconClassName="modal-yellow-warning-icon"
+                        confirmButtonClassName="remove-btn"
+                        icon={faTriangleExclamation}
+                    />
+                </div>
+            )}
         </main>
     );
 }
