@@ -229,19 +229,23 @@ export default function ProgressPictureDetails() {
                     className="remove-btn"
                 />
             </div>
-            <Modal
-                role="dialog"
-                aria-modal="true"
-                isOpen={showConfirm}
-                onClose={() => setShowConfirm(false)}
-                onConfirm={handleDelete}
-                message="Are you sure you want to remove this progress picture and it's details?"
-                confirmText="Yes, Remove"
-                cancelText="Cancel"
-                iconClassName="modal-yellow-warning-icon"
-                confirmButtonClassName="remove-btn"
-                icon={faTriangleExclamation}
-            />
+            {showConfirm && (
+                <div className="modal-overlay">
+                    <Modal
+                        role="dialog"
+                        aria-modal="true"
+                        isOpen={showConfirm}
+                        onClose={() => setShowConfirm(false)}
+                        onConfirm={handleDelete}
+                        message="Are you sure you want to remove this progress picture and its details?"
+                        confirmText="Yes, Remove"
+                        cancelText="Cancel"
+                        iconClassName="modal-yellow-warning-icon"
+                        confirmButtonClassName="remove-btn"
+                        icon={faTriangleExclamation}
+                    />
+                </div>
+            )}
         </main>
     );
 }
