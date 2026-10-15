@@ -98,7 +98,12 @@ export default function ProgressPictureDetails() {
             setErrors([]);
             setIsEditing(false);
         } catch (error) {
-            setErrors(error.message ?? ["Something went wrong. Please try again."]);
+            const message = error.message;
+            setErrors(
+                Array.isArray(message)
+                    ? message
+                    : [message ?? "Something went wrong. Please try again."],
+            );
         }
     }
 
