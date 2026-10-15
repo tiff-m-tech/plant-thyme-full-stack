@@ -1,5 +1,7 @@
 package com.plantthyme.plant_thyme_api.controller;
 
+import com.plantthyme.plant_thyme_api.dto.ProgressPictureResponse;
+import com.plantthyme.plant_thyme_api.dto.ProgressPictureUpdateRequest;
 import com.plantthyme.plant_thyme_api.model.CollectionPlant;
 import com.plantthyme.plant_thyme_api.model.ProgressPicture;
 import com.plantthyme.plant_thyme_api.repository.CollectionPlantRepository;
@@ -31,21 +33,25 @@ public class ProgressPictureController {
         this.fileStorageService = fileStorageService;
     }
 
-    // GET all progress pictures from a collection plant
-// GET progress pictures — all, or filtered by collection plant when the param is present
+    // GET progress pictures — all, or filtered by collection plant when the param is present
     @GetMapping
-    public List<ProgressPicture> getProgressPictures(
+    public List<ProgressPictureResponse> getProgressPictures(
             @RequestParam(required = false) Long collectionPlantId) {
-        if (collectionPlantId != null) {
-            return progressPictureRepository.findByCollectionPlantId(collectionPlantId);
-        }
-        return progressPictureRepository.findAll();
+
+        List<ProgressPicture> pictures = (collectionPlantId != null)
+                ? progressPictureRepository.findByCollectionPlantId(collectionPlantId)
+                : progressPictureRepository.findAll();
+
+        return pictures.stream()
+                .map(ProgressPictureResponse::fromEntity)
+                .toList();
     }
 
     // GET one progress picture by id
     @GetMapping("/{id}")
-    public ResponseEntity<ProgressPicture> getProgressPictureById(@PathVariable Long id) {
+    public ResponseEntity<ProgressPictureResponse> getProgressPictureById(@PathVariable Long id) {
         return progressPictureRepository.findById(id)
+                .map(ProgressPictureResponse::fromEntity)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
@@ -54,7 +60,7 @@ public class ProgressPictureController {
     // Upload endpoint — takes a FILE (multipart), not JSON.
     // No @RequestBody / @Valid here because there's no JSON body — just a file + a param.
     @PostMapping("/upload")
-    public ResponseEntity<ProgressPicture> uploadProgressPicture(
+    public ResponseEntity<ProgressPictureResponse> uploadProgressPicture(
             @RequestParam("file") MultipartFile file,
             @RequestParam Long collectionPlantId) {
 
@@ -73,14 +79,15 @@ public class ProgressPictureController {
         picture.setPictureDate(LocalDate.now());
 
         ProgressPicture saved = progressPictureRepository.save(picture);
-        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(ProgressPictureResponse.fromEntity(saved));
     }
 
     // PUT update a progress picture's details
     @PutMapping("/{id}")
-    public ResponseEntity<ProgressPicture> updateProgressPicture(
+    public ResponseEntity<ProgressPictureResponse> updateProgressPicture(
             @PathVariable Long id,
-            @Valid @RequestBody ProgressPicture updatedPicture) {
+            @Valid @RequestBody ProgressPictureUpdateRequest request) {
 
         ProgressPicture existingPicture =
                 progressPictureRepository.findById(id).orElse(null);
@@ -89,12 +96,12 @@ public class ProgressPictureController {
             return ResponseEntity.notFound().build();
         }
 
-        existingPicture.setPictureDate(updatedPicture.getPictureDate());
-        existingPicture.setUpdateType(updatedPicture.getUpdateType());
-        existingPicture.setNotes(updatedPicture.getNotes());
+        existingPicture.setPictureDate(request.pictureDate());
+        existingPicture.setUpdateType(request.updateType());
+        existingPicture.setNotes(request.notes());
 
         ProgressPicture saved = progressPictureRepository.save(existingPicture);
-        return ResponseEntity.ok(saved);
+        return ResponseEntity.ok(ProgressPictureResponse.fromEntity(saved));
     }
 
     // DELETE a progress picture
