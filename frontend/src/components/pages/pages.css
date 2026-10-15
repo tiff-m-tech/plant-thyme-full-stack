@@ -298,7 +298,11 @@ textarea:disabled {
     border-radius: 5px;
 }
 
-.no-search-results-found-message {
+.no-search-results-found-message,
+.search-error-message {
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: #da5955;
     grid-column: 1 / -1; /* start at the first line, end at the last */
 }
 

@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBug } from "@fortawesome/free-solid-svg-icons";
 import { searchPlants } from "../../services/api";
 import Button from "../ui/Button";
 import SearchCard from "../cards/SearchCard";
@@ -11,6 +13,7 @@ export default function AddPlant({ addPlantToCollection }) {
     const [searchValue, setSearchValue] = useState("");
     const [filteredPlants, setFilteredPlants] = useState([]);
     const [hasSearched, setHasSearched] = useState(false);
+    const [searchError, setSearchError] = useState("");
     const navigate = useNavigate();
 
     function handleChange(event) {
@@ -24,8 +27,10 @@ export default function AddPlant({ addPlantToCollection }) {
             const results = await searchPlants(searchValue.trim());
             setFilteredPlants(results);
             setHasSearched(true);
+            setSearchError("");
         } catch (error) {
             console.error("Failed to search plants:", error);
+            setSearchError("Unable to search right now. Please try again.");
         }
     }
 
@@ -55,9 +60,14 @@ export default function AddPlant({ addPlantToCollection }) {
                         addPlantToCollection={addPlantToCollection}
                     />
                 ))}
-                {hasSearched && filteredPlants.length === 0 && (
+                {searchError && (
+                    <p className="search-error-message">
+                        <FontAwesomeIcon icon={faBug} /> {searchError}
+                    </p>
+                )}
+                {hasSearched && !searchError && filteredPlants.length === 0 && (
                     <p className="no-search-results-found-message">
-                        No results found, please search again!
+                        <FontAwesomeIcon icon={faBug} /> No results found, please search again!
                     </p>
                 )}
             </div>
