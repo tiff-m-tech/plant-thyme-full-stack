@@ -88,7 +88,6 @@ export default function ProgressPictureDetails() {
     async function handleSave() {
         try {
             const details = {
-                imagePath: picture.imagePath,
                 pictureDate: formData.pictureDate,
                 updateType: formData.updateType === "" ? null : formData.updateType,
                 notes: formData.notes === "" ? null : formData.notes,
