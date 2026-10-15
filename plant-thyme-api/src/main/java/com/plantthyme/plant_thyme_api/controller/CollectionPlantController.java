@@ -1,5 +1,7 @@
 package com.plantthyme.plant_thyme_api.controller;
 
+import com.plantthyme.plant_thyme_api.dto.CollectionPlantRequest;
+import com.plantthyme.plant_thyme_api.dto.CollectionPlantResponse;
 import com.plantthyme.plant_thyme_api.model.CollectionPlant;
 import com.plantthyme.plant_thyme_api.model.Plant;
 import com.plantthyme.plant_thyme_api.repository.CollectionPlantRepository;
@@ -27,24 +29,27 @@ public class CollectionPlantController {
 
     // GET all collection plants
     @GetMapping
-    public List<CollectionPlant> getAllCollectionPlants() {
-        return collectionPlantRepository.findAll();
+    public List<CollectionPlantResponse> getAllCollectionPlants() {
+        return collectionPlantRepository.findAll()
+                .stream()
+                .map(CollectionPlantResponse::fromEntity)
+                .toList();
     }
 
     // GET one collection plant by id
     @GetMapping("/{id}")
-    public ResponseEntity<CollectionPlant> getCollectionPlantById(@PathVariable Long id) {
-
+    public ResponseEntity<CollectionPlantResponse> getCollectionPlantById(@PathVariable Long id) {
         return collectionPlantRepository.findById(id)
+                .map(CollectionPlantResponse::fromEntity)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     // POST add new collection plant
     @PostMapping
-    public ResponseEntity<CollectionPlant> createCollectionPlant(
+    public ResponseEntity<CollectionPlantResponse> createCollectionPlant(
             @RequestParam Long plantId,
-            @Valid @RequestBody CollectionPlant collectionPlant) {
+            @Valid @RequestBody CollectionPlantRequest request) {
 
         Plant plant = plantRepository.findById(plantId).orElse(null);
 
@@ -52,36 +57,31 @@ public class CollectionPlantController {
             return ResponseEntity.badRequest().build();
         }
 
+        CollectionPlant collectionPlant = new CollectionPlant();
         collectionPlant.setPlant(plant);
-        CollectionPlant saved = collectionPlantRepository.save(collectionPlant);
+        applyRequest(collectionPlant, request);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
+        CollectionPlant saved = collectionPlantRepository.save(collectionPlant);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(CollectionPlantResponse.fromEntity(saved));
     }
 
     // PUT update collection plant
     @PutMapping("/{id}")
-    public ResponseEntity<CollectionPlant> updateCollectionPlant(
+    public ResponseEntity<CollectionPlantResponse> updateCollectionPlant(
             @PathVariable Long id,
-            @Valid @RequestBody CollectionPlant updatedPlant) {
+            @Valid @RequestBody CollectionPlantRequest request) {
 
-        CollectionPlant existingPlant =
-                collectionPlantRepository.findById(id).orElse(null);
+        CollectionPlant existingPlant = collectionPlantRepository.findById(id).orElse(null);
 
         if (existingPlant == null) {
             return ResponseEntity.notFound().build();
         }
 
-        existingPlant.setPurchaseDate(updatedPlant.getPurchaseDate());
-        existingPlant.setPurchaseStore(updatedPlant.getPurchaseStore());
-        existingPlant.setCost(updatedPlant.getCost());
-        existingPlant.setNickname(updatedPlant.getNickname());
-        existingPlant.setLocation(updatedPlant.getLocation());
-        existingPlant.setNotes(updatedPlant.getNotes());
-        existingPlant.setShowNickname(updatedPlant.isShowNickname());
-        existingPlant.setShowLocation(updatedPlant.isShowLocation());
+        applyRequest(existingPlant, request);
 
         CollectionPlant saved = collectionPlantRepository.save(existingPlant);
-        return ResponseEntity.ok(saved);
+        return ResponseEntity.ok(CollectionPlantResponse.fromEntity(saved));
     }
 
     // DELETE one collection plant
@@ -92,5 +92,18 @@ public class CollectionPlantController {
         }
         collectionPlantRepository.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    // Copies the user-editable fields from the request onto the entity.
+    // Used by both POST and PUT so the field list lives in one place.
+    private void applyRequest(CollectionPlant collectionPlant, CollectionPlantRequest request) {
+        collectionPlant.setPurchaseDate(request.purchaseDate());
+        collectionPlant.setPurchaseStore(request.purchaseStore());
+        collectionPlant.setCost(request.cost());
+        collectionPlant.setNickname(request.nickname());
+        collectionPlant.setLocation(request.location());
+        collectionPlant.setNotes(request.notes());
+        collectionPlant.setShowNickname(Boolean.TRUE.equals(request.showNickname()));
+        collectionPlant.setShowLocation(Boolean.TRUE.equals(request.showLocation()));
     }
 }
