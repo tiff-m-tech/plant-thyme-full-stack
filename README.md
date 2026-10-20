@@ -320,7 +320,7 @@ erDiagram
 
 ## ⚙️ API Endpoints
 
-All endpoints are served from the Spring Boot backend at `http://localhost:8080`. The API is currently open (no authentication).
+All endpoints are served from the Spring Boot backend at `http://localhost:8080`. The API is currently open (no authentication). Requests and responses use DTOs (Java records) rather than the JPA entities themselves, which keeps internal fields out of the API and lets the database structure change without breaking the front end.
 
 ### Plants 🪴
 
@@ -381,7 +381,7 @@ All endpoints are served from the Spring Boot backend at `http://localhost:8080`
 
 ## 🧠 What I Learned & Design Decisions
 
-**The backend was the real challenge.** I built the first version of Plant Thyme in about a month, roughly two weeks on the front end and two on the back. The front end was the fun part; I already had some experience there and I love designing things, so it came fairly naturally. The back end was a different story. My only prior backend experience was a few weeks of Node.js, and Java with Spring Boot turned out to be a much steeper climb — a genuinely different beast. It's the part I learned the most from, and the part I still have the most planned for (DTOs and real authentication are next on my list).
+**The backend was the real challenge.** I built the first version of Plant Thyme in about a month, roughly two weeks on the front end and two on the back. The front end was the fun part; I already had some experience there and I love designing things, so it came fairly naturally. The back end was a different story. My only prior backend experience was a few weeks of Node.js, and Java with Spring Boot turned out to be a much steeper climb — a genuinely different beast. It’s the part I learned the most from, and the part I’ve kept improving since. After the bootcamp, I added a DTO layer (using Java records) so the API sends and receives only the data it needs instead of exposing the database entities directly. Real authentication is next on my list.
 
 **Designing for people, not just myself.** A surprising amount of the work was deciding _which_ details to include, and trying to see the app through other people's eyes instead of only my own. The nickname and location fields are a good example: personally I'd find them a bit like clutter, but I know plenty of plant people would love them, so I made them optional and let users choose whether they show on a card.
 
