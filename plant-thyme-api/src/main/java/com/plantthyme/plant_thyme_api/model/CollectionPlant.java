@@ -22,6 +22,10 @@ public class CollectionPlant {
     @JoinColumn(name = "plant_id")
     private Plant plant;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
     // cascade = ALL + orphanRemoval delete a plant's progress pictures when the plant is deleted
     @OneToMany(
             mappedBy = "collectionPlant",
@@ -67,6 +71,10 @@ public class CollectionPlant {
     public void setPlant(Plant plant) {
         this.plant = plant;
     }
+
+    public User getUser() { return user; }
+
+    public void setUser(User user) { this.user = user; }
 
     public LocalDate getPurchaseDate() {
         return purchaseDate;
