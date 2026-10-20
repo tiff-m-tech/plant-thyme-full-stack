@@ -69,7 +69,7 @@ export default function LogIn({ setIsLoggedIn }) {
             <div className="mock-credentials">
                 <strong>Demo login</strong>
                 <p>Username: tiffany</p>
-                <p>Password: plantthyme</p>
+                <p>Password: plantthyme (or 123 if frontend not connected)</p>
             </div>
         </main>
     );
