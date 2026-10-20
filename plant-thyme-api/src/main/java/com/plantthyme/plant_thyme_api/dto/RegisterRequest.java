@@ -10,7 +10,10 @@ public record RegisterRequest(
         String username,
 
         @NotBlank(message = "Email is required.")
-        @Email(message = "Please enter a valid email.")
+        @Email(
+                regexp = "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$",
+                message = "Please enter a valid email."
+        )
         String email,
 
         @NotBlank(message = "Password is required.")
