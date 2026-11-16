@@ -266,23 +266,34 @@ The project has two parts, both inside this repo: `plant-thyme-api` (the Spring 
 
 ## 🗄️ Database Structure (ERD)
 
-Plant Thyme uses a MySQL database built around three core entities, managed by Hibernate:
+Plant Thyme uses a MySQL database built around four entities, managed by Hibernate:
 
-- **Plant** — The master catalog of plants a user can choose from.
+- **User** — An account that owns a private collection. Passwords are stored only as BCrypt hashes.
+- **Plant** — The master catalog of plants a user can choose from, shared by everyone.
 - **CollectionPlant** — A plant a user has added to their collection, with details like nickname, cost, purchase date, store, and location. Deleting a collection plant also deletes its progress pictures (cascade).
 - **ProgressPicture** — A photo tied to a CollectionPlant, with a date, update type and notes.
 
 **Relationships:**
 
-1. Plant → CollectionPlant: One-to-Many — one catalog plant can appear many times in a collection (e.g. three Golden Pothos are three separate collection entries that all point to the same plant).
-2. CollectionPlant → ProgressPicture: One-to-Many — one collection plant can have many progress pictures.
+1. User → CollectionPlant: One-to-Many — each user has their own collection, and each collection plant belongs to exactly one user. Deleting a user also deletes their collection (cascade).
+2. Plant → CollectionPlant: One-to-Many — one catalog plant can appear many times in a collection (e.g. three Golden Pothos are three separate collection entries that all point to the same plant).
+3. CollectionPlant → ProgressPicture: One-to-Many — one collection plant can have many progress pictures.
 
 ### Entity Relationship Diagram
 
 ```mermaid
 erDiagram
+    users ||--o{ collection_plant : ""
     plant ||--o{ collection_plant : ""
     collection_plant ||--o{ progress_picture : ""
+
+    users {
+        bigint id PK
+        varchar username
+        varchar email
+        varchar password_hash
+        datetime created_at
+    }
 
     plant {
         bigint id PK
@@ -296,6 +307,7 @@ erDiagram
     collection_plant {
         bigint id PK
         bigint plant_id FK
+        bigint user_id FK
         date purchase_date
         varchar purchase_store
         decimal cost
@@ -322,7 +334,30 @@ erDiagram
 
 ## ⚙️ API Endpoints
 
-All endpoints are served from the Spring Boot backend at `http://localhost:8080`. The API is currently open (no authentication). Requests and responses use DTOs (Java records) rather than the JPA entities themselves, which keeps internal fields out of the API and lets the database structure change without breaking the front end.
+All endpoints are served from the Spring Boot backend at `http://localhost:8080`.
+
+### 🔐 Authentication
+
+Plant Thyme uses **JWT (JSON Web Token)** authentication. Logging in returns a token, which must be sent with every protected request in the `Authorization` header:
+
+```
+Authorization: Bearer <token>
+```
+
+Tokens expire after 24 hours. Each user can only see and change their own collection and progress pictures. Requests for another user's data return `404`.
+
+| Access            | Endpoints                                                                          |
+| :---------------- | :--------------------------------------------------------------------------------- |
+| 🔓 Public         | `POST /api/auth/register`, `POST /api/auth/login`, uploaded images (`/uploads/**`) |
+| 🔒 Requires token | Everything else                                                                    |
+
+### Auth 🔑
+
+| Method    | Endpoint             | Description                                                        |
+| :-------- | :------------------- | :----------------------------------------------------------------- |
+| 🟡 `POST` | `/api/auth/register` | Create an account (JSON body with `username`, `email`, `password`) |
+| 🟡 `POST` | `/api/auth/login`    | Log in and receive a JWT plus basic user info                      |
+| 🟢 `GET`  | `/api/auth/me`       | Get the currently logged-in user (used to check a saved token)     |
 
 ### Plants 🪴
 
@@ -334,9 +369,11 @@ All endpoints are served from the Spring Boot backend at `http://localhost:8080`
 
 ### Collection Plants 🌿
 
+All collection plant endpoints only return or change plants owned by the logged-in user.
+
 | Method      | Endpoint                                   | Description                                                               |
 | :---------- | :----------------------------------------- | :------------------------------------------------------------------------ |
-| 🟢 `GET`    | `/api/collection-plants`                   | Retrieve every plant in the collection                                    |
+| 🟢 `GET`    | `/api/collection-plants`                   | Retrieve the logged-in user's collection                                  |
 | 🟢 `GET`    | `/api/collection-plants/{id}`              | Retrieve a single collection plant by ID                                  |
 | 🟡 `POST`   | `/api/collection-plants?plantId={plantId}` | Add a catalog plant to the collection (JSON body with collection details) |
 | 🔵 `PUT`    | `/api/collection-plants/{id}`              | Update a collection plant's details                                       |
@@ -344,25 +381,29 @@ All endpoints are served from the Spring Boot backend at `http://localhost:8080`
 
 ### Progress Pictures 📸
 
+All progress picture endpoints only return or change pictures on plants owned by the logged-in user.
+
 | Method      | Endpoint                        | Description                                                                      |
 | :---------- | :------------------------------ | :------------------------------------------------------------------------------- |
-| 🟢 `GET`    | `/api/progress-pictures`        | Retrieve all progress pictures, or filter with `?collectionPlantId={id}`         |
+| 🟢 `GET`    | `/api/progress-pictures`        | Retrieve the user's progress pictures, or filter with `?collectionPlantId={id}`  |
 | 🟢 `GET`    | `/api/progress-pictures/{id}`   | Retrieve a single progress picture by ID                                         |
 | 🟡 `POST`   | `/api/progress-pictures/upload` | Upload a picture — `multipart/form-data` with a `file` and a `collectionPlantId` |
 | 🔵 `PUT`    | `/api/progress-pictures/{id}`   | Update a picture's date, update type, and notes                                  |
 | 🔴 `DELETE` | `/api/progress-pictures/{id}`   | Delete a progress picture                                                        |
 
----
+### Error Responses ⚠️
 
-<a name="visuals"></a>
+Errors return a consistent JSON shape. Validation errors also include `fieldErrors`, so each message can be shown next to the right form field:
 
-## 🖼️ Wireframes
-
-<em>Click the wireframe to open it full-size.</em>
-
-<a href="readme-resources/wireframe.png?raw=true">
-  <img src="readme-resources/wireframe.png" alt="Plant Thyme wireframe" width="100%" />
-</a>
+```json
+{
+    "statusCode": 400,
+    "errorCode": "VALIDATION_FAILED",
+    "message": ["Please enter a valid email."],
+    "fieldErrors": { "email": "Please enter a valid email." },
+    "timestamp": "2026-11-16T21:23:31.845Z"
+}
+```
 
 ---
 
