@@ -44,8 +44,15 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         List<String> errors = ex.getBindingResult().getFieldErrors()
                 .stream().map(field -> field.getDefaultMessage())
                 .collect(Collectors.toList());
+
+        // Field name -> message, so the front end can show each error under the right input   // NEW
+        Map<String, String> fieldErrors = new HashMap<>();                                       // NEW
+        ex.getBindingResult().getFieldErrors()                                                   // NEW
+                .forEach(error -> fieldErrors.putIfAbsent(error.getField(), error.getDefaultMessage()));  // NEW
+
         errorResponse.put("statusCode", HttpStatus.BAD_REQUEST.value());
         errorResponse.put("message", errors);
+        errorResponse.put("fieldErrors", fieldErrors);                                           // NEW
         errorResponse.put("timestamp", new Date());
         errorResponse.put("errorCode", "VALIDATION_FAILED");
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
