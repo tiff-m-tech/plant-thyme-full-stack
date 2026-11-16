@@ -35,7 +35,8 @@ public class SecurityConfig {
                         .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/me").authenticated()
-                        .anyRequest().permitAll() // TEMPORARY — locked down after plants are scoped to users
+                        .requestMatchers("/api/collection-plants/**").authenticated()
+                        .anyRequest().permitAll() // TEMPORARY — locked down after progress pictures are scoped
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
