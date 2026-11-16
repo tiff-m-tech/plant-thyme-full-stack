@@ -22,8 +22,8 @@ public class CollectionPlant {
     @JoinColumn(name = "plant_id")
     private Plant plant;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     // cascade = ALL + orphanRemoval delete a plant's progress pictures when the plant is deleted
