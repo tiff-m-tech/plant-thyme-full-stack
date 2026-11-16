@@ -36,6 +36,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/me").authenticated()
                         .requestMatchers("/api/collection-plants/**").authenticated()
+                        .requestMatchers("/api/progress-pictures/**").authenticated()
                         .anyRequest().permitAll() // TEMPORARY — locked down after progress pictures are scoped
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
