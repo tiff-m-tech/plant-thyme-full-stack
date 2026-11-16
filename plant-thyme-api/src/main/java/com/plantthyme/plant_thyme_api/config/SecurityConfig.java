@@ -34,10 +34,13 @@ public class SecurityConfig {
                 .exceptionHandling(ex -> ex
                         .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/me").authenticated()
-                        .requestMatchers("/api/collection-plants/**").authenticated()
-                        .requestMatchers("/api/progress-pictures/**").authenticated()
-                        .anyRequest().permitAll() // TEMPORARY — locked down after progress pictures are scoped
+                        // Public: anyone can reach these without logging in
+                        .requestMatchers("/api/auth/register", "/api/auth/login").permitAll()
+                        .requestMatchers("/uploads/**").permitAll()      // images load via <img>, which can't send a token
+                        .requestMatchers("/error").permitAll()           // lets error messages (400, 409) come through
+
+                        // Everything else requires a valid token
+                        .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
