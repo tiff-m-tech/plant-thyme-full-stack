@@ -216,18 +216,20 @@ The project has two parts, both inside this repo: `plant-thyme-api` (the Spring 
 
     🟢 The API should now be running at `http://localhost:8080`.
 
-5. **Seed the database.** Once the tables exist, import the seed files from the `db/` folder **in this order** — each one depends on the one before it:
+5. **Seed the database.** Once the tables exist, import the seed files from the `db/` folder **in this order**, since later files reference rows created by earlier ones:
     1. `db/plants.sql` — the master plant catalog
-    2. `db/collection_plants.sql` — a sample collection
-    3. `db/progress_pictures.sql` — sample progress pictures
+    2. `db/users.sql` — the demo user account
+    3. `db/collection_plants.sql` — a sample collection belonging to the demo user
+    4. `db/progress_pictures.sql` — sample progress pictures
 
     You can run each file in MySQL Workbench, or from the terminal:
 
-    ```shell
+```shell
     mysql -u root -p plant_thyme < db/plants.sql
+    mysql -u root -p plant_thyme < db/users.sql
     mysql -u root -p plant_thyme < db/collection_plants.sql
     mysql -u root -p plant_thyme < db/progress_pictures.sql
-    ```
+```
 
 ---
 
@@ -253,7 +255,7 @@ The project has two parts, both inside this repo: `plant-thyme-api` (the Spring 
 
     🟢 The front end will start, typically at `http://localhost:5173`.
 
-4. **Log in with the demo credentials** — username: `tiffany`, password: `123`.
+4. **Log in with the demo credentials** — username: `tiffany`, password: `plantthyme`.
 
 > [!TIP]
 > **Trying it out:** In the seeded data, the **Brasil Philodendron** — the first plant shown in your collection, since they're listed alphabetically — is the only plant that comes with progress pictures. To test uploading your own, the `demo-images/` folder has four sample Golden Pothos photos you can download and add to the Golden Pothos in your collection. (Or use whatever photos you've got — the uploader won't judge if it's a picture of your cat. 🐱)
