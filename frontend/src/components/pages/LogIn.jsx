@@ -3,11 +3,9 @@ import { useNavigate } from "react-router";
 import { usePageTitleForBrowserTab } from "../../hooks/usePageTitleForBrowserTab";
 import { altFromFileName } from "../../utils/altFromFileName";
 import { logoImagePath } from "../../constants";
+import { loginUser, saveToken } from "../../services/api"; // NEW
 import PageTitle from "../ui/PageTitle";
 import Button from "../ui/Button";
-
-const HARDCODED_USERNAME = "tiffany";
-const HARDCODED_PASSWORD = "123";
 
 export default function LogIn({ setIsLoggedIn }) {
     const navigate = useNavigate();
@@ -15,14 +13,20 @@ export default function LogIn({ setIsLoggedIn }) {
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
 
-    function handleSubmit(event) {
+    // Sends the username + password to the backend. If correct, saves the token and logs in.
+    async function handleSubmit(event) {
         event.preventDefault();
+        setError("");
 
-        if (username === HARDCODED_USERNAME && password === HARDCODED_PASSWORD) {
+        try {
+            const data = await loginUser(username, password);
+            saveToken(data.token);
             setIsLoggedIn(true);
             navigate("/home");
-        } else {
-            setError("Incorrect username or password.");
+        } catch (err) {
+            // Backend errors have a statusCode + message, e.g. "Invalid username or password."
+            // Anything else (like the server being off) gets a general message.
+            setError(err.statusCode ? err.message : "Could not log in. Please try again.");
         }
     }
 
@@ -69,7 +73,7 @@ export default function LogIn({ setIsLoggedIn }) {
             <div className="mock-credentials">
                 <strong>Demo login</strong>
                 <p>Username: tiffany</p>
-                <p>Password: plantthyme (or 123 if frontend not connected)</p>
+                <p>Password: plantthyme</p>
             </div>
         </main>
     );
