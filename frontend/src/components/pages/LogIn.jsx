@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { usePageTitleForBrowserTab } from "../../hooks/usePageTitleForBrowserTab";
 import { altFromFileName } from "../../utils/altFromFileName";
 import { logoImagePath } from "../../constants";
@@ -70,6 +70,9 @@ export default function LogIn({ setIsLoggedIn }) {
                 {error && <p className="red-font">{error}</p>}
                 <Button innerText="Login" type="submit" />
             </form>
+            <p className="auth-link">
+                Don't have an account? <Link to="/register">Sign up</Link>
+            </p>
             <div className="mock-credentials">
                 <strong>Demo login</strong>
                 <p>Username: tiffany</p>

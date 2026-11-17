@@ -17,6 +17,7 @@ import AddPlant from "./components/pages/AddPlant";
 import PlantDetails from "./components/pages/PlantDetails";
 import ProgressPictureDetails from "./components/pages/ProgressPictureDetails";
 import LogIn from "./components/pages/LogIn";
+import Register from "./components/pages/Register";
 import NotFound from "./components/pages/NotFound";
 import ScrollToTop from "./components/layout/ScrollToTop";
 
@@ -147,6 +148,7 @@ function App() {
                 </Routes>
             ) : (
                 <Routes>
+                    <Route path="/register" element={<Register setIsLoggedIn={setIsLoggedIn} />} />
                     <Route path="*" element={<LogIn setIsLoggedIn={setIsLoggedIn} />} />
                 </Routes>
             )}

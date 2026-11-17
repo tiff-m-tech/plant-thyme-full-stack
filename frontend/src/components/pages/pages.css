@@ -8,6 +8,7 @@ main {
 }
 
 #logIn,
+#register,
 #home,
 #contact,
 #currentCollection,
@@ -31,6 +32,7 @@ main {
 }
 
 #logIn form label,
+#register form label,
 #contact form label,
 #plantDetails form label,
 #progressPictureDetails form label {
@@ -167,8 +169,8 @@ select:disabled {
     color: red;
 }
 
-/* Log In Page ------------------------------------------------------------------------------------------ */
 #logIn form,
+#register form,
 .signup-container {
     display: flex;
     flex-direction: column;
@@ -177,7 +179,8 @@ select:disabled {
     margin-top: 1.5rem;
 }
 
-#logIn form input {
+#logIn form input,
+#register form input {
     background-color: white;
     width: 100%;
     padding: 0.5rem;
@@ -206,6 +209,16 @@ select:disabled {
 .mock-credentials p {
     margin: 0.25rem 0;
     font-family: monospace;
+}
+
+.auth-link {
+    margin-top: 1.5rem;
+}
+
+/* Register Page ------------------------------------------------------------------------------------------ */
+
+.login-link {
+    margin-top: 1.5rem;
 }
 
 /* Home Page -------------------------------------------------------------------------------------------- */
