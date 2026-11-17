@@ -74,7 +74,7 @@ export default function LogIn({ setIsLoggedIn }) {
                 Don't have an account? <Link to="/register">Sign up</Link>
             </p>
             <div className="mock-credentials">
-                <strong>Demo login</strong>
+                <strong>🔑 Demo login</strong>
                 <p>Username: tiffany</p>
                 <p>Password: plantthyme</p>
             </div>
