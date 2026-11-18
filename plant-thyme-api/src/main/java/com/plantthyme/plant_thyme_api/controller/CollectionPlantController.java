@@ -4,11 +4,13 @@ import com.plantthyme.plant_thyme_api.dto.CollectionPlantRequest;
 import com.plantthyme.plant_thyme_api.dto.CollectionPlantResponse;
 import com.plantthyme.plant_thyme_api.model.CollectionPlant;
 import com.plantthyme.plant_thyme_api.model.Plant;
+import com.plantthyme.plant_thyme_api.model.User;
 import com.plantthyme.plant_thyme_api.repository.CollectionPlantRepository;
 import com.plantthyme.plant_thyme_api.repository.PlantRepository;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,29 +29,33 @@ public class CollectionPlantController {
         this.plantRepository = plantRepository;
     }
 
-    // GET all collection plants
+    // GET all collection plants for the logged-in user
     @GetMapping
-    public List<CollectionPlantResponse> getAllCollectionPlants() {
-        return collectionPlantRepository.findAll()
+    public List<CollectionPlantResponse> getAllCollectionPlants(
+            @AuthenticationPrincipal User user) {
+        return collectionPlantRepository.findByUser(user)
                 .stream()
                 .map(CollectionPlantResponse::fromEntity)
                 .toList();
     }
 
-    // GET one collection plant by id
+    // GET one collection plant by id (only if it belongs to the logged-in user)
     @GetMapping("/{id}")
-    public ResponseEntity<CollectionPlantResponse> getCollectionPlantById(@PathVariable Long id) {
-        return collectionPlantRepository.findById(id)
+    public ResponseEntity<CollectionPlantResponse> getCollectionPlantById(
+            @PathVariable Long id,
+            @AuthenticationPrincipal User user) {
+        return collectionPlantRepository.findByIdAndUser(id, user)
                 .map(CollectionPlantResponse::fromEntity)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // POST add new collection plant
+    // POST add new collection plant, owned by the logged-in user
     @PostMapping
     public ResponseEntity<CollectionPlantResponse> createCollectionPlant(
             @RequestParam Long plantId,
-            @Valid @RequestBody CollectionPlantRequest request) {
+            @Valid @RequestBody CollectionPlantRequest request,
+            @AuthenticationPrincipal User user) {                       // NEW
 
         Plant plant = plantRepository.findById(plantId).orElse(null);
 
@@ -59,6 +65,7 @@ public class CollectionPlantController {
 
         CollectionPlant collectionPlant = new CollectionPlant();
         collectionPlant.setPlant(plant);
+        collectionPlant.setUser(user);
         applyRequest(collectionPlant, request);
 
         CollectionPlant saved = collectionPlantRepository.save(collectionPlant);
@@ -66,13 +73,15 @@ public class CollectionPlantController {
                 .body(CollectionPlantResponse.fromEntity(saved));
     }
 
-    // PUT update collection plant
+    // PUT update collection plant (only if it belongs to the logged-in user)
     @PutMapping("/{id}")
     public ResponseEntity<CollectionPlantResponse> updateCollectionPlant(
             @PathVariable Long id,
-            @Valid @RequestBody CollectionPlantRequest request) {
+            @Valid @RequestBody CollectionPlantRequest request,
+            @AuthenticationPrincipal User user) {
 
-        CollectionPlant existingPlant = collectionPlantRepository.findById(id).orElse(null);
+        CollectionPlant existingPlant =
+                collectionPlantRepository.findByIdAndUser(id, user).orElse(null);
 
         if (existingPlant == null) {
             return ResponseEntity.notFound().build();
@@ -84,13 +93,20 @@ public class CollectionPlantController {
         return ResponseEntity.ok(CollectionPlantResponse.fromEntity(saved));
     }
 
-    // DELETE one collection plant
+    // DELETE one collection plant (only if it belongs to the logged-in user)
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCollectionPlant(@PathVariable Long id) {
-        if (!collectionPlantRepository.existsById(id)) {
+    public ResponseEntity<Void> deleteCollectionPlant(
+            @PathVariable Long id,
+            @AuthenticationPrincipal User user) {
+
+        CollectionPlant existingPlant =
+                collectionPlantRepository.findByIdAndUser(id, user).orElse(null);  // CHANGED
+
+        if (existingPlant == null) {
             return ResponseEntity.notFound().build();
         }
-        collectionPlantRepository.deleteById(id);
+
+        collectionPlantRepository.delete(existingPlant);
         return ResponseEntity.noContent().build();
     }
 

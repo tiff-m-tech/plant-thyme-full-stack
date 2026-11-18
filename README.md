@@ -55,6 +55,10 @@ Build your personal collection from a plant database, customize details for each
 
 ## 🧩 Features
 
+### 🔐 Personal Accounts
+
+Sign up for your own account and log in securely. Each person has their own private collection and progress pictures that no one else can see. You stay logged in between visits, and passwords are never stored — only secure hashes.
+
 ### 🪴 Build Your Plant Collection
 
 Add houseplants from the plant database to create your own personal collection.
@@ -108,8 +112,8 @@ Plants that are no longer part of your collection can be removed from their Plan
 
 The layout adapts to desktop, tablet, and mobile screens, using CSS Grid and Flexbox to keep everything readable and organized at any size.
 
-> [!NOTE]
-> The current version uses a single hard-coded user while the application is in development.
+> [!TIP]
+> Want to look around without making an account? Log in with the demo account (username `tiffany`), which comes with a sample collection and progress pictures. See [Installation](#installation) for the password.
 
 ---
 
@@ -216,18 +220,20 @@ The project has two parts, both inside this repo: `plant-thyme-api` (the Spring 
 
     🟢 The API should now be running at `http://localhost:8080`.
 
-5. **Seed the database.** Once the tables exist, import the seed files from the `db/` folder **in this order** — each one depends on the one before it:
+5. **Seed the database.** Once the tables exist, import the seed files from the `db/` folder **in this order**, since later files reference rows created by earlier ones:
     1. `db/plants.sql` — the master plant catalog
-    2. `db/collection_plants.sql` — a sample collection
-    3. `db/progress_pictures.sql` — sample progress pictures
+    2. `db/users.sql` — the demo user account
+    3. `db/collection_plants.sql` — a sample collection belonging to the demo user
+    4. `db/progress_pictures.sql` — sample progress pictures
 
     You can run each file in MySQL Workbench, or from the terminal:
 
-    ```shell
+```shell
     mysql -u root -p plant_thyme < db/plants.sql
+    mysql -u root -p plant_thyme < db/users.sql
     mysql -u root -p plant_thyme < db/collection_plants.sql
     mysql -u root -p plant_thyme < db/progress_pictures.sql
-    ```
+```
 
 ---
 
@@ -253,7 +259,7 @@ The project has two parts, both inside this repo: `plant-thyme-api` (the Spring 
 
     🟢 The front end will start, typically at `http://localhost:5173`.
 
-4. **Log in with the demo credentials** — username: `tiffany`, password: `123`.
+4. **Log in with the demo credentials** — username: `tiffany`, password: `plantthyme`.
 
 > [!TIP]
 > **Trying it out:** In the seeded data, the **Brasil Philodendron** — the first plant shown in your collection, since they're listed alphabetically — is the only plant that comes with progress pictures. To test uploading your own, the `demo-images/` folder has four sample Golden Pothos photos you can download and add to the Golden Pothos in your collection. (Or use whatever photos you've got — the uploader won't judge if it's a picture of your cat. 🐱)
@@ -264,23 +270,34 @@ The project has two parts, both inside this repo: `plant-thyme-api` (the Spring 
 
 ## 🗄️ Database Structure (ERD)
 
-Plant Thyme uses a MySQL database built around three core entities, managed by Hibernate:
+Plant Thyme uses a MySQL database built around four entities, managed by Hibernate:
 
-- **Plant** — The master catalog of plants a user can choose from.
+- **User** — An account that owns a private collection. Passwords are stored only as BCrypt hashes.
+- **Plant** — The master catalog of plants a user can choose from, shared by everyone.
 - **CollectionPlant** — A plant a user has added to their collection, with details like nickname, cost, purchase date, store, and location. Deleting a collection plant also deletes its progress pictures (cascade).
 - **ProgressPicture** — A photo tied to a CollectionPlant, with a date, update type and notes.
 
 **Relationships:**
 
-1. Plant → CollectionPlant: One-to-Many — one catalog plant can appear many times in a collection (e.g. three Golden Pothos are three separate collection entries that all point to the same plant).
-2. CollectionPlant → ProgressPicture: One-to-Many — one collection plant can have many progress pictures.
+1. User → CollectionPlant: One-to-Many — each user has their own collection, and each collection plant belongs to exactly one user. Deleting a user also deletes their collection (cascade).
+2. Plant → CollectionPlant: One-to-Many — one catalog plant can appear many times in a collection (e.g. three Golden Pothos are three separate collection entries that all point to the same plant).
+3. CollectionPlant → ProgressPicture: One-to-Many — one collection plant can have many progress pictures.
 
 ### Entity Relationship Diagram
 
 ```mermaid
 erDiagram
+    users ||--o{ collection_plant : ""
     plant ||--o{ collection_plant : ""
     collection_plant ||--o{ progress_picture : ""
+
+    users {
+        bigint id PK
+        varchar username
+        varchar email
+        varchar password_hash
+        datetime created_at
+    }
 
     plant {
         bigint id PK
@@ -294,6 +311,7 @@ erDiagram
     collection_plant {
         bigint id PK
         bigint plant_id FK
+        bigint user_id FK
         date purchase_date
         varchar purchase_store
         decimal cost
@@ -320,7 +338,30 @@ erDiagram
 
 ## ⚙️ API Endpoints
 
-All endpoints are served from the Spring Boot backend at `http://localhost:8080`. The API is currently open (no authentication).
+All endpoints are served from the Spring Boot backend at `http://localhost:8080`.
+
+### 🔐 Authentication
+
+Plant Thyme uses **JWT (JSON Web Token)** authentication. Logging in returns a token, which must be sent with every protected request in the `Authorization` header:
+
+```
+Authorization: Bearer <token>
+```
+
+Tokens expire after 24 hours. Each user can only see and change their own collection and progress pictures. Requests for another user's data return `404`.
+
+| Access            | Endpoints                                                                          |
+| :---------------- | :--------------------------------------------------------------------------------- |
+| 🔓 Public         | `POST /api/auth/register`, `POST /api/auth/login`, uploaded images (`/uploads/**`) |
+| 🔒 Requires token | Everything else                                                                    |
+
+### Auth 🔑
+
+| Method    | Endpoint             | Description                                                        |
+| :-------- | :------------------- | :----------------------------------------------------------------- |
+| 🟡 `POST` | `/api/auth/register` | Create an account (JSON body with `username`, `email`, `password`) |
+| 🟡 `POST` | `/api/auth/login`    | Log in and receive a JWT plus basic user info                      |
+| 🟢 `GET`  | `/api/auth/me`       | Get the currently logged-in user (used to check a saved token)     |
 
 ### Plants 🪴
 
@@ -332,9 +373,11 @@ All endpoints are served from the Spring Boot backend at `http://localhost:8080`
 
 ### Collection Plants 🌿
 
+All collection plant endpoints only return or change plants owned by the logged-in user.
+
 | Method      | Endpoint                                   | Description                                                               |
 | :---------- | :----------------------------------------- | :------------------------------------------------------------------------ |
-| 🟢 `GET`    | `/api/collection-plants`                   | Retrieve every plant in the collection                                    |
+| 🟢 `GET`    | `/api/collection-plants`                   | Retrieve the logged-in user's collection                                  |
 | 🟢 `GET`    | `/api/collection-plants/{id}`              | Retrieve a single collection plant by ID                                  |
 | 🟡 `POST`   | `/api/collection-plants?plantId={plantId}` | Add a catalog plant to the collection (JSON body with collection details) |
 | 🔵 `PUT`    | `/api/collection-plants/{id}`              | Update a collection plant's details                                       |
@@ -342,25 +385,29 @@ All endpoints are served from the Spring Boot backend at `http://localhost:8080`
 
 ### Progress Pictures 📸
 
+All progress picture endpoints only return or change pictures on plants owned by the logged-in user.
+
 | Method      | Endpoint                        | Description                                                                      |
 | :---------- | :------------------------------ | :------------------------------------------------------------------------------- |
-| 🟢 `GET`    | `/api/progress-pictures`        | Retrieve all progress pictures, or filter with `?collectionPlantId={id}`         |
+| 🟢 `GET`    | `/api/progress-pictures`        | Retrieve the user's progress pictures, or filter with `?collectionPlantId={id}`  |
 | 🟢 `GET`    | `/api/progress-pictures/{id}`   | Retrieve a single progress picture by ID                                         |
 | 🟡 `POST`   | `/api/progress-pictures/upload` | Upload a picture — `multipart/form-data` with a `file` and a `collectionPlantId` |
 | 🔵 `PUT`    | `/api/progress-pictures/{id}`   | Update a picture's date, update type, and notes                                  |
 | 🔴 `DELETE` | `/api/progress-pictures/{id}`   | Delete a progress picture                                                        |
 
----
+### Error Responses ⚠️
 
-<a name="visuals"></a>
+Errors return a consistent JSON shape. Validation errors also include `fieldErrors`, so each message can be shown next to the right form field:
 
-## 🖼️ Wireframes
-
-<em>Click the wireframe to open it full-size.</em>
-
-<a href="readme-resources/wireframe.png?raw=true">
-  <img src="readme-resources/wireframe.png" alt="Plant Thyme wireframe" width="100%" />
-</a>
+```json
+{
+    "statusCode": 400,
+    "errorCode": "VALIDATION_FAILED",
+    "message": ["Please enter a valid email."],
+    "fieldErrors": { "email": "Please enter a valid email." },
+    "timestamp": "2026-11-16T21:23:31.845Z"
+}
+```
 
 ---
 
@@ -368,7 +415,7 @@ All endpoints are served from the Spring Boot backend at `http://localhost:8080`
 
 ## 🔮 Unsolved Problems & Future Features
 
-- 🔐 **User accounts & authentication:** Login is currently hardcoded to a single user, and there's just one shared collection. The plan is real registration and secure authentication so that each person has their own account and their own private collection.
+- 🔒 **Fully private progress pictures:** Uploaded photos are saved with random, unguessable file names, but anyone with an exact image link could still view it. The next step would be serving images through a protected endpoint that checks the logged-in user, the same way the rest of the app does.
 - ⭐ **Wishlist:** A list for plants you _want_ but don't own yet — much like the collection, with a photo and editable details such as which stores usually carry it, a good target price, and notes (for example, how to tell whether a plant is healthy). Once you buy one, you could move it straight into your collection.
 - 🍂 **Past plants:** A list for plants you no longer have, added from the catalog or moved out of your current collection. You could keep notes on why it's gone — did it die, did you sell it, was it too high-maintenance, or is it one to try again once the conditions are right (like when you finally get a greenhouse)?
 - 🔌 **Connect to a plant API:** The catalog currently holds about 34 plants. Hooking into a public plant API could open that up to thousands of options to search and add.
@@ -381,7 +428,9 @@ All endpoints are served from the Spring Boot backend at `http://localhost:8080`
 
 ## 🧠 What I Learned & Design Decisions
 
-**The backend was the real challenge.** I built the first version of Plant Thyme in about a month, roughly two weeks on the front end and two on the back. The front end was the fun part; I already had some experience there and I love designing things, so it came fairly naturally. The back end was a different story. My only prior backend experience was a few weeks of Node.js, and Java with Spring Boot turned out to be a much steeper climb — a genuinely different beast. It's the part I learned the most from, and the part I still have the most planned for (DTOs and real authentication are next on my list).
+**The backend was the real challenge.** I built the first version of Plant Thyme in about a month, roughly two weeks on the front end and two on the back. The front end was the fun part; I already had some experience there and I love designing things, so it came fairly naturally. The back end was a different story. My only prior backend experience was a few weeks of Node.js, and Java with Spring Boot turned out to be a much steeper climb — a genuinely different beast. It's the part I learned the most from, and the part I've kept improving since.
+
+**Adding real accounts after the bootcamp.** Once the bootcamp was over, I went back and added a DTO layer (using Java records), so the API sends and receives only the data it needs instead of exposing the database entities directly. Then I added real user accounts: hashing passwords with BCrypt, issuing and checking JWTs with Spring Security, and making sure every request only touches the logged-in user's own plants and pictures. Testing it in Postman with a second account (and watching it get a `404` for someone else's plant) was the moment it really clicked. It also taught me a lot about debugging: tracing a `401` back through a security filter is very different from fixing a broken button.
 
 **Designing for people, not just myself.** A surprising amount of the work was deciding _which_ details to include, and trying to see the app through other people's eyes instead of only my own. The nickname and location fields are a good example: personally I'd find them a bit like clutter, but I know plenty of plant people would love them, so I made them optional and let users choose whether they show on a card.
 

@@ -1,6 +1,13 @@
 import { useState, useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router";
-import { getCollection, addToCollection, deleteCollectionPlant } from "./services/api";
+import {
+    getCollection,
+    addToCollection,
+    deleteCollectionPlant,
+    getToken,
+    clearToken,
+    getCurrentUser,
+} from "./services/api";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 import Home from "./components/pages/Home";
@@ -10,16 +17,44 @@ import AddPlant from "./components/pages/AddPlant";
 import PlantDetails from "./components/pages/PlantDetails";
 import ProgressPictureDetails from "./components/pages/ProgressPictureDetails";
 import LogIn from "./components/pages/LogIn";
+import Register from "./components/pages/Register";
 import NotFound from "./components/pages/NotFound";
 import ScrollToTop from "./components/layout/ScrollToTop";
 
 function App() {
     const [collection, setCollection] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [isLoggedIn, setIsLoggedIn] = useState(true);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [checkingLogin, setCheckingLogin] = useState(true);
 
+    // When the app first opens, check if a saved token is still valid (e.g. after a refresh)
     useEffect(() => {
+        async function checkSavedLogin() {
+            if (!getToken()) {
+                setCheckingLogin(false);
+                return;
+            }
+            try {
+                await getCurrentUser();
+                setIsLoggedIn(true);
+            } catch {
+                clearToken(); // token expired or invalid
+            } finally {
+                setCheckingLogin(false);
+            }
+        }
+        checkSavedLogin();
+    }, []);
+
+    // Load the collection only once someone is logged in
+    useEffect(() => {
+        if (!isLoggedIn) {
+            setCollection([]);
+            return;
+        }
+
         async function loadCollection() {
+            setLoading(true);
             try {
                 const data = await getCollection();
                 setCollection(data);
@@ -30,7 +65,7 @@ function App() {
             }
         }
         loadCollection();
-    }, []);
+    }, [isLoggedIn]);
 
     async function addPlantToCollection(plant) {
         try {
@@ -75,6 +110,11 @@ function App() {
         }
     }
 
+    // While checking a saved token, show nothing (prevents a flash of the login page)
+    if (checkingLogin) {
+        return null;
+    }
+
     return (
         <>
             <ScrollToTop />
@@ -108,6 +148,7 @@ function App() {
                 </Routes>
             ) : (
                 <Routes>
+                    <Route path="/register" element={<Register setIsLoggedIn={setIsLoggedIn} />} />
                     <Route path="*" element={<LogIn setIsLoggedIn={setIsLoggedIn} />} />
                 </Routes>
             )}

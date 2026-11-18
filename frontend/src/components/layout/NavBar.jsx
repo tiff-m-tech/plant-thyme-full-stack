@@ -2,11 +2,14 @@ import { Link } from "react-router";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPhone, faHouse, faLeaf, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import { clearToken } from "../../services/api";
 
 export default function NavBar({ isLoggedIn, setIsLoggedIn }) {
     const [isOpen, setIsOpen] = useState(false);
 
+    // Forget the token and switch back to the login page
     function handleLogout() {
+        clearToken();
         setIsLoggedIn(false);
     }
 

@@ -4,12 +4,14 @@ import com.plantthyme.plant_thyme_api.dto.ProgressPictureResponse;
 import com.plantthyme.plant_thyme_api.dto.ProgressPictureUpdateRequest;
 import com.plantthyme.plant_thyme_api.model.CollectionPlant;
 import com.plantthyme.plant_thyme_api.model.ProgressPicture;
+import com.plantthyme.plant_thyme_api.model.User;
 import com.plantthyme.plant_thyme_api.repository.CollectionPlantRepository;
 import com.plantthyme.plant_thyme_api.repository.ProgressPictureRepository;
 import com.plantthyme.plant_thyme_api.service.FileStorageService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -33,39 +35,43 @@ public class ProgressPictureController {
         this.fileStorageService = fileStorageService;
     }
 
-    // GET progress pictures — all, or filtered by collection plant when the param is present
+    // GET the logged-in user's progress pictures — all, or filtered by collection plant
     @GetMapping
     public List<ProgressPictureResponse> getProgressPictures(
-            @RequestParam(required = false) Long collectionPlantId) {
+            @RequestParam(required = false) Long collectionPlantId,
+            @AuthenticationPrincipal User user) {                                                   // NEW
 
         List<ProgressPicture> pictures = (collectionPlantId != null)
-                ? progressPictureRepository.findByCollectionPlantId(collectionPlantId)
-                : progressPictureRepository.findAll();
+                ? progressPictureRepository.findByCollectionPlantIdAndCollectionPlantUser(collectionPlantId, user)  // CHANGED
+                : progressPictureRepository.findByCollectionPlantUser(user);                       // CHANGED
 
         return pictures.stream()
                 .map(ProgressPictureResponse::fromEntity)
                 .toList();
     }
 
-    // GET one progress picture by id
+    // GET one progress picture by id (only if its plant belongs to the logged-in user)
     @GetMapping("/{id}")
-    public ResponseEntity<ProgressPictureResponse> getProgressPictureById(@PathVariable Long id) {
-        return progressPictureRepository.findById(id)
+    public ResponseEntity<ProgressPictureResponse> getProgressPictureById(
+            @PathVariable Long id,
+            @AuthenticationPrincipal User user) {                                                   // NEW
+        return progressPictureRepository.findByIdAndCollectionPlantUser(id, user)                 // CHANGED
                 .map(ProgressPictureResponse::fromEntity)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // POST a new progress picture
+    // POST a new progress picture (only onto the logged-in user's own plant)
     // Upload endpoint — takes a FILE (multipart), not JSON.
     // No @RequestBody / @Valid here because there's no JSON body — just a file + a param.
     @PostMapping("/upload")
     public ResponseEntity<ProgressPictureResponse> uploadProgressPicture(
             @RequestParam("file") MultipartFile file,
-            @RequestParam Long collectionPlantId) {
+            @RequestParam Long collectionPlantId,
+            @AuthenticationPrincipal User user) {                                                   // NEW
 
         CollectionPlant collectionPlant =
-                collectionPlantRepository.findById(collectionPlantId).orElse(null);
+                collectionPlantRepository.findByIdAndUser(collectionPlantId, user).orElse(null);  // CHANGED
         if (collectionPlant == null) {
             return ResponseEntity.badRequest().build();
         }
@@ -83,14 +89,15 @@ public class ProgressPictureController {
                 .body(ProgressPictureResponse.fromEntity(saved));
     }
 
-    // PUT update a progress picture's details
+    // PUT update a progress picture's details (only if its plant belongs to the logged-in user)
     @PutMapping("/{id}")
     public ResponseEntity<ProgressPictureResponse> updateProgressPicture(
             @PathVariable Long id,
-            @Valid @RequestBody ProgressPictureUpdateRequest request) {
+            @Valid @RequestBody ProgressPictureUpdateRequest request,
+            @AuthenticationPrincipal User user) {                                                   // NEW
 
         ProgressPicture existingPicture =
-                progressPictureRepository.findById(id).orElse(null);
+                progressPictureRepository.findByIdAndCollectionPlantUser(id, user).orElse(null);  // CHANGED
 
         if (existingPicture == null) {
             return ResponseEntity.notFound().build();
@@ -104,13 +111,20 @@ public class ProgressPictureController {
         return ResponseEntity.ok(ProgressPictureResponse.fromEntity(saved));
     }
 
-    // DELETE a progress picture
+    // DELETE a progress picture (only if its plant belongs to the logged-in user)
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProgressPicture(@PathVariable Long id) {
-        if (!progressPictureRepository.existsById(id)) {
+    public ResponseEntity<Void> deleteProgressPicture(
+            @PathVariable Long id,
+            @AuthenticationPrincipal User user) {                                                   // NEW
+
+        ProgressPicture existingPicture =
+                progressPictureRepository.findByIdAndCollectionPlantUser(id, user).orElse(null);  // CHANGED
+
+        if (existingPicture == null) {
             return ResponseEntity.notFound().build();
         }
-        progressPictureRepository.deleteById(id);
+
+        progressPictureRepository.delete(existingPicture);                                         // CHANGED
         return ResponseEntity.noContent().build();
     }
 }
