@@ -55,6 +55,10 @@ Build your personal collection from a plant database, customize details for each
 
 ## 🧩 Features
 
+### 🔐 Personal Accounts
+
+Sign up for your own account and log in securely. Each person has their own private collection and progress pictures that no one else can see. You stay logged in between visits, and passwords are never stored — only secure hashes.
+
 ### 🪴 Build Your Plant Collection
 
 Add houseplants from the plant database to create your own personal collection.
@@ -108,8 +112,8 @@ Plants that are no longer part of your collection can be removed from their Plan
 
 The layout adapts to desktop, tablet, and mobile screens, using CSS Grid and Flexbox to keep everything readable and organized at any size.
 
-> [!NOTE]
-> The current version uses a single hard-coded user while the application is in development.
+> [!TIP]
+> Want to look around without making an account? Log in with the demo account (username `tiffany`), which comes with a sample collection and progress pictures. See [Installation](#installation) for the password.
 
 ---
 
@@ -411,7 +415,7 @@ Errors return a consistent JSON shape. Validation errors also include `fieldErro
 
 ## 🔮 Unsolved Problems & Future Features
 
-- 🔐 **User accounts & authentication:** Login is currently hardcoded to a single user, and there's just one shared collection. The plan is real registration and secure authentication so that each person has their own account and their own private collection.
+- 🔒 **Fully private progress pictures:** Uploaded photos are saved with random, unguessable file names, but anyone with an exact image link could still view it. The next step would be serving images through a protected endpoint that checks the logged-in user, the same way the rest of the app does.
 - ⭐ **Wishlist:** A list for plants you _want_ but don't own yet — much like the collection, with a photo and editable details such as which stores usually carry it, a good target price, and notes (for example, how to tell whether a plant is healthy). Once you buy one, you could move it straight into your collection.
 - 🍂 **Past plants:** A list for plants you no longer have, added from the catalog or moved out of your current collection. You could keep notes on why it's gone — did it die, did you sell it, was it too high-maintenance, or is it one to try again once the conditions are right (like when you finally get a greenhouse)?
 - 🔌 **Connect to a plant API:** The catalog currently holds about 34 plants. Hooking into a public plant API could open that up to thousands of options to search and add.
@@ -424,7 +428,9 @@ Errors return a consistent JSON shape. Validation errors also include `fieldErro
 
 ## 🧠 What I Learned & Design Decisions
 
-**The backend was the real challenge.** I built the first version of Plant Thyme in about a month, roughly two weeks on the front end and two on the back. The front end was the fun part; I already had some experience there and I love designing things, so it came fairly naturally. The back end was a different story. My only prior backend experience was a few weeks of Node.js, and Java with Spring Boot turned out to be a much steeper climb — a genuinely different beast. It’s the part I learned the most from, and the part I’ve kept improving since. After the bootcamp, I added a DTO layer (using Java records) so the API sends and receives only the data it needs instead of exposing the database entities directly. Real authentication is next on my list.
+**The backend was the real challenge.** I built the first version of Plant Thyme in about a month, roughly two weeks on the front end and two on the back. The front end was the fun part; I already had some experience there and I love designing things, so it came fairly naturally. The back end was a different story. My only prior backend experience was a few weeks of Node.js, and Java with Spring Boot turned out to be a much steeper climb — a genuinely different beast. It's the part I learned the most from, and the part I've kept improving since.
+
+**Adding real accounts after the bootcamp.** Once the bootcamp was over, I went back and added a DTO layer (using Java records), so the API sends and receives only the data it needs instead of exposing the database entities directly. Then I added real user accounts: hashing passwords with BCrypt, issuing and checking JWTs with Spring Security, and making sure every request only touches the logged-in user's own plants and pictures. Testing it in Postman with a second account (and watching it get a `404` for someone else's plant) was the moment it really clicked. It also taught me a lot about debugging: tracing a `401` back through a security filter is very different from fixing a broken button.
 
 **Designing for people, not just myself.** A surprising amount of the work was deciding _which_ details to include, and trying to see the app through other people's eyes instead of only my own. The nickname and location fields are a good example: personally I'd find them a bit like clutter, but I know plenty of plant people would love them, so I made them optional and let users choose whether they show on a card.
 
